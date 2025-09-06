@@ -27,6 +27,10 @@
     <string name="your_note">Tu Nota</string>
     <string name="close">Cerrar</string>
     <string name="error_decrypting">Error de cifrado</string>
+    <string name="delete">Eliminar</string>
+    <string name="confirm_deletion_title">Confirmar eliminación</string>
+    <string name="confirm_deletion_message">¿Seguro que desea eliminar esta nota? Esta acción no se puede deshacer.</string>
+    <string name="confirm">Confirmar</string>
 
     <!-- Add Entry Screen -->
     <string name="new_note">Nueva Nota</string>

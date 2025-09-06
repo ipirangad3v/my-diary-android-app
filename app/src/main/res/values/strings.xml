@@ -26,6 +26,10 @@
     <string name="your_note">Sua Anotação</string>
     <string name="close">Fechar</string>
     <string name="error_decrypting">Erro de encriptamento</string>
+    <string name="delete">Deletar</string>
+    <string name="confirm_deletion_title">Confirmar Exclusão</string>
+    <string name="confirm_deletion_message">Você tem certeza que deseja deletar esta nota? Esta ação não pode ser desfeita.</string>
+    <string name="confirm">Confirmar</string>
 
     <!-- Add Entry Screen -->
     <string name="new_note">Nova Anotação</string>

@@ -11,9 +11,7 @@ sealed class AppScreen {
 
             other as Main
 
-            if (!masterPassword.contentEquals(other.masterPassword)) return false
-
-            return true
+            return masterPassword.contentEquals(other.masterPassword)
         }
 
         override fun hashCode(): Int {
@@ -28,9 +26,7 @@ sealed class AppScreen {
 
             other as AddEntry
 
-            if (!masterPassword.contentEquals(other.masterPassword)) return false
-
-            return true
+            return masterPassword.contentEquals(other.masterPassword)
         }
 
         override fun hashCode(): Int {

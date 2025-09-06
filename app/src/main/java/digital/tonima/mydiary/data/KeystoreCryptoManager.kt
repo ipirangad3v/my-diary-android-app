@@ -15,7 +15,6 @@ object KeystoreCryptoManager {
     private const val TRANSFORMATION = "AES/GCM/NoPadding"
 
     private const val AES_KEY_SIZE = 256
-    private const val GCM_IV_SIZE = 12
     private const val GCM_TAG_LENGTH = 128
 
     private val keyStore = KeyStore.getInstance(ANDROID_KEYSTORE).apply {
@@ -32,7 +31,7 @@ object KeystoreCryptoManager {
             setBlockModes(KeyProperties.BLOCK_MODE_GCM)
             setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
             setKeySize(AES_KEY_SIZE)
-            setUserAuthenticationRequired(true) // Requer biometria para usar a chave
+            setUserAuthenticationRequired(true)
         }.build()
 
         val keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, ANDROID_KEYSTORE)

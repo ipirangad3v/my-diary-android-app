@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -47,7 +47,7 @@ fun AddEntryScreen(
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            imageVector = Icons.Filled.ArrowBack,
                             contentDescription = stringResource(back)
                         )
                     }
@@ -62,14 +62,22 @@ fun AddEntryScreen(
                             val filename = "entry_${System.currentTimeMillis()}.txt"
                             PasswordBasedCryptoManager.saveDiaryEntry(
                                 context = context,
-                                password = masterPassword,
                                 filename = filename,
-                                content = entryContent
+                                content = entryContent,
+                                masterPassword = masterPassword
                             )
-                            Toast.makeText(context, context.getString(note_saved), Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                context,
+                                context.getString(note_saved),
+                                Toast.LENGTH_SHORT
+                            ).show()
                             onNavigateBack()
                         } catch (e: Exception) {
-                            Toast.makeText(context, "Error saving entry: ${e.message}", Toast.LENGTH_LONG).show()
+                            Toast.makeText(
+                                context,
+                                "Error saving entry: ${e.message}",
+                                Toast.LENGTH_LONG
+                            ).show()
                         }
                     }
                 }

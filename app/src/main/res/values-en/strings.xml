@@ -26,6 +26,10 @@
     <string name="your_note">Your Note</string>
     <string name="close">Close</string>
     <string name="error_decrypting">Encryption error</string>
+    <string name="delete">Delete</string>
+    <string name="confirm_deletion_title">Confirm Deletion</string>
+    <string name="confirm_deletion_message">Are you sure you want to delete this note? This action cannot be undone.</string>
+    <string name="confirm">Confirm</string>
 
     <!-- Add Entry Screen -->
     <string name="new_note">New Note</string>

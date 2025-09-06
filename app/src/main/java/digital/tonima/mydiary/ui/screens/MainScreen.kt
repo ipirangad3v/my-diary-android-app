@@ -1,10 +1,8 @@
 package digital.tonima.mydiary.ui.screens
 
-import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -16,11 +14,11 @@ import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -35,152 +33,162 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import digital.tonima.mydiary.R.string.add_note
 import digital.tonima.mydiary.R.string.app_name
-import digital.tonima.mydiary.R.string.ask_for_lock_diary
+import digital.tonima.mydiary.R.string.cancel
 import digital.tonima.mydiary.R.string.close
+import digital.tonima.mydiary.R.string.confirm
+import digital.tonima.mydiary.R.string.confirm_deletion_message
+import digital.tonima.mydiary.R.string.confirm_deletion_title
+import digital.tonima.mydiary.R.string.delete
 import digital.tonima.mydiary.R.string.empty_notes_message
 import digital.tonima.mydiary.R.string.lock_diary
-import digital.tonima.mydiary.R.string.lock_confirm
-import digital.tonima.mydiary.R.string.no
 import digital.tonima.mydiary.data.PasswordBasedCryptoManager
 import java.io.File
-import java.text.DateFormat
+import java.text.DateFormat.getDateTimeInstance
 import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
     masterPassword: CharArray,
-    onLockRequest: () -> Unit,
-    onAddEntry: () -> Unit
+    onAddEntry: () -> Unit,
+    onLockRequest: () -> Unit
 ) {
     val context = LocalContext.current
     var diaryEntries by remember { mutableStateOf<List<File>>(emptyList()) }
-    var showLockDialog by remember { mutableStateOf(false) }
-    var selectedEntry by remember { mutableStateOf<File?>(null) }
-    var decryptedContent by remember { mutableStateOf<String?>(null) }
+    var isLoading by remember { mutableStateOf(true) }
+    var selectedEntry by remember { mutableStateOf<Pair<String, String>?>(null) }
+    var showDeleteConfirmationDialog by remember { mutableStateOf(false) }
+    var entryToDelete by remember { mutableStateOf<String?>(null) }
+
 
     LaunchedEffect(Unit) {
         diaryEntries = PasswordBasedCryptoManager.getAllEntryFiles(context)
+        isLoading = false
     }
 
-    if (showLockDialog) {
-        AlertDialog(
-            onDismissRequest = { showLockDialog = false },
-            title = { Text(stringResource(lock_diary)) },
-            text = { Text(stringResource(ask_for_lock_diary)) },
-            confirmButton = {
-                TextButton(
-                    onClick = {
-                        showLockDialog = false
-                        onLockRequest()
-                    }
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(stringResource(app_name)) }
+            )
+        },
+        floatingActionButton = {
+            Column(horizontalAlignment = Alignment.End) {
+                FloatingActionButton(
+                    onClick = { onAddEntry() },
+                    modifier = Modifier.padding(bottom = 16.dp)
                 ) {
-                    Text(stringResource(lock_confirm))
+                    Icon(Icons.Filled.Add, contentDescription = stringResource(add_note))
+                }
+                FloatingActionButton(onClick = { onLockRequest() }) {
+                    Icon(Icons.Filled.Lock, contentDescription = stringResource(lock_diary))
+                }
+            }
+        }
+    ) { innerPadding ->
+        Box(
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            if (isLoading) {
+                CircularProgressIndicator()
+            } else if (diaryEntries.isEmpty()) {
+                Text(stringResource(empty_notes_message))
+            } else {
+                LazyColumn(modifier = Modifier.fillMaxSize()) {
+                    items(diaryEntries) { file ->
+                        EntryListItem(
+                            file = file,
+                            onClick = {
+                                val content = PasswordBasedCryptoManager.readDiaryEntry(context, file.name, masterPassword)
+                                if (content != null) {
+                                    selectedEntry = Pair(file.name, content)
+                                }
+                            }
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    if (selectedEntry != null) {
+        AlertDialog(
+            onDismissRequest = { selectedEntry = null },
+            title = { Text(formatTimestamp(selectedEntry!!.first)) },
+            text = { Text(selectedEntry!!.second) },
+            confirmButton = {
+                TextButton(onClick = { selectedEntry = null }) {
+                    Text(stringResource(close))
                 }
             },
             dismissButton = {
                 TextButton(
-                    onClick = { showLockDialog = false }
+                    onClick = {
+                        entryToDelete = selectedEntry?.first
+                        showDeleteConfirmationDialog = true
+                        selectedEntry = null
+                    }
                 ) {
-                    Text(stringResource(no))
+                    Text(stringResource(delete))
                 }
             }
         )
     }
 
-    selectedEntry?.let { entryFile ->
-        try {
-            decryptedContent = PasswordBasedCryptoManager.readDiaryEntry(context, masterPassword, entryFile.name)
-        } catch (e: Exception) {
-            Toast.makeText(context, "Erro ao ler a entrada: ${e.message}", Toast.LENGTH_LONG).show()
-            decryptedContent = null
-            selectedEntry = null // Reset selection on error
-        }
-
-        decryptedContent?.let { content ->
-            AlertDialog(
-                onDismissRequest = { selectedEntry = null; decryptedContent = null },
-                title = { Text(formatTimestamp(entryFile.name)) },
-                text = { Text(content) },
-                confirmButton = {
-                    TextButton(onClick = { selectedEntry = null; decryptedContent = null }) {
-                        Text(stringResource(close))
+    if (showDeleteConfirmationDialog) {
+        AlertDialog(
+            onDismissRequest = { showDeleteConfirmationDialog = false },
+            title = { Text(stringResource(confirm_deletion_title)) },
+            text = { Text(stringResource(confirm_deletion_message)) },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        entryToDelete?.let {
+                            PasswordBasedCryptoManager.deleteDiaryEntry(context, it)
+                            diaryEntries = PasswordBasedCryptoManager.getAllEntryFiles(context)
+                        }
+                        showDeleteConfirmationDialog = false
+                        entryToDelete = null
                     }
+                ) {
+                    Text(stringResource(confirm))
                 }
-            )
-        }
-    }
-
-
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(stringResource(app_name)) },
-                actions = {
-                    IconButton(onClick = { showLockDialog = true }) {
-                        Icon(Icons.Filled.Lock, contentDescription = stringResource(lock_diary))
-                    }
-                }
-            )
-        },
-        floatingActionButton = {
-            FloatingActionButton(onClick = onAddEntry) {
-                Icon(Icons.Filled.Add, contentDescription = stringResource(add_note))
-            }
-        }
-    ) { innerPadding ->
-        if (diaryEntries.isEmpty()) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(stringResource(empty_notes_message))
-            }
-        } else {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding),
-                contentPadding = PaddingValues(16.dp)
-            ) {
-                items(diaryEntries) { file ->
-                    DiaryEntryCard(file = file, onClick = { selectedEntry = file })
+            },
+            dismissButton = {
+                TextButton(onClick = { showDeleteConfirmationDialog = false }) {
+                    Text(stringResource(cancel))
                 }
             }
-        }
+        )
     }
 }
 
 @Composable
-private fun DiaryEntryCard(file: File, onClick: () -> Unit) {
+private fun EntryListItem(file: File, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 4.dp)
-            .clickable(onClick = onClick),
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .clickable { onClick() },
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(
-                text = formatTimestamp(file.name),
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
-            )
-        }
+        ListItem(
+            headlineContent = { Text(formatTimestamp(file.name)) }
+        )
     }
 }
 
 private fun formatTimestamp(filename: String): String {
     return try {
         val timestamp = filename.removePrefix("entry_").removeSuffix(".txt").toLong()
-        val formatter = DateFormat.getDateTimeInstance()
-        formatter.format(Date(timestamp))
+        val dateFormat = getDateTimeInstance()
+        dateFormat.format(Date(timestamp))
     } catch (_: Exception) {
         "Data Inválida"
     }
