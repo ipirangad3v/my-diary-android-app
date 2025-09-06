@@ -1,19 +1,30 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-   Sample data extraction rules file; uncomment and customize as necessary.
-   See https://developer.android.com/about/versions/12/backup-restore#xml-changes
-   for details.
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   Data extraction rules for Android Auto Backup.
+   See https://developer.android.com/about/versions/12/backup-restore#xml-changes for more details.
 -->
 <data-extraction-rules>
     <cloud-backup>
-        <!-- TODO: Use <include> and <exclude> to control what is backed up.
-        <include .../>
-        <exclude .../>
+        <!--
+            Includes the essential data for cloud backup.
+            With this configuration, the backup will work on other devices
+            because the encryption depends on the user's master password, not on the hardware.
         -->
+
+        <!-- Includes the shared preferences file that stores the encrypted master password and the IV (initialization vector). -->
+        <include domain="sharedpref" path="diary_prefs.xml"/>
+
+        <!-- Includes all encrypted entry files from the app's files directory. -->
+        <include domain="file" path="."/>
+
     </cloud-backup>
-    <!--
+
     <device-transfer>
-        <include .../>
-        <exclude .../>
+        <!--
+            The same rules apply for direct device-to-device transfers.
+        -->
+        <include domain="sharedpref" path="diary_prefs.xml"/>
+        <include domain="file" path="."/>
     </device-transfer>
-    -->
 </data-extraction-rules>
+
