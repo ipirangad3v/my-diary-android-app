@@ -25,6 +25,7 @@
     <string name="empty_notes_message">Nenhuma anotação ainda.\nToque em \'+\' para adicionar a primeira!</string>
     <string name="your_note">Sua Anotação</string>
     <string name="close">Fechar</string>
+    <string name="error_decrypting">Erro de encriptamento</string>
 
     <!-- Add Entry Screen -->
     <string name="new_note">Nova Anotação</string>
@@ -34,4 +35,19 @@
     <string name="write_something_to_save">Escreva algo para salvar.</string>
     <string name="whats_happened_today">O que aconteceu hoje?</string>
     <string name="start_writing">Comece a escrever…</string>
+    <string name="new_entry">Nova entrada</string>
+    <string name="save_entry">Salvar entrada</string>
+
+    <!-- Password Screen -->
+    <string name="password_too_short">Senha muito curta</string>
+    <string name="passwords_do_not_match">Senhas não são iguais</string>
+    <string name="save_password">Salvar senha</string>
+    <string name="create_master_password">Criar senha mestra</string>
+    <string name="write_here">Escreva aqui</string>
+    <string name="confirm_password">Confirmar senha</string>
+    <string name="master_password">Senha mestra</string>
+    <string name="master_password_description">Esta senha mestra protege todas as suas anotações e é a única forma de acessar seu diário caso você troque de celular ou reinstale o aplicativo. Guarde-a em um local seguro, pois não é possível recuperá-la. Se você a esquecer, suas anotações ficarão permanentemente inacessíveis.</string>
+    <string name="secure_your_password">Proteja sua senha</string>
+    <string name="confirm_to_encrypt">Confirme sua identidade para criptografar sua senha mestra</string>
+
 </resources>

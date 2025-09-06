@@ -1,132 +1,140 @@
 package digital.tonima.meudiario
 
-import android.content.Intent
+import android.content.Context
 import android.os.Bundle
-import android.provider.Settings
-import android.util.Log
-import android.widget.Toast
+import android.util.Base64
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.biometric.BiometricManager
-import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
-import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
 import androidx.biometric.BiometricPrompt
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
+import digital.tonima.meudiario.data.KeystoreCryptoManager
 import digital.tonima.meudiario.ui.screens.AddEntryScreen
 import digital.tonima.meudiario.ui.screens.LockedScreen
 import digital.tonima.meudiario.ui.screens.MainScreen
+import digital.tonima.meudiario.ui.screens.PasswordSetupScreen
 import digital.tonima.meudiario.ui.theme.MeuDiarioTheme
-import java.util.concurrent.Executor
+import javax.crypto.Cipher
 
-sealed class Screen {
-    object Main : Screen()
-    object AddEntry : Screen()
+sealed class AppScreen {
+    object Locked : AppScreen()
+    object SetupPassword : AppScreen()
+    data class Main(val masterPassword: CharArray) : AppScreen()
+    data class AddEntry(val masterPassword: CharArray) : AppScreen()
 }
 
 class MainActivity : FragmentActivity() {
 
-    private lateinit var executor: Executor
-    private lateinit var biometricPrompt: BiometricPrompt
-    private lateinit var promptInfo: BiometricPrompt.PromptInfo
-
-    private val isAuthenticated = mutableStateOf(false)
-
-    private val enrollLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) {
-        checkDeviceCapabilityAndAuthenticate()
-    }
+    private val PREFS_NAME = "diary_prefs"
+    private val PREF_KEY_ENCRYPTED_PASSWORD = "encrypted_password"
+    private val PREF_KEY_PASSWORD_IV = "password_iv"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        executor = ContextCompat.getMainExecutor(this)
-        setupBiometricPrompt()
+        val prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
         setContent {
             MeuDiarioTheme {
-                var currentScreen by remember { mutableStateOf<Screen>(Screen.Main) }
-                val isAuthenticatedValue by isAuthenticated
+                var currentScreen by remember {
+                    val needsSetup = !prefs.contains(PREF_KEY_ENCRYPTED_PASSWORD)
+                    mutableStateOf<AppScreen>(if (needsSetup) AppScreen.SetupPassword else AppScreen.Locked)
+                }
 
-                if (isAuthenticatedValue) {
-                    when (currentScreen) {
-                        is Screen.Main -> MainScreen(
-                            onLockRequest = { isAuthenticated.value = false },
-                            onNavigateToAddEntry = { currentScreen = Screen.AddEntry }
-                        )
-                        is Screen.AddEntry -> AddEntryScreen(
-                            onNavigateBack = {
-                                currentScreen = Screen.Main
+                when (val screen = currentScreen) {
+                    is AppScreen.SetupPassword -> {
+                        PasswordSetupScreen { password ->
+                            showBiometricPromptForEncryption { cipher ->
+                                val encryptedPassword = cipher.doFinal(password.concatToString().toByteArray())
+                                val iv = cipher.iv
+
+                                prefs.edit()
+                                    .putString(PREF_KEY_ENCRYPTED_PASSWORD, Base64.encodeToString(encryptedPassword, Base64.DEFAULT))
+                                    .putString(PREF_KEY_PASSWORD_IV, Base64.encodeToString(iv, Base64.DEFAULT))
+                                    .apply()
+
+                                currentScreen = AppScreen.Main(password)
                             }
+                        }
+                    }
+                    is AppScreen.Locked -> {
+                        LockedScreen(onUnlockRequest = {
+                            showBiometricPromptForDecryption { decryptedPassword ->
+                                currentScreen = AppScreen.Main(decryptedPassword)
+                            }
+                        })
+                    }
+                    is AppScreen.Main -> {
+                        MainScreen(
+                            masterPassword = screen.masterPassword,
+                            onLockRequest = { currentScreen = AppScreen.Locked },
+                            onAddEntry = { currentScreen = AppScreen.AddEntry(screen.masterPassword) }
                         )
                     }
-                } else {
-                    LockedScreen(onUnlockRequest = {
-                        checkDeviceCapabilityAndAuthenticate()
-                    })
+                    is AppScreen.AddEntry -> {
+                        AddEntryScreen(
+                            masterPassword = screen.masterPassword,
+                            onNavigateBack = { currentScreen = AppScreen.Main(screen.masterPassword) }
+                        )
+                    }
                 }
             }
         }
     }
 
-    private fun setupBiometricPrompt() {
-        val authenticationCallback = object : BiometricPrompt.AuthenticationCallback() {
-            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                super.onAuthenticationSucceeded(result)
-                isAuthenticated.value = true
-            }
+    private fun showBiometricPromptForEncryption(onSuccess: (Cipher) -> Unit) {
+        val executor = ContextCompat.getMainExecutor(this)
+        val promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle(getString(R.string.secure_your_password))
+            .setSubtitle(getString(R.string.confirm_to_encrypt))
+            .setNegativeButtonText(getString(R.string.cancel))
+            .build()
 
-            override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-                super.onAuthenticationError(errorCode, errString)
-                if (!(errorCode == BiometricPrompt.ERROR_NEGATIVE_BUTTON || errorCode == BiometricPrompt.ERROR_USER_CANCELED)) {
-                    Toast.makeText(applicationContext, getString(R.string.autentication_error, errString), Toast.LENGTH_SHORT).show()
+        val encryptCipher = KeystoreCryptoManager.getEncryptCipher()
+
+        val biometricPrompt = BiometricPrompt(this, executor,
+            object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    result.cryptoObject?.cipher?.let {
+                        onSuccess(it)
+                    }
                 }
-            }
-        }
+            })
 
-        biometricPrompt = BiometricPrompt(this, executor, authenticationCallback)
-        promptInfo = BiometricPrompt.PromptInfo.Builder()
+        biometricPrompt.authenticate(promptInfo, BiometricPrompt.CryptoObject(encryptCipher))
+    }
+
+    private fun showBiometricPromptForDecryption(onSuccess: (CharArray) -> Unit) {
+        val executor = ContextCompat.getMainExecutor(this)
+        val promptInfo = BiometricPrompt.PromptInfo.Builder()
             .setTitle(getString(R.string.acess_to_diary))
             .setSubtitle(getString(R.string.use_pin_or_digital_to_continue))
-            .setAllowedAuthenticators(BIOMETRIC_STRONG or DEVICE_CREDENTIAL)
+            .setNegativeButtonText(getString(R.string.cancel))
             .build()
-    }
 
-    override fun onResume() {
-        super.onResume()
-        if (!isAuthenticated.value) {
-            checkDeviceCapabilityAndAuthenticate()
-        }
-    }
+        val prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val encryptedPasswordB64 = prefs.getString(PREF_KEY_ENCRYPTED_PASSWORD, null)
+        val ivB64 = prefs.getString(PREF_KEY_PASSWORD_IV, null)
 
-    private fun checkDeviceCapabilityAndAuthenticate() {
-        val biometricManager = BiometricManager.from(this)
-        when (biometricManager.canAuthenticate(BIOMETRIC_STRONG or DEVICE_CREDENTIAL)) {
-            BiometricManager.BIOMETRIC_SUCCESS -> {
-                biometricPrompt.authenticate(promptInfo)
-            }
-            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
-                Toast.makeText(this, getString(R.string.none_pin_or_digital_set), Toast.LENGTH_LONG).show()
-                val enrollIntent = Intent(Settings.ACTION_BIOMETRIC_ENROLL).apply {
-                    putExtra(
-                        Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
-                        BIOMETRIC_STRONG or DEVICE_CREDENTIAL
-                    )
+        if (encryptedPasswordB64 == null || ivB64 == null) return
+
+        val iv = Base64.decode(ivB64, Base64.DEFAULT)
+        val decryptCipher = KeystoreCryptoManager.getDecryptCipherForIv(iv)
+
+        val biometricPrompt = BiometricPrompt(this, executor,
+            object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    result.cryptoObject?.cipher?.let { cipher ->
+                        val encryptedPassword = Base64.decode(encryptedPasswordB64, Base64.DEFAULT)
+                        val decryptedPasswordBytes = cipher.doFinal(encryptedPassword)
+                        onSuccess(String(decryptedPasswordBytes).toCharArray())
+                    }
                 }
-                enrollLauncher.launch(enrollIntent)
-            }
-            else -> {
-                Toast.makeText(this, getString(R.string.unsupported_auth), Toast.LENGTH_LONG).show()
-                finish()
-            }
-        }
+            })
+
+        biometricPrompt.authenticate(promptInfo, BiometricPrompt.CryptoObject(decryptCipher))
     }
 }
 

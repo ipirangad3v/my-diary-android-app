@@ -26,6 +26,7 @@
     <string name="empty_notes_message">Aún no hay entradas.\n¡Toca \'+\' para añadir la primera!</string>
     <string name="your_note">Tu Nota</string>
     <string name="close">Cerrar</string>
+    <string name="error_decrypting">Error de cifrado</string>
 
     <!-- Add Entry Screen -->
     <string name="new_note">Nueva Nota</string>
@@ -35,4 +36,18 @@
     <string name="write_something_to_save">Escribe algo para guardar.</string>
     <string name="whats_happened_today">¿Qué pasó hoy?</string>
     <string name="start_writing">Empieza a escribir…</string>
+    <string name="write_here">Escribe aquí</string>
+    <string name="new_entry">Nueva entrada</string>
+    <string name="save_entry">guardar entrada</string>
+
+    <!-- Password Screen -->
+    <string name="password_too_short">La contraseña es demasiado corta</string>
+    <string name="passwords_do_not_match">Las contraseñas no son las mismas</string>
+    <string name="save_password">Guardar contraseña</string>
+    <string name="create_master_password">Crear contraseña maestra</string>
+    <string name="confirm_password">Confirmar Contraseña</string>
+    <string name="master_password">Contraseña maestra</string>
+    <string name="master_password_description">Esta contraseña maestra protege todas tus notas y es la única forma de acceder a tu diario si cambias de teléfono o reinstalas la aplicación. Guárdala en un lugar seguro, ya que es irrecuperable. Si la olvidas, tus notas quedarán inaccesibles para siempre.</string>
+    <string name="secure_your_password">Protege tu contraseña</string>
+    <string name="confirm_to_encrypt">Confirme su identidad para encriptar su contraseña maestra</string>
 </resources>

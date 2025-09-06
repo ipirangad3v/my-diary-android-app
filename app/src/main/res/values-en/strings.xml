@@ -1,37 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <resources>
-        <string name="app_name">My diary</string>
-        <!-- Biometric Prompt & Toasts -->
-        <string name="acess_to_diary">Diary Access</string>
-        <string name="use_pin_or_digital_to_continue">Use your fingerprint or PIN to continue</string>
-        <string name="sucessful_unlock">Authentication successful!</string>
-        <string name="canceled_autentication">Authentication canceled.</string>
-        <string name="autentication_error">Authentication error: %s</string>
-        <string name="autentication_fail">Authentication failed.</string>
-        <string name="none_pin_or_digital_set">No fingerprint or PIN configured.</string>
-        <string name="unsupported_auth">Authentication not supported.</string>
-        <string name="cancel">Cancel</string>
+<resources>
+    <string name="app_name">My diary</string>
+    <!-- Biometric Prompt & Toasts -->
+    <string name="acess_to_diary">Diary Access</string>
+    <string name="use_pin_or_digital_to_continue">Use your fingerprint or PIN to continue</string>
+    <string name="sucessful_unlock">Authentication successful!</string>
+    <string name="canceled_autentication">Authentication canceled.</string>
+    <string name="autentication_error">Authentication error: %s</string>
+    <string name="autentication_fail">Authentication failed.</string>
+    <string name="none_pin_or_digital_set">No fingerprint or PIN configured.</string>
+    <string name="unsupported_auth">Authentication not supported.</string>
+    <string name="cancel">Cancel</string>
 
-        <!-- Locked Screen -->
-        <string name="unlock_diary">Unlock Diary</string>
-        <string name="locked_diary">Diary Locked</string>
+    <!-- Locked Screen -->
+    <string name="unlock_diary">Unlock Diary</string>
+    <string name="locked_diary">Diary Locked</string>
 
-        <!-- Main Screen -->
-        <string name="lock_diary">Lock Diary</string>
-        <string name="ask_for_lock_diary">Do you want to lock the diary and require authentication again?</string>
-        <string name="lock_confirm">Yes, lock</string>
-        <string name="no">No</string>
-        <string name="add_note">Add Note</string>
-        <string name="empty_notes_message">No entries yet.\nTap \'+\' to add your first one!</string>
-        <string name="your_note">Your Note</string>
-        <string name="close">Close</string>
+    <!-- Main Screen -->
+    <string name="lock_diary">Lock Diary</string>
+    <string name="ask_for_lock_diary">Do you want to lock the diary and require authentication again?</string>
+    <string name="lock_confirm">Yes, lock</string>
+    <string name="no">No</string>
+    <string name="add_note">Add Note</string>
+    <string name="empty_notes_message">No entries yet.\nTap \'+\' to add your first one!</string>
+    <string name="your_note">Your Note</string>
+    <string name="close">Close</string>
+    <string name="error_decrypting">Encryption error</string>
 
-        <!-- Add Entry Screen -->
-        <string name="new_note">New Note</string>
-        <string name="back">Back</string>
-        <string name="save_note">Save Note</string>
-        <string name="note_saved">Note saved!</string>
-        <string name="write_something_to_save">Write something to save.</string>
-        <string name="whats_happened_today">What happened today?</string>
-        <string name="start_writing">Start writing…</string>
-    </resources>
+    <!-- Add Entry Screen -->
+    <string name="new_note">New Note</string>
+    <string name="back">Back</string>
+    <string name="save_note">Save Note</string>
+    <string name="note_saved">Note saved!</string>
+    <string name="write_something_to_save">Write something to save.</string>
+    <string name="whats_happened_today">What happened today?</string>
+    <string name="start_writing">Start writing…</string>
+    <string name="write_here">Write here</string>
+    <string name="new_entry">New entry</string>
+    <string name="save_entry">Save entry</string>
+
+    <!-- Password Screen -->
+    <string name="password_too_short">Password too short</string>
+    <string name="passwords_do_not_match">Passwords are not the same</string>
+    <string name="save_password">Save password</string>
+    <string name="create_master_password">Create master password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="master_password">Master password</string>
+    <string name="master_password_description">This master password protects all your notes and is the only way to access your journal if you change phones or reinstall the app. Keep it in a safe place, as it is irretrievable. If you forget it, your notes will be permanently inaccessible.</string>
+    <string name="secure_your_password">Secure your password</string>
+    <string name="confirm_to_encrypt">Confirm your identity to encrypt your master password</string>
+
+</resources>
