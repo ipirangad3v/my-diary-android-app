@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <resources>
+        <string name="app_name">My diary</string>
+        <!-- Biometric Prompt & Toasts -->
+        <string name="acess_to_diary">Diary Access</string>
+        <string name="use_pin_or_digital_to_continue">Use your fingerprint or PIN to continue</string>
+        <string name="sucessful_unlock">Authentication successful!</string>
+        <string name="canceled_autentication">Authentication canceled.</string>
+        <string name="autentication_error">Authentication error: %s</string>
+        <string name="autentication_fail">Authentication failed.</string>
+        <string name="none_pin_or_digital_set">No fingerprint or PIN configured.</string>
+        <string name="unsupported_auth">Authentication not supported.</string>
+        <string name="cancel">Cancel</string>
+
+        <!-- Locked Screen -->
+        <string name="unlock_diary">Unlock Diary</string>
+        <string name="locked_diary">Diary Locked</string>
+
+        <!-- Main Screen -->
+        <string name="lock_diary">Lock Diary</string>
+        <string name="ask_for_lock_diary">Do you want to lock the diary and require authentication again?</string>
+        <string name="lock_confirm">Yes, lock</string>
+        <string name="no">No</string>
+        <string name="add_note">Add Note</string>
+        <string name="empty_notes_message">No entries yet.\nTap \'+\' to add your first one!</string>
+        <string name="your_note">Your Note</string>
+        <string name="close">Close</string>
+
+        <!-- Add Entry Screen -->
+        <string name="new_note">New Note</string>
+        <string name="back">Back</string>
+        <string name="save_note">Save Note</string>
+        <string name="note_saved">Note saved!</string>
+        <string name="write_something_to_save">Write something to save.</string>
+        <string name="whats_happened_today">What happened today?</string>
+        <string name="start_writing">Start writing…</string>
+    </resources>

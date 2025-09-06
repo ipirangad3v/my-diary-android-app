@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mi diario</string>
+
+    <!-- Biometric Prompt & Toasts -->
+    <string name="acess_to_diary">Acceso al Diario</string>
+    <string name="use_pin_or_digital_to_continue">Usa tu huella o PIN para continuar</string>
+    <string name="sucessful_unlock">¡Autenticación exitosa!</string>
+    <string name="canceled_autentication">Autenticación cancelada.</string>
+    <string name="autentication_error">Error de autenticación: %s</string>
+    <string name="autentication_fail">Fallo de autenticación.</string>
+    <string name="none_pin_or_digital_set">No se ha configurado ninguna huella o PIN.</string>
+    <string name="unsupported_auth">Autenticación no compatible.</string>
+    <string name="cancel">Cancelar</string>
+
+    <!-- Locked Screen -->
+    <string name="unlock_diary">Desbloquear Diario</string>
+    <string name="locked_diary">Diario Bloqueado</string>
+
+    <!-- Main Screen -->
+    <string name="lock_diary">Bloquear Diario</string>
+    <string name="ask_for_lock_diary">¿Quieres bloquear el diario y requerir autenticación de nuevo?</string>
+    <string name="lock_confirm">Sí, bloquear</string>
+    <string name="no">No</string>
+    <string name="add_note">Añadir Nota</string>
+    <string name="empty_notes_message">Aún no hay entradas.\n¡Toca \'+\' para añadir la primera!</string>
+    <string name="your_note">Tu Nota</string>
+    <string name="close">Cerrar</string>
+
+    <!-- Add Entry Screen -->
+    <string name="new_note">Nueva Nota</string>
+    <string name="back">Volver</string>
+    <string name="save_note">Guardar Nota</string>
+    <string name="note_saved">¡Nota guardada!</string>
+    <string name="write_something_to_save">Escribe algo para guardar.</string>
+    <string name="whats_happened_today">¿Qué pasó hoy?</string>
+    <string name="start_writing">Empieza a escribir…</string>
+</resources>
