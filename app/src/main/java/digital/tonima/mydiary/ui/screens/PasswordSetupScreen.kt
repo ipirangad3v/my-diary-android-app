@@ -1,14 +1,34 @@
-package digital.tonima.meudiario.ui.screens
+package digital.tonima.mydiary.ui.screens
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import digital.tonima.meudiario.R
+import digital.tonima.mydiary.R.string.confirm_password
+import digital.tonima.mydiary.R.string.create_master_password
+import digital.tonima.mydiary.R.string.master_password
+import digital.tonima.mydiary.R.string.master_password_description
+import digital.tonima.mydiary.R.string.password_too_short
+import digital.tonima.mydiary.R.string.passwords_do_not_match
+import digital.tonima.mydiary.R.string.save_password
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -26,14 +46,14 @@ fun PasswordSetupScreen(onPasswordSet: (CharArray) -> Unit) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = stringResource(R.string.create_master_password), style = MaterialTheme.typography.headlineSmall)
+        Text(text = stringResource(create_master_password), style = MaterialTheme.typography.headlineSmall)
         Spacer(modifier = Modifier.height(8.dp))
-        Text(text = stringResource(R.string.master_password_description), style = MaterialTheme.typography.bodyMedium)
+        Text(text = stringResource(master_password_description), style = MaterialTheme.typography.bodyMedium)
         Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
-            label = { Text(stringResource(R.string.master_password)) },
+            label = { Text(stringResource(master_password)) },
             visualTransformation = PasswordVisualTransformation(),
             isError = error != null,
             modifier = Modifier.fillMaxWidth()
@@ -42,7 +62,7 @@ fun PasswordSetupScreen(onPasswordSet: (CharArray) -> Unit) {
         OutlinedTextField(
             value = confirmPassword,
             onValueChange = { confirmPassword = it },
-            label = { Text(stringResource(R.string.confirm_password)) },
+            label = { Text(stringResource(confirm_password)) },
             visualTransformation = PasswordVisualTransformation(),
             isError = error != null,
             modifier = Modifier.fillMaxWidth()
@@ -54,16 +74,16 @@ fun PasswordSetupScreen(onPasswordSet: (CharArray) -> Unit) {
         Button(
             onClick = {
                 if (password.length < 6) {
-                    error = context.getString(R.string.password_too_short)
+                    error = context.getString(password_too_short)
                 } else if (password != confirmPassword) {
-                    error = context.getString(R.string.passwords_do_not_match)
+                    error = context.getString(passwords_do_not_match)
                 } else {
                     onPasswordSet(password.toCharArray())
                 }
             },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(stringResource(R.string.save_password))
+            Text(stringResource(save_password))
         }
     }
 }

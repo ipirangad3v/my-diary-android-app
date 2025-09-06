@@ -1,4 +1,4 @@
-package digital.tonima.meudiario.ui.theme
+package digital.tonima.mydiary.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

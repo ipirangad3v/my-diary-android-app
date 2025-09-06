@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "digital.tonima.meudiario"
+    namespace = "digital.tonima.mydiary"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "digital.tonima.meudiario"
+        applicationId = "digital.tonima.mydiary"
         minSdk = 24
         targetSdk = 36
         versionCode = 1

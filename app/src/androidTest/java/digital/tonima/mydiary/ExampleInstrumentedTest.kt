@@ -1,4 +1,4 @@
-package digital.tonima.meudiario
+package digital.tonima.mydiary
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

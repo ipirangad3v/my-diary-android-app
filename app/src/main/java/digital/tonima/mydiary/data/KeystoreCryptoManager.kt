@@ -1,4 +1,4 @@
-package digital.tonima.meudiario.data
+package digital.tonima.mydiary.data
 
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties

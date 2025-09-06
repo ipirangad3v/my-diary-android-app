@@ -1,4 +1,4 @@
-package digital.tonima.meudiario
+package digital.tonima.mydiary
 
 import android.content.Context
 import android.os.Bundle
@@ -9,12 +9,17 @@ import androidx.biometric.BiometricPrompt
 import androidx.compose.runtime.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
-import digital.tonima.meudiario.data.KeystoreCryptoManager
-import digital.tonima.meudiario.ui.screens.AddEntryScreen
-import digital.tonima.meudiario.ui.screens.LockedScreen
-import digital.tonima.meudiario.ui.screens.MainScreen
-import digital.tonima.meudiario.ui.screens.PasswordSetupScreen
-import digital.tonima.meudiario.ui.theme.MeuDiarioTheme
+import digital.tonima.mydiary.R.string.acess_to_diary
+import digital.tonima.mydiary.R.string.cancel
+import digital.tonima.mydiary.R.string.confirm_to_encrypt
+import digital.tonima.mydiary.R.string.secure_your_password
+import digital.tonima.mydiary.R.string.use_pin_or_digital_to_continue
+import digital.tonima.mydiary.data.KeystoreCryptoManager
+import digital.tonima.mydiary.ui.screens.AddEntryScreen
+import digital.tonima.mydiary.ui.screens.LockedScreen
+import digital.tonima.mydiary.ui.screens.MainScreen
+import digital.tonima.mydiary.ui.screens.PasswordSetupScreen
+import digital.tonima.mydiary.ui.theme.MyDiaryTheme
 import javax.crypto.Cipher
 
 sealed class AppScreen {
@@ -37,7 +42,7 @@ class MainActivity : FragmentActivity() {
         val prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
         setContent {
-            MeuDiarioTheme {
+            MyDiaryTheme {
                 var currentScreen by remember {
                     val needsSetup = !prefs.contains(PREF_KEY_ENCRYPTED_PASSWORD)
                     mutableStateOf<AppScreen>(if (needsSetup) AppScreen.SetupPassword else AppScreen.Locked)
@@ -87,9 +92,9 @@ class MainActivity : FragmentActivity() {
     private fun showBiometricPromptForEncryption(onSuccess: (Cipher) -> Unit) {
         val executor = ContextCompat.getMainExecutor(this)
         val promptInfo = BiometricPrompt.PromptInfo.Builder()
-            .setTitle(getString(R.string.secure_your_password))
-            .setSubtitle(getString(R.string.confirm_to_encrypt))
-            .setNegativeButtonText(getString(R.string.cancel))
+            .setTitle(getString(secure_your_password))
+            .setSubtitle(getString(confirm_to_encrypt))
+            .setNegativeButtonText(getString(cancel))
             .build()
 
         val encryptCipher = KeystoreCryptoManager.getEncryptCipher()
@@ -109,9 +114,9 @@ class MainActivity : FragmentActivity() {
     private fun showBiometricPromptForDecryption(onSuccess: (CharArray) -> Unit) {
         val executor = ContextCompat.getMainExecutor(this)
         val promptInfo = BiometricPrompt.PromptInfo.Builder()
-            .setTitle(getString(R.string.acess_to_diary))
-            .setSubtitle(getString(R.string.use_pin_or_digital_to_continue))
-            .setNegativeButtonText(getString(R.string.cancel))
+            .setTitle(getString(acess_to_diary))
+            .setSubtitle(getString(use_pin_or_digital_to_continue))
+            .setNegativeButtonText(getString(cancel))
             .build()
 
         val prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)

@@ -1,4 +1,4 @@
-package digital.tonima.meudiario.data
+package digital.tonima.mydiary.data
 
 import android.content.Context
 import java.io.File

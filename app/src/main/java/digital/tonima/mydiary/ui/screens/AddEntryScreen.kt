@@ -1,4 +1,4 @@
-package digital.tonima.meudiario.ui.screens
+package digital.tonima.mydiary.ui.screens
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -21,8 +21,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import digital.tonima.meudiario.R
-import digital.tonima.meudiario.data.PasswordBasedCryptoManager
+import digital.tonima.mydiary.R.string.back
+import digital.tonima.mydiary.R.string.new_entry
+import digital.tonima.mydiary.R.string.save_entry
+import digital.tonima.mydiary.R.string.write_here
+import digital.tonima.mydiary.data.PasswordBasedCryptoManager
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,10 +39,12 @@ fun AddEntryScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(R.string.new_entry)) },
+                title = { Text(stringResource(new_entry)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back))
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(
+                            back
+                        ))
                     }
                 },
                 actions = {
@@ -50,7 +55,7 @@ fun AddEntryScreen(
                             onNavigateBack()
                         }
                     }) {
-                        Icon(Icons.Default.Done, contentDescription = stringResource(R.string.save_entry))
+                        Icon(Icons.Default.Done, contentDescription = stringResource(save_entry))
                     }
                 }
             )
@@ -63,7 +68,7 @@ fun AddEntryScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
                 .padding(16.dp),
-            placeholder = { Text(stringResource(R.string.write_here)) },
+            placeholder = { Text(stringResource(write_here)) },
         )
     }
 }

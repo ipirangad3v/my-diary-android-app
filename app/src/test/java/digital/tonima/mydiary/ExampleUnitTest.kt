@@ -1,4 +1,4 @@
-package digital.tonima.meudiario
+package digital.tonima.mydiary
 
 import org.junit.Test
 
