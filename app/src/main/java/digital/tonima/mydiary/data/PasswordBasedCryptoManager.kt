@@ -21,7 +21,6 @@ object PasswordBasedCryptoManager {
     private const val ITERATION_COUNT = 100000
     private const val SALT_LENGTH_BYTES = 16
     private const val IV_LENGTH_BYTES = 12 // GCM recommended IV size
-    private const val TAG_LENGTH_BITS = 128
 
     private fun deriveKey(password: CharArray, salt: ByteArray): SecretKeySpec {
         val spec = PBEKeySpec(password, salt, ITERATION_COUNT, KEY_LENGTH_BITS)
