@@ -1,87 +1,98 @@
 package digital.tonima.mydiary.data
 
 import android.content.Context
+import android.util.Log
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.security.SecureRandom
 import javax.crypto.Cipher
-import javax.crypto.SecretKey
 import javax.crypto.SecretKeyFactory
-import javax.crypto.spec.GCMParameterSpec
+import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.PBEKeySpec
 import javax.crypto.spec.SecretKeySpec
 
 object PasswordBasedCryptoManager {
 
-    private const val TRANSFORMATION = "AES/GCM/NoPadding"
-    private const val ENTRY_FILE_PREFIX = "entry_"
-    private const val KEY_DERIVATION_ALGORITHM = "PBKDF2WithHmacSHA256"
     private const val KEY_ALGORITHM = "AES"
+    private const val KEY_DERIVATION_ALGORITHM = "PBKDF2WithHmacSHA256"
+    private const val CIPHER_ALGORITHM = "AES/GCM/NoPadding"
+    private const val KEY_LENGTH_BITS = 256
+    private const val ITERATION_COUNT = 100000
+    private const val SALT_LENGTH_BYTES = 16
+    private const val IV_LENGTH_BYTES = 12 // GCM recommended IV size
+    private const val TAG_LENGTH_BITS = 128
 
-    private const val AES_KEY_SIZE = 256
-    private const val GCM_IV_SIZE = 12 // bytes
-    private const val GCM_TAG_LENGTH = 128 // bits
-
-    private const val PBKDF2_ITERATIONS = 100000
-    private const val SALT_SIZE = 16 // bytes
-
-    private fun deriveKeyFromPassword(password: CharArray, salt: ByteArray): SecretKey {
+    private fun deriveKey(password: CharArray, salt: ByteArray): SecretKeySpec {
+        val spec = PBEKeySpec(password, salt, ITERATION_COUNT, KEY_LENGTH_BITS)
         val factory = SecretKeyFactory.getInstance(KEY_DERIVATION_ALGORITHM)
-        val spec = PBEKeySpec(password, salt, PBKDF2_ITERATIONS, AES_KEY_SIZE)
-        val secret = factory.generateSecret(spec)
-        return SecretKeySpec(secret.encoded, KEY_ALGORITHM)
+        val keyBytes = factory.generateSecret(spec).encoded
+        return SecretKeySpec(keyBytes, KEY_ALGORITHM)
     }
 
-    fun saveDiaryEntry(context: Context, fileName: String, content: String, password: CharArray) {
-        val salt = ByteArray(SALT_SIZE)
+    fun saveDiaryEntry(context: Context, password: CharArray, filename: String, content: String) {
+        val salt = ByteArray(SALT_LENGTH_BYTES)
         SecureRandom().nextBytes(salt)
 
-        val secretKey = deriveKeyFromPassword(password, salt)
+        val secretKey = deriveKey(password, salt)
 
-        val cipher = Cipher.getInstance(TRANSFORMATION)
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey)
-        val iv = cipher.iv
-        val encryptedData = cipher.doFinal(content.toByteArray())
+        val cipher = Cipher.getInstance(CIPHER_ALGORITHM)
+        val iv = ByteArray(IV_LENGTH_BYTES)
+        SecureRandom().nextBytes(iv)
+        val ivSpec = IvParameterSpec(iv)
+        cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivSpec)
 
-        val file = File(context.filesDir, fileName)
-        FileOutputStream(file).use { fos ->
+        val encryptedContent = cipher.doFinal(content.toByteArray())
+
+        val entriesDir = File(context.filesDir, "entries")
+        if (!entriesDir.exists()) entriesDir.mkdirs()
+
+        FileOutputStream(File(entriesDir, filename)).use { fos ->
             fos.write(salt)
             fos.write(iv)
-            fos.write(encryptedData)
+            fos.write(encryptedContent)
         }
     }
 
-    fun readDiaryEntry(context: Context, fileName: String, password: CharArray): String {
+    fun readDiaryEntry(context: Context, password: CharArray, filename: String): String {
+        val entriesDir = File(context.filesDir, "entries")
+        val file = File(entriesDir, filename)
+
+        FileInputStream(file).use { fis ->
+            val salt = ByteArray(SALT_LENGTH_BYTES)
+            fis.read(salt)
+
+            val iv = ByteArray(IV_LENGTH_BYTES)
+            fis.read(iv)
+
+            val encryptedContent = fis.readBytes()
+
+            val secretKey = deriveKey(password, salt)
+            val cipher = Cipher.getInstance(CIPHER_ALGORITHM)
+            val ivSpec = IvParameterSpec(iv)
+            cipher.init(Cipher.DECRYPT_MODE, secretKey, ivSpec)
+
+            val decryptedContent = cipher.doFinal(encryptedContent)
+            return String(decryptedContent)
+        }
+    }
+
+    fun verifyPassword(context: Context, password: CharArray, file: File): Boolean {
         return try {
-            val file = File(context.filesDir, fileName)
-            FileInputStream(file).use { fis ->
-                // 1. Ler o salt e o iv do início do arquivo
-                val salt = ByteArray(SALT_SIZE)
-                fis.read(salt)
-
-                val iv = ByteArray(GCM_IV_SIZE)
-                fis.read(iv)
-
-                val encryptedData = fis.readBytes()
-
-                val secretKey = deriveKeyFromPassword(password, salt)
-
-                val cipher = Cipher.getInstance(TRANSFORMATION)
-                val spec = GCMParameterSpec(GCM_TAG_LENGTH, iv)
-                cipher.init(Cipher.DECRYPT_MODE, secretKey, spec)
-
-                val decryptedData = cipher.doFinal(encryptedData)
-                String(decryptedData)
-            }
+            readDiaryEntry(context, password, file.name)
+            // If readDiaryEntry doesn't throw an exception, the password is correct
+            true
         } catch (e: Exception) {
-            e.printStackTrace()
-            ""
+            // Any cryptographic exception (like AEADBadTagException) indicates a wrong password
+            Log.e("PasswordVerify", "Failed to verify password for file ${file.name}", e)
+            false
         }
     }
 
     fun getAllEntryFiles(context: Context): List<File> {
-        val dataDir = context.filesDir
-        return dataDir.listFiles { _, name -> name.startsWith(ENTRY_FILE_PREFIX) }?.toList() ?: emptyList()
+        val entriesDir = File(context.filesDir, "entries")
+        if (!entriesDir.exists()) return emptyList()
+        return entriesDir.listFiles { _, name -> name.startsWith("entry_") }?.sortedByDescending { it.lastModified() } ?: emptyList()
     }
 }
+

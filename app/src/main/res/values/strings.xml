@@ -50,4 +50,11 @@
     <string name="secure_your_password">Proteja sua senha</string>
     <string name="confirm_to_encrypt">Confirme sua identidade para criptografar sua senha mestra</string>
 
+    <!-- Manual Password Recovery Screen -->
+    <string name="master_password_recovery">Recuperação com Senha Mestra</string>
+    <string name="master_password_recovery_desc">O desbloqueio por biometria não está disponível. Por favor, insira sua senha mestra para continuar.</string>
+    <string name="unlock">Desbloquear</string>
+    <string name="incorrect_password_try_again">Senha incorreta. Tente novamente.</string>
+    <string name="no_entries_for_verification">Nenhuma anotação encontrada para verificação da senha.</string>
+    <string name="password_verified_re_encrypt">Senha verificada! Por favor, confirme com sua biometria para reativar o desbloqueio rápido neste dispositivo.</string>
 </resources>

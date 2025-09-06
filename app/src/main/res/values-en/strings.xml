@@ -50,4 +50,11 @@
     <string name="secure_your_password">Secure your password</string>
     <string name="confirm_to_encrypt">Confirm your identity to encrypt your master password</string>
 
+    <!-- Manual Password Recovery Screen -->
+    <string name="master_password_recovery">Master Password Recovery</string>
+    <string name="master_password_recovery_desc">Biometric unlocking is not available. Please enter your Master Password to continue.</string>
+    <string name="unlock">Unlock</string>
+    <string name="incorrect_password_try_again">Incorrect password. Please try again.</string>
+    <string name="no_entries_for_verification">No entries found for password verification.</string>
+    <string name="password_verified_re_encrypt">Password verified! Please confirm with your biometrics to re-enable Quick Unlock on this device.</string>
 </resources>

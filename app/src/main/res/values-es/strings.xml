@@ -50,4 +50,12 @@
     <string name="master_password_description">Esta contraseña maestra protege todas tus notas y es la única forma de acceder a tu diario si cambias de teléfono o reinstalas la aplicación. Guárdala en un lugar seguro, ya que es irrecuperable. Si la olvidas, tus notas quedarán inaccesibles para siempre.</string>
     <string name="secure_your_password">Protege tu contraseña</string>
     <string name="confirm_to_encrypt">Confirme su identidad para encriptar su contraseña maestra</string>
+
+    <!-- Manual Password Recovery Screen -->
+    <string name="master_password_recovery">Recuperación de contraseña maestra</string>
+    <string name="master_password_recovery_desc">El desbloqueo biométrico no está disponible. Ingrese su contraseña maestra para continuar.</string>
+    <string name="unlock">Desbloquear</string>
+    <string name="incorrect_password_try_again">Contraseña incorrecta. Vuelva a intentarlo.</string>
+    <string name="no_entries_for_verification">No se encontraron entradas para la verificación de contraseña.</string>
+    <string name="password_verified_re_encrypt">¡Contraseña verificada! Confirme con sus datos biométricos para volver a activar el desbloqueo rápido en este dispositivo.</string>
 </resources>

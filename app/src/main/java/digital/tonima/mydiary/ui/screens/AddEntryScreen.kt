@@ -1,28 +1,19 @@
 package digital.tonima.mydiary.ui.screens
 
+import android.widget.Toast
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Done
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TopAppBar
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import digital.tonima.mydiary.R.string.back
-import digital.tonima.mydiary.R.string.new_entry
+import digital.tonima.mydiary.R
 import digital.tonima.mydiary.R.string.save_entry
 import digital.tonima.mydiary.R.string.write_here
 import digital.tonima.mydiary.data.PasswordBasedCryptoManager
@@ -33,43 +24,60 @@ fun AddEntryScreen(
     masterPassword: CharArray,
     onNavigateBack: () -> Unit
 ) {
-    var text by remember { mutableStateOf("") }
     val context = LocalContext.current
+    var entryContent by remember { mutableStateOf("") }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(new_entry)) },
+                title = { Text(stringResource(R.string.new_entry)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(
-                            back
-                        ))
-                    }
-                },
-                actions = {
-                    IconButton(onClick = {
-                        if (text.isNotBlank()) {
-                            val fileName = "entry_${System.currentTimeMillis()}"
-                            PasswordBasedCryptoManager.saveDiaryEntry(context, fileName, text, masterPassword)
-                            onNavigateBack()
-                        }
-                    }) {
-                        Icon(Icons.Default.Done, contentDescription = stringResource(save_entry))
+                        Icon(
+                            imageVector = Icons.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.back)
+                        )
                     }
                 }
             )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                    if (entryContent.isNotBlank()) {
+                        try {
+                            val filename = "entry_${System.currentTimeMillis()}.txt"
+                            PasswordBasedCryptoManager.saveDiaryEntry(
+                                context = context,
+                                password = masterPassword,
+                                filename = filename,
+                                content = entryContent
+                            )
+                            Toast.makeText(context, context.getString(R.string.note_saved), Toast.LENGTH_SHORT).show()
+                            onNavigateBack()
+                        } catch (e: Exception) {
+                            Toast.makeText(context, "Error saving entry: ${e.message}", Toast.LENGTH_LONG).show()
+                        }
+                    }
+                }
+            ) {
+                Icon(Icons.Filled.Done, contentDescription = stringResource(save_entry))
+            }
         }
-    ) { paddingValues ->
-        TextField(
-            value = text,
-            onValueChange = { text = it },
+    ) { innerPadding ->
+        Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
-                .padding(16.dp),
-            placeholder = { Text(stringResource(write_here)) },
-        )
+                .padding(innerPadding)
+                .padding(16.dp)
+        ) {
+            TextField(
+                value = entryContent,
+                onValueChange = { entryContent = it },
+                modifier = Modifier.fillMaxSize(),
+                placeholder = { Text(stringResource(write_here)) },
+            )
+        }
     }
 }
 
