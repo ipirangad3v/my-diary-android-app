@@ -14,8 +14,15 @@ jetpack-security = "1.1.0"
 google-services = "4.4.3"
 firebase-bom = "34.2.0"
 hilt = "2.57.1"
-hilt-binder="1.0.0"
+hilt-binder="1.1.3"
 ksp = "2.2.10-2.0.2"
+coroutines-test="1.10.2"
+mockk = "1.14.5"
+turbine = "1.2.1"
+core-testing = "2.2.0"
+truth = "1.4.4"
+roboelectric = "4.16"
+coreKtxVersion = "1.7.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -41,6 +48,13 @@ hilt-compiler = { group = "com.google.dagger",name= "hilt-compiler" , version.re
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-binder = { group = "com.paulrybitskyi", name = "hilt-binder", version.ref = "hilt-binder" }
 hilt-binder-compiler = { group = "com.paulrybitskyi", name = "hilt-binder-compiler", version.ref = "hilt-binder" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines-test" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
+androidx-core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "core-testing" }
+truth = { group = "com.google.truth", name = "truth", version.ref = "truth" }
+robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "roboelectric" }
+core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "coreKtxVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

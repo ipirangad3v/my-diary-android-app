@@ -13,60 +13,21 @@ import javax.inject.Inject
  * A repository for managing the persistence of the encrypted master password.
  * This class abstracts the underlying storage mechanism (SharedPreferences).
  */
-@BindType(installIn = VIEW_MODEL)
-class PasswordRepository @Inject constructor(@ApplicationContext context: Context) {
-
-    private val prefs: SharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-
-    companion object {
-        private const val PREFS_NAME = "diary_prefs"
-        private const val PREF_KEY_ENCRYPTED_PASSWORD = "encrypted_password"
-        private const val PREF_KEY_PASSWORD_IV = "password_iv"
-    }
-
+interface PasswordRepository {
     /**
      * Saves the encrypted password and its IV to persistent storage.
      */
-    fun saveEncryptedPassword(encryptedPassword: EncryptedPassword) {
-        prefs.edit {
-            putString(
-                PREF_KEY_ENCRYPTED_PASSWORD,
-                Base64.encodeToString(encryptedPassword.value, Base64.DEFAULT)
-            )
-            putString(
-                PREF_KEY_PASSWORD_IV,
-                Base64.encodeToString(encryptedPassword.iv, Base64.DEFAULT)
-            )
-        }
-    }
+    fun saveEncryptedPassword(encryptedPassword: EncryptedPassword)
 
     /**
      * Retrieves the encrypted password and its IV from storage.
      * @return An [EncryptedPassword] object, or null if not found.
      */
-    fun getEncryptedPassword(): EncryptedPassword? {
-        val encryptedPasswordB64 = prefs.getString(PREF_KEY_ENCRYPTED_PASSWORD, null)
-        val ivB64 = prefs.getString(PREF_KEY_PASSWORD_IV, null)
-
-        if (encryptedPasswordB64 == null || ivB64 == null) {
-            return null
-        }
-
-        return try {
-            val password = Base64.decode(encryptedPasswordB64, Base64.DEFAULT)
-            val iv = Base64.decode(ivB64, Base64.DEFAULT)
-            EncryptedPassword(password, iv)
-        } catch (_: IllegalArgumentException) {
-            // Handle possible Base64 decoding errors
-            null
-        }
-    }
+    fun getEncryptedPassword(): EncryptedPassword?
 
     /**
      * Checks if a master password has been set up and saved.
      * @return True if a password exists, false otherwise.
      */
-    fun hasPassword(): Boolean {
-        return prefs.contains(PREF_KEY_ENCRYPTED_PASSWORD)
-    }
+    fun hasPassword(): Boolean
 }
