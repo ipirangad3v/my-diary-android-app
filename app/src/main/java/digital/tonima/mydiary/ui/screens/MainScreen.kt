@@ -193,4 +193,3 @@ private fun formatTimestamp(filename: String): String {
         "Data Inválida"
     }
 }
-

@@ -100,5 +100,9 @@ class MainViewModel @Inject constructor(
     fun lockApp() {
         _uiState.value = Locked
     }
-}
 
+    fun retryBiometricAction() {
+        _uiState.value = _uiState.value
+    }
+
+}

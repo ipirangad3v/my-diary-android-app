@@ -11,6 +11,7 @@
     <string name="none_pin_or_digital_set">Nenhuma digital ou PIN configurado.</string>
     <string name="unsupported_auth">Autenticação não suportada.</string>
     <string name="cancel">Cancelar</string>
+    <string name="setup_lock_screen_prompt">Por favor, configure um PIN, padrão ou digital nas configurações de segurança do seu aparelho.</string>
 
     <!-- Locked Screen -->
     <string name="unlock_diary">Desbloquear Diário</string>
@@ -50,15 +51,19 @@
     <string name="write_here">Escreva aqui</string>
     <string name="confirm_password">Confirmar senha</string>
     <string name="master_password">Senha mestra</string>
-    <string name="master_password_description">Esta senha mestra protege todas as suas anotações e é a única forma de acessar seu diário caso você troque de celular ou reinstale o aplicativo. Guarde-a em um local seguro, pois não é possível recuperá-la. Se você a esquecer, suas anotações ficarão permanentemente inacessíveis.</string>
+    <string name="master_password_description">Esta senha mestra protege todas as suas anotações e é a única forma de acessar seu diário caso
+        você troque de celular ou reinstale o aplicativo. Guarde-a em um local seguro, pois não é possível recuperá-la.
+        Se você a esquecer, suas anotações ficarão permanentemente inacessíveis.</string>
     <string name="secure_your_password">Proteja sua senha</string>
     <string name="confirm_to_encrypt">Confirme sua identidade para criptografar sua senha mestra</string>
 
     <!-- Manual Password Recovery Screen -->
     <string name="master_password_recovery">Recuperação com Senha Mestra</string>
-    <string name="master_password_recovery_desc">O desbloqueio por biometria não está disponível. Por favor, insira sua senha mestra para continuar.</string>
+    <string name="master_password_recovery_desc">O desbloqueio por biometria não está disponível. Por favor, insira sua senha mestra para
+        continuar.</string>
     <string name="unlock">Desbloquear</string>
     <string name="incorrect_password_try_again">Senha incorreta. Tente novamente.</string>
     <string name="no_entries_for_verification">Nenhuma anotação encontrada para verificação da senha.</string>
-    <string name="password_verified_re_encrypt">Senha verificada! Por favor, confirme com sua biometria para reativar o desbloqueio rápido neste dispositivo.</string>
+    <string name="password_verified_re_encrypt">Senha verificada! Por favor, confirme com sua biometria para reativar o desbloqueio rápido neste
+        dispositivo.</string>
 </resources>
