@@ -70,6 +70,9 @@ jobs:
       - name: Run unit tests
         run: ./gradlew testDebugUnitTest
 
+      - name: Generate JaCoCo coverage report
+        run: ./gradlew createDebugCoverageReport
+
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4
         with:
