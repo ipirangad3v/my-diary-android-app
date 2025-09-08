@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.kotlin.ksp)
     alias(libs.plugins.spotless)
+    alias(libs.plugins.jacoco)
 }
 
 android {
@@ -42,6 +43,42 @@ android {
         compose = true
     }
 }
+
+tasks.register<JacocoReport>("jacocoTestReport") {
+    dependsOn("testDebugUnitTest") // Roda depois dos testes de unidade
+
+    reports {
+        xml.required.set(true) // Necessário para o Codecov
+        html.required.set(true) // Para você visualizar o relatório localmente
+    }
+
+    val fileFilter = listOf(
+        // Android
+        "**/R.class",
+        "**/R$*.class",
+        "**/BuildConfig.*",
+        "**/Manifest*.*",
+        "**/*Test*.*",
+        "android/**/*.*",
+        // DI, generated code
+        "**/*_Hilt*.class",
+        "**/Dagger*Component.class",
+        "**/Dagger*Module.class",
+        "**/Dagger*Module_Provide*Factory.class",
+        "**/*_Provide*Factory*.*",
+        "**/*_Factory*.*"
+    )
+
+    val debugTree = fileTree("${buildDir}/tmp/kotlin-classes/debug") {
+        exclude(fileFilter)
+    }
+    val mainSrc = "${project.projectDir}/src/main/java"
+
+    sourceDirectories.setFrom(files(mainSrc))
+    classDirectories.setFrom(files(debugTree))
+    executionData.setFrom(fileTree(buildDir) {
+        include("outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec")
+    })}
 
 dependencies {
 

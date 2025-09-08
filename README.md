@@ -1,3 +1,12 @@
+<p align="center">
+  <a href="https://github.com/ipirangad3v/my-diary-android-app/actions/workflows/android_ci.yml">
+    <img alt="Build Status" src="https://github.com/ipirangad3v/my-diary-android-app/actions/workflows/android_ci.yml/badge.svg">
+  </a>
+  <a href="https://codecov.io/gh/ipirangad3v/my-diary-android-app">
+    <img alt="Code Coverage" src="https://codecov.io/gh/ipirangad3v/my-diary-android-app/graph/badge.svg"/>
+  </a>
+</p>
+
 ## My Diary - A Private, Encrypted Android Diary
 
 My Diary is a modern, offline-first journaling application for Android, built with security and privacy as its core principles. It demonstrates a robust, multi-layered encryption strategy to ensure that user entries remain confidential and accessible only to them, even across multiple devices.
