@@ -36,15 +36,12 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        jvmTarget = "11"
-    }
     buildFeatures {
         compose = true
     }
 }
 
-tasks.register<JacocoReport>("jacocoTestReport") {
+tasks.register<JacocoReport>("createDebugCoverageReport") {
     dependsOn("testDebugUnitTest") // Roda depois dos testes de unidade
 
     reports {
@@ -69,14 +66,14 @@ tasks.register<JacocoReport>("jacocoTestReport") {
         "**/*_Factory*.*"
     )
 
-    val debugTree = fileTree("${buildDir}/tmp/kotlin-classes/debug") {
+    val debugTree = fileTree("${layout.buildDirectory}/tmp/kotlin-classes/debug") {
         exclude(fileFilter)
     }
     val mainSrc = "${project.projectDir}/src/main/java"
 
     sourceDirectories.setFrom(files(mainSrc))
     classDirectories.setFrom(files(debugTree))
-    executionData.setFrom(fileTree(buildDir) {
+    executionData.setFrom(fileTree(layout.buildDirectory) {
         include("outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec")
     })}
 
