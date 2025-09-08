@@ -11,7 +11,7 @@ import digital.tonima.mydiary.data.PasswordRepository
 import digital.tonima.mydiary.ui.screens.AppScreen
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.mockkStatic
+import io.mockk.mockkObject
 import io.mockk.slot
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -23,6 +23,8 @@ import org.junit.rules.TemporaryFolder
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
 import javax.crypto.Cipher
 
 @RunWith(RobolectricTestRunner::class)
@@ -176,14 +178,19 @@ class MainViewModelTest {
         viewModel = MainViewModel(passwordRepository, realContext)
         val passwordAttempt = "correct_password".toCharArray()
 
-        mockkStatic(PasswordBasedCryptoManager::class) {
+        val latch = CountDownLatch(1)
+        var result = false
+
+        mockkObject(PasswordBasedCryptoManager) {
             every { PasswordBasedCryptoManager.verifyPassword(realContext, passwordAttempt) } returns true
 
-            var result = false
             // Act
             viewModel.onRecoveryPasswordSubmit(passwordAttempt) { isCorrect ->
                 result = isCorrect
+                latch.countDown()
             }
+
+            latch.await(2, TimeUnit.SECONDS)
 
             // Assert
             assertThat(result).isTrue()

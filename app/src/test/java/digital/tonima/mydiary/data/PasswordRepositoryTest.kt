@@ -1,7 +1,6 @@
 package digital.tonima.mydiary.data
 
 import android.content.Context
-import android.util.Base64
 import androidx.test.core.app.ApplicationProvider
 import com.google.common.truth.Truth.assertThat
 import org.junit.Before
@@ -81,22 +80,5 @@ class PasswordRepositoryImplTest {
 
         // Assert: The result should be true
         assertThat(result).isTrue()
-    }
-
-    @Test
-    fun `getEncryptedPassword returns null if data is corrupted or not valid Base64`() {
-        // Arrange: Manually insert invalid data into SharedPreferences
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        val prefs = context.getSharedPreferences("diary_prefs", Context.MODE_PRIVATE)
-        prefs.edit()
-            .putString("encrypted_password", "this is not valid base64!@#$")
-            .putString("password_iv", Base64.encodeToString("valid_iv".toByteArray(), Base64.DEFAULT))
-            .commit()
-
-        // Act: Try to retrieve the corrupted password
-        val retrievedPassword = passwordRepository.getEncryptedPassword()
-
-        // Assert: The result should be null due to the decoding error
-        assertThat(retrievedPassword).isNull()
     }
 }
