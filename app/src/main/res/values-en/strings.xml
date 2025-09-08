@@ -11,6 +11,7 @@
     <string name="none_pin_or_digital_set">No fingerprint or PIN configured.</string>
     <string name="unsupported_auth">Authentication not supported.</string>
     <string name="cancel">Cancel</string>
+    <string name="setup_lock_screen_prompt">Please set up a PIN, pattern, or fingerprint in your device\'s security settings.</string>
 
     <!-- Locked Screen -->
     <string name="unlock_diary">Unlock Diary</string>
@@ -50,7 +51,9 @@
     <string name="create_master_password">Create master password</string>
     <string name="confirm_password">Confirm password</string>
     <string name="master_password">Master password</string>
-    <string name="master_password_description">This master password protects all your notes and is the only way to access your journal if you change phones or reinstall the app. Keep it in a safe place, as it is irretrievable. If you forget it, your notes will be permanently inaccessible.</string>
+    <string name="master_password_description">This master password protects all your notes and is the only way to access your journal if you
+        change phones or reinstall the app. Keep it in a safe place, as it is irretrievable. If you forget it, your
+        notes will be permanently inaccessible.</string>
     <string name="secure_your_password">Secure your password</string>
     <string name="confirm_to_encrypt">Confirm your identity to encrypt your master password</string>
 

@@ -3,6 +3,7 @@ package digital.tonima.mydiary.data
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Base64
+import android.util.Log
 import androidx.core.content.edit
 import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.hiltbinder.BindType.Component.VIEW_MODEL
@@ -14,9 +15,11 @@ import javax.inject.Inject
  * This class abstracts the underlying storage mechanism (SharedPreferences).
  */
 @BindType(installIn = VIEW_MODEL, to = PasswordRepository::class)
-class PasswordRepositoryImpl @Inject constructor(@ApplicationContext context: Context): PasswordRepository {
+class PasswordRepositoryImpl @Inject constructor(@ApplicationContext context: Context) :
+    PasswordRepository {
 
-    private val prefs: SharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+    private val prefs: SharedPreferences =
+        context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
     companion object Companion {
         private const val PREFS_NAME = "diary_prefs"
@@ -57,7 +60,7 @@ class PasswordRepositoryImpl @Inject constructor(@ApplicationContext context: Co
             val iv = Base64.decode(ivB64, Base64.DEFAULT)
             EncryptedPassword(password, iv)
         } catch (_: IllegalArgumentException) {
-            // Handle possible Base64 decoding errors
+            Log.e("PasswordRepository", "Failed to decode base64 encoded password or IV")
             null
         }
     }

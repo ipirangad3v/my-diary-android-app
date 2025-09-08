@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.google.services)
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.kotlin.ksp)
+    alias(libs.plugins.spotless)
 }
 
 android {
@@ -77,3 +78,5 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 }
+
+apply(from = "../spotless.gradle")
