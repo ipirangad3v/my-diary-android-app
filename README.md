@@ -1,11 +1,4 @@
-<p align="center">
-  <a href="https://github.com/ipirangad3v/my-diary-android-app/actions/workflows/android_ci.yml">
-    <img alt="Build Status" src="https://github.com/ipirangad3v/my-diary-android-app/actions/workflows/android_ci.yml/badge.svg">
-  </a>
-  <a href="https://codecov.io/gh/ipirangad3v/my-diary-android-app">
-    <img alt="Code Coverage" src="https://codecov.io/gh/ipirangad3v/my-diary-android-app/graph/badge.svg"/>
-  </a>
-</p>
+[![codecov](https://codecov.io/github/ipirangad3v/my-diary-android-app/branch/master/graph/badge.svg?token=4I1V1EHFBE)](https://codecov.io/github/ipirangad3v/my-diary-android-app)
 
 ## My Diary - A Private, Encrypted Android Diary
 
