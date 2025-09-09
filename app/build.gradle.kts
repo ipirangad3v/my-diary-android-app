@@ -21,6 +21,21 @@ android {
     versionName = "1.0"
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+    val admobAppIdTest = "ca-app-pub-3940256099942544~3347511713"
+    val admobBannerAdUnitIdTest = "ca-app-pub-3940256099942544/6300978111"
+
+    val admobAppId = System.getenv("ADMOB_APP_ID") ?: admobAppIdTest
+    val admobBannerAdUnitIdHome =
+        System.getenv("ADMOB_BANNER_AD_UNIT_HOME") ?: admobBannerAdUnitIdTest
+    val admobBannerAdUnitIdLockedDiary =
+        System.getenv("ADMOB_BANNER_AD_UNIT_LOCKED_DIARY") ?: admobBannerAdUnitIdTest
+
+    resValue("string", "admob_app_id", admobAppId)
+
+    buildConfigField("String", "ADMOB_BANNER_AD_UNIT_HOME", "\"$admobBannerAdUnitIdHome\"")
+    buildConfigField(
+        "String", "ADMOB_BANNER_AD_UNIT_LOCKED_DIARY", "\"$admobBannerAdUnitIdLockedDiary\"")
   }
 
   buildTypes {
@@ -34,7 +49,10 @@ android {
     targetCompatibility = JavaVersion.VERSION_21
   }
   kotlin { jvmToolchain(21) }
-  buildFeatures { compose = true }
+  buildFeatures {
+    compose = true
+    buildConfig = true
+  }
 }
 
 tasks.register<JacocoReport>("createDebugCoverageReport") {
@@ -91,6 +109,7 @@ dependencies {
   implementation(libs.compose.calendar)
   implementation(libs.hilt.android)
   implementation(libs.core.ktx)
+  implementation(libs.play.services.ads.api)
   ksp(libs.hilt.compiler)
   implementation(libs.hilt.binder)
   ksp(libs.hilt.binder.compiler)
