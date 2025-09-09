@@ -25,6 +25,7 @@ roboelectric = "4.16"
 coreKtxVersion = "1.7.0"
 spotless = "7.2.1"
 compose-calendar= "2.8.0"
+playServicesAdsApi = "24.6.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -58,6 +59,7 @@ truth = { group = "com.google.truth", name = "truth", version.ref = "truth" }
 robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "roboelectric" }
 core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "coreKtxVersion" }
 compose-calendar = { group = "com.kizitonwose.calendar", name = "compose", version.ref = "compose-calendar" }
+play-services-ads-api = { group = "com.google.android.gms", name = "play-services-ads-api", version.ref = "playServicesAdsApi" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -1,5 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?><!-- Sample backup rules file; uncomment and customize as necessary. See https://developer.android.com/guide/topics/data/autobackup
-    for details. Note: This file is ignored for devices older than API 31 See https://developer.android.com/about/versions/12/backup-restore -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Rules for the Auto Backup system on Android versions 6.0 (API 23) to 11 (API 30). This file explicitly defines what
+    data should be included in the cloud backup. See https://developer.android.com/guide/topics/data/autobackup for details. -->
 <full-backup-content>
-    <!-- <include domain="sharedpref" path="."/> <exclude domain="sharedpref" path="device.xml"/> -->
+    <!-- Include the specific SharedPreferences file that stores the encrypted master password. -->
+    <include domain="sharedpref" path="diary_prefs.xml" />
+    <!-- Include all files stored in the app's private file directory (our encrypted diary entries). -->
+    <include domain="file" path="." />
 </full-backup-content>

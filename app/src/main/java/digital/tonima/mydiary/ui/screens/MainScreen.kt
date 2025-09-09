@@ -57,8 +57,10 @@ import com.kizitonwose.calendar.compose.rememberCalendarState
 import com.kizitonwose.calendar.core.CalendarDay
 import com.kizitonwose.calendar.core.DayPosition
 import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
+import digital.tonima.mydiary.BuildConfig
 import digital.tonima.mydiary.R
 import digital.tonima.mydiary.data.PasswordBasedCryptoManager
+import digital.tonima.mydiary.ui.components.AdBannerView
 import digital.tonima.mydiary.utils.formatTimestamp
 import digital.tonima.mydiary.utils.getLocalDateFromFile
 import java.io.File
@@ -125,6 +127,7 @@ private fun DaysOfWeekTitle(daysOfWeek: List<DayOfWeek>) {
         }
     }
 }
+
 @Composable
 private fun CalendarView(
     modifier: Modifier = Modifier,
@@ -141,11 +144,18 @@ private fun CalendarView(
 
     Column(modifier = modifier) {
         Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
-            Text(text = monthTitle, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.padding(bottom = 8.dp))
-            val daysOfWeek = remember { firstDayOfWeekFromLocale().let {
-                val days = DayOfWeek.entries.toTypedArray()
-                days.slice(it.ordinal until days.size) + days.slice(0 until it.ordinal)
-            }}
+            Text(
+                text = monthTitle,
+                fontWeight = FontWeight.Bold,
+                fontSize = 20.sp,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+            val daysOfWeek = remember {
+                firstDayOfWeekFromLocale().let {
+                    val days = DayOfWeek.entries.toTypedArray()
+                    days.slice(it.ordinal until days.size) + days.slice(0 until it.ordinal)
+                }
+            }
             DaysOfWeekTitle(daysOfWeek = daysOfWeek)
         }
 
@@ -178,11 +188,19 @@ private fun NotesListView(
         if (isLoading) {
             CircularProgressIndicator()
         } else if (allDiaryEntries.isEmpty()) {
-            Text(stringResource(R.string.empty_notes_message), textAlign = TextAlign.Center, modifier = Modifier.padding(16.dp))
+            Text(
+                stringResource(R.string.empty_notes_message),
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(16.dp)
+            )
         } else if (filteredEntries.isEmpty() && selectedDate != null) {
             Text("Nenhuma nota para este dia.", modifier = Modifier.padding(16.dp))
         } else if (filteredEntries.isEmpty()) {
-            Text("Selecione um dia no calendário para ver as notas.", textAlign = TextAlign.Center, modifier = Modifier.padding(16.dp))
+            Text(
+                "Selecione um dia no calendário para ver as notas.",
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(16.dp)
+            )
         } else {
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 items(filteredEntries) { file ->
@@ -256,69 +274,76 @@ fun MainScreen(
             }
         }
     ) { innerPadding ->
+        Column(
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+        ) {
+            Box(Modifier.weight(1f)) {
+                when (configuration.orientation) {
+                    Configuration.ORIENTATION_LANDSCAPE -> {
+                        Row(modifier = Modifier.fillMaxSize()) {
+                            CalendarView(
+                                modifier = Modifier.weight(0.45f),
+                                calendarState = calendarState,
+                                selectedDate = selectedDate,
+                                entryDates = entryDates,
+                                onDateSelected = { selectedDate = it }
+                            )
+                            HorizontalDivider(
+                                modifier = Modifier
+                                    .fillMaxHeight()
+                                    .width(1.dp),
+                                thickness = DividerDefaults.Thickness,
+                                color = DividerDefaults.color
+                            )
+                            NotesListView(
+                                modifier = Modifier.weight(0.55f),
+                                isLoading = isLoading,
+                                allDiaryEntries = allDiaryEntries,
+                                filteredEntries = filteredEntries,
+                                selectedDate = selectedDate,
+                                onNoteClick = { file ->
+                                    val content =
+                                        PasswordBasedCryptoManager.readDiaryEntry(context, file.name, masterPassword)
+                                    if (content != null) {
+                                        selectedEntry = Pair(file.name, content)
+                                    }
+                                }
+                            )
+                        }
+                    }
 
-        when (configuration.orientation) {
-            Configuration.ORIENTATION_LANDSCAPE -> {
-                Row(
-                    modifier = Modifier
-                        .padding(innerPadding)
-                        .fillMaxSize()
-                ) {
-                    CalendarView(
-                        modifier = Modifier.weight(0.45f),
-                        calendarState = calendarState,
-                        selectedDate = selectedDate,
-                        entryDates = entryDates,
-                        onDateSelected = { selectedDate = it }
-                    )
-                    HorizontalDivider(
-                        modifier = Modifier.fillMaxHeight().width(1.dp),
-                        thickness = DividerDefaults.Thickness,
-                        color = DividerDefaults.color
-                    )
-                    NotesListView(
-                        modifier = Modifier.weight(0.55f),
-                        isLoading = isLoading,
-                        allDiaryEntries = allDiaryEntries,
-                        filteredEntries = filteredEntries,
-                        selectedDate = selectedDate,
-                        onNoteClick = { file ->
-                            val content = PasswordBasedCryptoManager.readDiaryEntry(context, file.name, masterPassword)
-                            if (content != null) {
-                                selectedEntry = Pair(file.name, content)
-                            }
+                    else -> { // Portrait
+                        Column(modifier = Modifier.fillMaxSize()) {
+                            CalendarView(
+                                calendarState = calendarState,
+                                selectedDate = selectedDate,
+                                entryDates = entryDates,
+                                onDateSelected = { selectedDate = it }
+                            )
+                            HorizontalDivider(Modifier, DividerDefaults.Thickness, DividerDefaults.color)
+                            NotesListView(
+                                modifier = Modifier.weight(1f),
+                                isLoading = isLoading,
+                                allDiaryEntries = allDiaryEntries,
+                                filteredEntries = filteredEntries,
+                                selectedDate = selectedDate,
+                                onNoteClick = { file ->
+                                    val content =
+                                        PasswordBasedCryptoManager.readDiaryEntry(context, file.name, masterPassword)
+                                    if (content != null) {
+                                        selectedEntry = Pair(file.name, content)
+                                    }
+                                }
+                            )
                         }
-                    )
+                    }
                 }
             }
-            else -> { // Portrait
-                Column(
-                    modifier = Modifier
-                        .padding(innerPadding)
-                        .fillMaxSize()
-                ) {
-                    CalendarView(
-                        calendarState = calendarState,
-                        selectedDate = selectedDate,
-                        entryDates = entryDates,
-                        onDateSelected = { selectedDate = it }
-                    )
-                    HorizontalDivider(Modifier, DividerDefaults.Thickness, DividerDefaults.color)
-                    NotesListView(
-                        modifier = Modifier.weight(1f),
-                        isLoading = isLoading,
-                        allDiaryEntries = allDiaryEntries,
-                        filteredEntries = filteredEntries,
-                        selectedDate = selectedDate,
-                        onNoteClick = { file ->
-                            val content = PasswordBasedCryptoManager.readDiaryEntry(context, file.name, masterPassword)
-                            if (content != null) {
-                                selectedEntry = Pair(file.name, content)
-                            }
-                        }
-                    )
-                }
-            }
+            AdBannerView(
+                adId = BuildConfig.ADMOB_BANNER_AD_UNIT_HOME
+            )
         }
     }
 
