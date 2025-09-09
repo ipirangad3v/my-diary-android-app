@@ -4,6 +4,8 @@
 
 My Diary is a modern, offline-first journaling application for Android, built with security and privacy as its core principles. It demonstrates a robust, multi-layered encryption strategy to ensure that user entries remain confidential and accessible only to them, even across multiple devices.
 
+## Download
+<a href='https://play.google.com/store/apps/details?id=digital.tonima.mydiary' target="_blank" rel="noopener noreferrer"><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' width='200'/></a>
 ## Features
 
 - <b>Offline-First:</b> All entries are stored locally on your device.
