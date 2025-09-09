@@ -1,0 +1,68 @@
+<resources>
+    <string name="app_name">مذكراتي</string>
+
+    <!-- Biometric Prompt & Toasts -->
+    <string name="acess_to_diary">الوصول إلى المذكرات</string>
+    <string name="use_pin_or_digital_to_continue">استخدم رقم التعريف الشخصي أو بصمة الإصبع للمتابعة</string>
+    <string name="sucessful_unlock">نجحت المصادقة!</string>
+    <string name="canceled_autentication">تم إلغاء المصادقة.</string>
+    <string name="autentication_error">خطأ في المصادقة: %s</string>
+    <string name="autentication_fail">فشلت المصادقة.</string>
+    <string name="none_pin_or_digital_set">لم يتم تعيين رقم تعريف شخصي أو بصمة إصبع.</string>
+    <string name="unsupported_auth">المصادقة غير مدعومة.</string>
+    <string name="cancel">إلغاء</string>
+    <string name="setup_lock_screen_prompt">يرجى إعداد رقم تعريف شخصي أو نمط أو بصمة إصبع في إعدادات أمان جهازك.</string>
+
+    <!-- Locked Screen -->
+    <string name="unlock_diary">فتح المذكرات</string>
+    <string name="locked_diary">المذكرات مقفلة</string>
+
+    <!-- Main Screen -->
+    <string name="lock_diary">قفل المذكرات</string>
+    <string name="ask_for_lock_diary">هل تريد قفل المذكرات وطلب المصادقة مرة أخرى؟</string>
+    <string name="lock_confirm">نعم، قفل</string>
+    <string name="no">لا</string>
+    <string name="add_note">إضافة ملاحظة</string>
+    <string name="empty_notes_message">لا توجد ملاحظات بعد.\nانقر فوق \'+\' لإضافة أول ملاحظة!</string>
+    <string name="your_note">ملاحظتك</string>
+    <string name="close">إغلاق</string>
+    <string name="error_decrypting">خطأ في فك التشفير</string>
+    <string name="delete">حذف</string>
+    <string name="confirm_deletion_title">تأكيد الحذف</string>
+    <string name="confirm_deletion_message">هل أنت متأكد من أنك تريد حذف هذه الملاحظة؟ لا يمكن التراجع عن هذا الإجراء.</string>
+    <string name="confirm">تأكيد</string>
+
+    <!-- Add Entry Screen -->
+    <string name="new_note">ملاحظة جديدة</string>
+    <string name="back">رجوع</string>
+    <string name="save_note">حفظ الملاحظة</string>
+    <string name="note_saved">تم حفظ الملاحظة!</string>
+    <string name="write_something_to_save">اكتب شيئًا لحفظه.</string>
+    <string name="whats_happened_today">ماذا حدث اليوم؟</string>
+    <string name="start_writing">ابدأ الكتابة…</string>
+    <string name="new_entry">إدخال جديد</string>
+    <string name="save_entry">حفظ الإدخال</string>
+
+    <!-- Password Screen -->
+    <string name="password_too_short">كلمة المرور قصيرة جدًا</string>
+    <string name="passwords_do_not_match">كلمتا المرور غير متطابقتين</string>
+    <string name="save_password">حفظ كلمة المرور</string>
+    <string name="create_master_password">إنشاء كلمة مرور رئيسية</string>
+    <string name="write_here">اكتب هنا</string>
+    <string name="confirm_password">تأكيد كلمة المرور</string>
+    <string name="master_password">كلمة المرور الرئيسية</string>
+    <string name="master_password_description">تحمي كلمة المرور الرئيسية هذه جميع ملاحظاتك وهي الطريقة الوحيدة للوصول إلى مذكراتك إذا قمت
+        بتغيير هاتفك أو إعادة تثبيت التطبيق. احتفظ بها في مكان آمن، حيث لا يمكن استردادها. إذا نسيتها، فستصبح ملاحظاتك
+        غير قابلة للوصول إليها بشكل دائم.</string>
+    <string name="secure_your_password">قم بتأمين كلمة المرور الخاصة بك</string>
+    <string name="confirm_to_encrypt">قم بتأكيد هويتك لتشفير كلمة المرور الرئيسية الخاصة بك</string>
+
+    <!-- Manual Password Recovery Screen -->
+    <string name="master_password_recovery">الاسترداد باستخدام كلمة المرور الرئيسية</string>
+    <string name="master_password_recovery_desc">فتح القفل بالقياسات الحيوية غير متاح. يرجى إدخال كلمة المرور الرئيسية للمتابعة.</string>
+    <string name="unlock">فتح القفل</string>
+    <string name="incorrect_password_try_again">كلمة المرور غير صحيحة. حاول مرة أخرى.</string>
+    <string name="no_entries_for_verification">لم يتم العثور على إدخالات للتحقق من كلمة المرور.</string>
+    <string name="password_verified_re_encrypt">تم التحقق من كلمة المرور! يرجى التأكيد باستخدام القياسات الحيوية الخاصة بك لإعادة تنشيط الفتح
+        السريع على هذا الجهاز.</string>
+</resources>

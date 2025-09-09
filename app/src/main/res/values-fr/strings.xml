@@ -1,0 +1,70 @@
+<resources>
+    <string name="app_name">Mon journal</string>
+
+    <!-- Biometric Prompt & Toasts -->
+    <string name="acess_to_diary">Accès au journal</string>
+    <string name="use_pin_or_digital_to_continue">Utilisez votre PIN ou votre empreinte digitale pour continuer</string>
+    <string name="sucessful_unlock">Authentification réussie !</string>
+    <string name="canceled_autentication">Authentification annulée.</string>
+    <string name="autentication_error">Erreur d\'authentification : %s</string>
+    <string name="autentication_fail">Échec de l\'authentification.</string>
+    <string name="none_pin_or_digital_set">Aucun PIN ou empreinte digitale configuré.</string>
+    <string name="unsupported_auth">Authentification non prise en charge.</string>
+    <string name="cancel">Annuler</string>
+    <string name="setup_lock_screen_prompt">Veuillez configurer un PIN, un schéma ou une empreinte digitale dans les paramètres de sécurité
+        de votre appareil.</string>
+
+    <!-- Locked Screen -->
+    <string name="unlock_diary">Déverrouiller le journal</string>
+    <string name="locked_diary">Journal verrouillé</string>
+
+    <!-- Main Screen -->
+    <string name="lock_diary">Verrouiller le journal</string>
+    <string name="ask_for_lock_diary">Voulez-vous verrouiller le journal et exiger à nouveau une authentification ?</string>
+    <string name="lock_confirm">Oui, verrouiller</string>
+    <string name="no">Non</string>
+    <string name="add_note">Ajouter une note</string>
+    <string name="empty_notes_message">Aucune note pour le moment.\nAppuyez sur \'+\' pour ajouter la première !</string>
+    <string name="your_note">Votre note</string>
+    <string name="close">Fermer</string>
+    <string name="error_decrypting">Erreur de déchiffrement</string>
+    <string name="delete">Supprimer</string>
+    <string name="confirm_deletion_title">Confirmer la suppression</string>
+    <string name="confirm_deletion_message">Êtes-vous sûr de vouloir supprimer cette note ? Cette action est irréversible.</string>
+    <string name="confirm">Confirmer</string>
+
+    <!-- Add Entry Screen -->
+    <string name="new_note">Nouvelle note</string>
+    <string name="back">Retour</string>
+    <string name="save_note">Enregistrer la note</string>
+    <string name="note_saved">Note enregistrée !</string>
+    <string name="write_something_to_save">Écrivez quelque chose à enregistrer.</string>
+    <string name="whats_happened_today">Que s\'est-il passé aujourd\'hui ?</string>
+    <string name="start_writing">Commencez à écrire…</string>
+    <string name="new_entry">Nouvelle entrée</string>
+    <string name="save_entry">Enregistrer l\'entrée</string>
+
+    <!-- Password Screen -->
+    <string name="password_too_short">Mot de passe trop court</string>
+    <string name="passwords_do_not_match">Les mots de passe ne correspondent pas</string>
+    <string name="save_password">Enregistrer le mot de passe</string>
+    <string name="create_master_password">Créer un mot de passe maître</string>
+    <string name="write_here">Écrivez ici</string>
+    <string name="confirm_password">Confirmer le mot de passe</string>
+    <string name="master_password">Mot de passe maître</string>
+    <string name="master_password_description">Ce mot de passe maître protège toutes vos notes et est le seul moyen d\'accéder à votre journal
+        si vous changez de téléphone ou réinstallez l\'application. Conservez-le dans un endroit sûr, car il ne peut pas
+        être récupéré. Si vous l\'oubliez, vos notes deviendront inaccessibles en permanence.</string>
+    <string name="secure_your_password">Sécurisez votre mot de passe</string>
+    <string name="confirm_to_encrypt">Confirmez votre identité pour chiffrer votre mot de passe maître</string>
+
+    <!-- Manual Password Recovery Screen -->
+    <string name="master_password_recovery">Récupération avec le mot de passe maître</string>
+    <string name="master_password_recovery_desc">Le déverrouillage biométrique n\'est pas disponible. Veuillez saisir votre mot de passe maître
+        pour continuer.</string>
+    <string name="unlock">Déverrouiller</string>
+    <string name="incorrect_password_try_again">Mot de passe incorrect. Veuillez réessayer.</string>
+    <string name="no_entries_for_verification">Aucune entrée trouvée pour la vérification du mot de passe.</string>
+    <string name="password_verified_re_encrypt">Mot de passe vérifié ! Veuillez confirmer avec vos données biométriques pour réactiver le
+        déverrouillage rapide sur cet appareil.</string>
+</resources>
