@@ -4,26 +4,32 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import android.widget.Toast.makeText
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.activity.viewModels
 import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
 import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
-import androidx.compose.runtime.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dagger.hilt.android.AndroidEntryPoint
-import digital.tonima.mydiary.biometrics.BiometricAuthManager
-import digital.tonima.mydiary.ui.screens.*
-import digital.tonima.mydiary.ui.theme.MyDiaryTheme
 import digital.tonima.mydiary.R.string.incorrect_password_try_again
 import digital.tonima.mydiary.R.string.password_verified_re_encrypt
 import digital.tonima.mydiary.R.string.setup_lock_screen_prompt
+import digital.tonima.mydiary.biometrics.BiometricAuthManager
+import digital.tonima.mydiary.ui.screens.AddEntryScreen
+import digital.tonima.mydiary.ui.screens.AppScreen
+import digital.tonima.mydiary.ui.screens.LockedScreen
+import digital.tonima.mydiary.ui.screens.MainScreen
+import digital.tonima.mydiary.ui.screens.ManualPasswordScreen
+import digital.tonima.mydiary.ui.screens.PasswordSetupScreen
+import digital.tonima.mydiary.ui.theme.MyDiaryTheme
 
 @AndroidEntryPoint
 class MainActivity : FragmentActivity() {

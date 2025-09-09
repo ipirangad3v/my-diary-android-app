@@ -10,6 +10,7 @@ plugins {
   alias(libs.plugins.kotlin.ksp)
   alias(libs.plugins.spotless)
   alias(libs.plugins.jacoco)
+  alias(libs.plugins.crashlytics)
 }
 
 android {
@@ -152,6 +153,7 @@ dependencies {
   implementation(libs.hilt.android)
   implementation(libs.core.ktx)
   implementation(libs.play.services.ads.api)
+  implementation(libs.crashlytics)
   ksp(libs.hilt.compiler)
   implementation(libs.hilt.binder)
   ksp(libs.hilt.binder.compiler)
