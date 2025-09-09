@@ -24,6 +24,7 @@ truth = "1.4.4"
 roboelectric = "4.16"
 coreKtxVersion = "1.7.0"
 spotless = "7.2.1"
+compose-calendar= "2.8.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -56,6 +57,7 @@ androidx-core-testing = { group = "androidx.arch.core", name = "core-testing", v
 truth = { group = "com.google.truth", name = "truth", version.ref = "truth" }
 robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "roboelectric" }
 core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "coreKtxVersion" }
+compose-calendar = { group = "com.kizitonwose.calendar", name = "compose", version.ref = "compose-calendar" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

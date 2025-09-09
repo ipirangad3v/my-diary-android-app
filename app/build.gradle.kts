@@ -15,7 +15,7 @@ android {
 
   defaultConfig {
     applicationId = "digital.tonima.mydiary"
-    minSdk = 24
+    minSdk = 26
     targetSdk = 36
     versionCode = 1
     versionName = "1.0"
@@ -88,6 +88,7 @@ dependencies {
   implementation(libs.androidx.biometrics)
   implementation(libs.androidx.fragment.ktx)
   implementation(libs.androidx.security.crypto)
+  implementation(libs.compose.calendar)
   implementation(libs.hilt.android)
   implementation(libs.core.ktx)
   ksp(libs.hilt.compiler)
