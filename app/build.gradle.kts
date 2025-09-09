@@ -41,21 +41,44 @@ android {
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
       signingConfig = signingConfigs.getByName("debug")
 
-      val localProperties = Properties()
-      val localPropertiesFile = rootProject.file("local.properties")
-      if (localPropertiesFile.exists()) {
-        localProperties.load(FileInputStream(localPropertiesFile))
+      val isRunningReleaseTask =
+          gradle.startParameter.taskNames.any { it.contains("release", ignoreCase = true) }
+
+      val admobAppIdTest = "ca-app-pub-3940256099942544~3347511713"
+      val admobBannerAdUnitIdTest = "ca-app-pub-3940256099942544/6300978111"
+
+      val admobAppId: String
+      val admobBannerAdUnitIdHome: String
+      val admobBannerAdUnitIdLockedDiary: String
+
+      if (isRunningReleaseTask) {
+        // Se for uma tarefa de release, carrega os segredos reais
+        val localProperties = Properties()
+        val localPropertiesFile = rootProject.file("local.properties")
+        if (localPropertiesFile.exists()) {
+          localProperties.load(FileInputStream(localPropertiesFile))
+        }
+
+        admobAppId =
+            System.getenv("ADMOB_APP_ID")
+                ?: localProperties.getProperty("admob.app.id")
+                ?: admobAppIdTest
+
+        admobBannerAdUnitIdHome =
+            System.getenv("ADMOB_BANNER_AD_UNIT_HOME")
+                ?: localProperties.getProperty("admob.banner.ad.unit.home")
+                ?: admobBannerAdUnitIdTest
+
+        admobBannerAdUnitIdLockedDiary =
+            System.getenv("ADMOB_BANNER_AD_UNIT_LOCKED_DIARY")
+                ?: localProperties.getProperty("admob.banner.ad.unit.locked.diary")
+                ?: admobBannerAdUnitIdTest
+      } else {
+        // Para qualquer outra tarefa (como spotlessCheck), usa os IDs de teste
+        admobAppId = admobAppIdTest
+        admobBannerAdUnitIdHome = admobBannerAdUnitIdTest
+        admobBannerAdUnitIdLockedDiary = admobBannerAdUnitIdTest
       }
-
-      val admobAppId = System.getenv("ADMOB_APP_ID") ?: localProperties.getProperty("admob.app.id")
-
-      val admobBannerAdUnitIdHome =
-          System.getenv("ADMOB_BANNER_AD_UNIT_HOME")
-              ?: localProperties.getProperty("admob.banner.ad.unit.home")
-
-      val admobBannerAdUnitIdLockedDiary =
-          System.getenv("ADMOB_BANNER_AD_UNIT_LOCKED_DIARY")
-              ?: localProperties.getProperty("admob.banner.ad.unit.locked.diary")
 
       resValue("string", "admob_app_id", admobAppId)
       buildConfigField("String", "ADMOB_BANNER_AD_UNIT_HOME", "\"$admobBannerAdUnitIdHome\"")
