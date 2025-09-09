@@ -33,6 +33,7 @@
     <string name="confirm">Confirmar</string>
     <string name="setup_lock_screen_prompt">Configure un PIN, un patrón o una huella digital en la configuración de seguridad de su
         dispositivo.</string>
+
     <!-- Add Entry Screen -->
     <string name="new_note">Nueva Nota</string>
     <string name="back">Volver</string>

@@ -1,0 +1,68 @@
+<resources>
+    <string name="app_name">میری ڈائری</string>
+
+    <!-- Biometric Prompt & Toasts -->
+    <string name="acess_to_diary">ڈائری تک رسائی</string>
+    <string name="use_pin_or_digital_to_continue">جاری رکھنے کے لیے اپنا پن یا فنگر پرنٹ استعمال کریں</string>
+    <string name="sucessful_unlock">کامیاب تصدیق!</string>
+    <string name="canceled_autentication">تصدیق منسوخ ہوگئی۔</string>
+    <string name="autentication_error">تصدیق میں خرابی: %s</string>
+    <string name="autentication_fail">تصدیق ناکام ہوگئی۔</string>
+    <string name="none_pin_or_digital_set">کوئی پن یا فنگر پرنٹ سیٹ نہیں ہے۔</string>
+    <string name="unsupported_auth">تصدیق غیر تعاون یافتہ ہے۔</string>
+    <string name="cancel">منسوخ کریں</string>
+    <string name="setup_lock_screen_prompt">براہ کرم اپنے آلے کی سیکیورٹی سیٹنگز میں ایک پن، پیٹرن یا فنگر پرنٹ سیٹ کریں۔</string>
+
+    <!-- Locked Screen -->
+    <string name="unlock_diary">ڈائری انلاک کریں</string>
+    <string name="locked_diary">ڈائری مقفل ہے</string>
+
+    <!-- Main Screen -->
+    <string name="lock_diary">ڈائری لاک کریں</string>
+    <string name="ask_for_lock_diary">کیا آپ ڈائری کو لاک کرنا اور دوبارہ تصدیق کی ضرورت چاہتے ہیں؟</string>
+    <string name="lock_confirm">ہاں، لاک کریں</string>
+    <string name="no">نہیں</string>
+    <string name="add_note">نوٹ شامل کریں</string>
+    <string name="empty_notes_message">ابھی تک کوئی نوٹ نہیں ہے۔\nپہلا شامل کرنے کے لیے \'+\' پر ٹیپ کریں!</string>
+    <string name="your_note">آپ کا نوٹ</string>
+    <string name="close">بند کریں</string>
+    <string name="error_decrypting">ڈکرپشن میں خرابی</string>
+    <string name="delete">حذف کریں</string>
+    <string name="confirm_deletion_title">حذف کرنے کی تصدیق کریں</string>
+    <string name="confirm_deletion_message">کیا آپ واقعی اس نوٹ کو حذف کرنا چاہتے ہیں؟ اس کارروائی کو واپس نہیں لیا جا سکتا۔</string>
+    <string name="confirm">تصدیق کریں</string>
+
+    <!-- Add Entry Screen -->
+    <string name="new_note">نیا نوٹ</string>
+    <string name="back">پیچھے</string>
+    <string name="save_note">نوٹ محفوظ کریں</string>
+    <string name="note_saved">نوٹ محفوظ ہوگیا!</string>
+    <string name="write_something_to_save">محفوظ کرنے کے لیے کچھ لکھیں۔</string>
+    <string name="whats_happened_today">آج کیا ہوا؟</string>
+    <string name="start_writing">لکھنا شروع کریں…</string>
+    <string name="new_entry">نیا اندراج</string>
+    <string name="save_entry">اندراج محفوظ کریں</string>
+
+    <!-- Password Screen -->
+    <string name="password_too_short">پاس ورڈ بہت چھوٹا ہے</string>
+    <string name="passwords_do_not_match">پاس ورڈز مماثل نہیں ہیں</string>
+    <string name="save_password">پاس ورڈ محفوظ کریں</string>
+    <string name="create_master_password">ماسٹر پاس ورڈ بنائیں</string>
+    <string name="write_here">یہاں لکھیں</string>
+    <string name="confirm_password">پاس ورڈ کی تصدیق کریں</string>
+    <string name="master_password">ماسٹر پاس ورڈ</string>
+    <string name="master_password_description">یہ ماسٹر پاس ورڈ آپ کے تمام نوٹوں کی حفاظت کرتا ہے اور اگر آپ فون تبدیل کرتے ہیں یا ایپ کو
+        دوبارہ انسٹال کرتے ہیں تو اپنی ڈائری تک رسائی کا واحد طریقہ ہے۔ اسے ایک محفوظ جگہ پر رکھیں، کیونکہ اسے بازیافت
+        نہیں کیا جاسکتا۔ اگر آپ اسے بھول جاتے ہیں تو، آپ کے نوٹ مستقل طور پر ناقابل رسائی ہو جائیں گے۔</string>
+    <string name="secure_your_password">اپنا پاس ورڈ محفوظ کریں</string>
+    <string name="confirm_to_encrypt">اپنا ماسٹر پاس ورڈ خفیہ کرنے کے لیے اپنی شناخت کی تصدیق کریں</string>
+
+    <!-- Manual Password Recovery Screen -->
+    <string name="master_password_recovery">ماسٹر پاس ورڈ سے بازیابی</string>
+    <string name="master_password_recovery_desc">بائیو میٹرک انلاک دستیاب نہیں ہے۔ جاری رکھنے کے لیے براہ کرم اپنا ماسٹر پاس ورڈ درج کریں۔</string>
+    <string name="unlock">انلاک کریں</string>
+    <string name="incorrect_password_try_again">غلط پاس ورڈ۔ دوبارہ کوشش کریں۔</string>
+    <string name="no_entries_for_verification">پاس ورڈ کی تصدیق کے لیے کوئی اندراج نہیں ملا۔</string>
+    <string name="password_verified_re_encrypt">پاس ورڈ کی تصدیق ہوگئی! اس ڈیوائس پر فوری انلاک کو دوبارہ فعال کرنے کے لیے براہ کرم اپنے بائیو
+        میٹرکس سے تصدیق کریں۔</string>
+</resources>

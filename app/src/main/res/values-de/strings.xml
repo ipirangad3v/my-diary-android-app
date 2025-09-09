@@ -1,0 +1,72 @@
+<resources>
+    <string name="app_name">Mein Tagebuch</string>
+
+    <!-- Biometric Prompt & Toasts -->
+    <string name="acess_to_diary">Zugriff auf das Tagebuch</string>
+    <string name="use_pin_or_digital_to_continue">Verwenden Sie Ihre PIN oder Ihren Fingerabdruck, um fortzufahren</string>
+    <string name="sucessful_unlock">Authentifizierung erfolgreich!</string>
+    <string name="canceled_autentication">Authentifizierung abgebrochen.</string>
+    <string name="autentication_error">Authentifizierungsfehler: %s</string>
+    <string name="autentication_fail">Authentifizierung fehlgeschlagen.</string>
+    <string name="none_pin_or_digital_set">Keine PIN oder Fingerabdruck eingerichtet.</string>
+    <string name="unsupported_auth">Authentifizierung nicht unterstützt.</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="setup_lock_screen_prompt">Bitte richten Sie eine PIN, ein Muster oder einen Fingerabdruck in den Sicherheitseinstellungen
+        Ihres Geräts ein.</string>
+
+    <!-- Locked Screen -->
+    <string name="unlock_diary">Tagebuch entsperren</string>
+    <string name="locked_diary">Tagebuch gesperrt</string>
+
+    <!-- Main Screen -->
+    <string name="lock_diary">Tagebuch sperren</string>
+    <string name="ask_for_lock_diary">Möchten Sie das Tagebuch sperren und erneut eine Authentifizierung verlangen?</string>
+    <string name="lock_confirm">Ja, sperren</string>
+    <string name="no">Nein</string>
+    <string name="add_note">Notiz hinzufügen</string>
+    <string name="empty_notes_message">Noch keine Notizen.\nTippen Sie auf \'+\', um die erste hinzuzufügen!</string>
+    <string name="your_note">Ihre Notiz</string>
+    <string name="close">Schließen</string>
+    <string name="error_decrypting">Entschlüsselungsfehler</string>
+    <string name="delete">Löschen</string>
+    <string name="confirm_deletion_title">Löschen bestätigen</string>
+    <string name="confirm_deletion_message">Sind Sie sicher, dass Sie diese Notiz löschen möchten? Diese Aktion kann nicht rückgängig
+        gemacht werden.</string>
+    <string name="confirm">Bestätigen</string>
+
+    <!-- Add Entry Screen -->
+    <string name="new_note">Neue Notiz</string>
+    <string name="back">Zurück</string>
+    <string name="save_note">Notiz speichern</string>
+    <string name="note_saved">Notiz gespeichert!</string>
+    <string name="write_something_to_save">Schreiben Sie etwas zum Speichern.</string>
+    <string name="whats_happened_today">Was ist heute passiert?</string>
+    <string name="start_writing">Beginnen Sie zu schreiben…</string>
+    <string name="new_entry">Neuer Eintrag</string>
+    <string name="save_entry">Eintrag speichern</string>
+
+    <!-- Password Screen -->
+    <string name="password_too_short">Passwort zu kurz</string>
+    <string name="passwords_do_not_match">Passwörter stimmen nicht überein</string>
+    <string name="save_password">Passwort speichern</string>
+    <string name="create_master_password">Master-Passwort erstellen</string>
+    <string name="write_here">Hier schreiben</string>
+    <string name="confirm_password">Passwort bestätigen</string>
+    <string name="master_password">Master-Passwort</string>
+    <string name="master_password_description">Dieses Master-Passwort schützt alle Ihre Notizen und ist die einzige Möglichkeit, auf Ihr
+        Tagebuch zuzugreifen, wenn Sie das Telefon wechseln oder die App neu installieren. Bewahren Sie es an einem
+        sicheren Ort auf, da es nicht wiederhergestellt werden kann. Wenn Sie es vergessen, sind Ihre Notizen dauerhaft
+        unzugänglich.</string>
+    <string name="secure_your_password">Sichern Sie Ihr Passwort</string>
+    <string name="confirm_to_encrypt">Bestätigen Sie Ihre Identität, um Ihr Master-Passwort zu verschlüsseln</string>
+
+    <!-- Manual Password Recovery Screen -->
+    <string name="master_password_recovery">Wiederherstellung mit Master-Passwort</string>
+    <string name="master_password_recovery_desc">Biometrisches Entsperren ist nicht verfügbar. Bitte geben Sie Ihr Master-Passwort ein, um
+        fortzufahren.</string>
+    <string name="unlock">Entsperren</string>
+    <string name="incorrect_password_try_again">Falsches Passwort. Bitte versuchen Sie es erneut.</string>
+    <string name="no_entries_for_verification">Keine Einträge zur Passwortüberprüfung gefunden.</string>
+    <string name="password_verified_re_encrypt">Passwort bestätigt! Bitte bestätigen Sie mit Ihren biometrischen Daten, um das schnelle
+        Entsperren auf diesem Gerät wieder zu aktivieren.</string>
+</resources>

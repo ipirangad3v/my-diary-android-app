@@ -1,0 +1,65 @@
+<resources>
+    <string name="app_name">我的日记</string>
+
+    <!-- Biometric Prompt & Toasts -->
+    <string name="acess_to_diary">访问日记</string>
+    <string name="use_pin_or_digital_to_continue">请使用您的 PIN 码或指纹以继续</string>
+    <string name="sucessful_unlock">验证成功！</string>
+    <string name="canceled_autentication">验证已取消。</string>
+    <string name="autentication_error">验证错误：%s</string>
+    <string name="autentication_fail">验证失败。</string>
+    <string name="none_pin_or_digital_set">未设置 PIN 码或指纹。</string>
+    <string name="unsupported_auth">不支持的验证方式。</string>
+    <string name="cancel">取消</string>
+    <string name="setup_lock_screen_prompt">请在您设备的系统安全设置中设置 PIN 码、图案或指纹。</string>
+
+    <!-- Locked Screen -->
+    <string name="unlock_diary">解锁日记</string>
+    <string name="locked_diary">日记已锁定</string>
+
+    <!-- Main Screen -->
+    <string name="lock_diary">锁定日记</string>
+    <string name="ask_for_lock_diary">您想锁定日记并再次要求验证吗？</string>
+    <string name="lock_confirm">是的，锁定</string>
+    <string name="no">不</string>
+    <string name="add_note">添加笔记</string>
+    <string name="empty_notes_message">暂无笔记。\n点击“+”添加第一条！</string>
+    <string name="your_note">您的笔记</string>
+    <string name="close">关闭</string>
+    <string name="error_decrypting">解密错误</string>
+    <string name="delete">删除</string>
+    <string name="confirm_deletion_title">确认删除</string>
+    <string name="confirm_deletion_message">您确定要删除此笔记吗？此操作无法撤销。</string>
+    <string name="confirm">确认</string>
+
+    <!-- Add Entry Screen -->
+    <string name="new_note">新笔记</string>
+    <string name="back">返回</string>
+    <string name="save_note">保存笔记</string>
+    <string name="note_saved">笔记已保存！</string>
+    <string name="write_something_to_save">请写点什么再保存。</string>
+    <string name="whats_happened_today">今天发生了什么？</string>
+    <string name="start_writing">开始写作…</string>
+    <string name="new_entry">新条目</string>
+    <string name="save_entry">保存条目</string>
+
+    <!-- Password Screen -->
+    <string name="password_too_short">密码太短</string>
+    <string name="passwords_do_not_match">密码不匹配</string>
+    <string name="save_password">保存密码</string>
+    <string name="create_master_password">创建主密码</string>
+    <string name="write_here">在此输入</string>
+    <string name="confirm_password">确认密码</string>
+    <string name="master_password">主密码</string>
+    <string name="master_password_description">此主密码保护您的所有笔记，是您更换手机或重新安装应用时访问日记的唯一方式。请将其保存在安全的地方，因为它无法恢复。如果您忘记了，您的笔记将永久无法访问。</string>
+    <string name="secure_your_password">保护您的密码</string>
+    <string name="confirm_to_encrypt">请确认您的身份以加密您的主密码</string>
+
+    <!-- Manual Password Recovery Screen -->
+    <string name="master_password_recovery">使用主密码恢复</string>
+    <string name="master_password_recovery_desc">生物识别解锁不可用。请输入您的主密码以继续。</string>
+    <string name="unlock">解锁</string>
+    <string name="incorrect_password_try_again">密码不正确。请重试。</string>
+    <string name="no_entries_for_verification">未找到用于密码验证的条目。</string>
+    <string name="password_verified_re_encrypt">密码已验证！请使用您的生物识别信息确认，以在此设备上重新激活快速解锁。</string>
+</resources>

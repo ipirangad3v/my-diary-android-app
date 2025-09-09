@@ -1,0 +1,69 @@
+<resources>
+    <string name="app_name">Мой дневник</string>
+
+    <!-- Biometric Prompt & Toasts -->
+    <string name="acess_to_diary">Доступ к дневнику</string>
+    <string name="use_pin_or_digital_to_continue">Используйте PIN-код или отпечаток пальца для продолжения</string>
+    <string name="sucessful_unlock">Аутентификация прошла успешно!</string>
+    <string name="canceled_autentication">Аутентификация отменена.</string>
+    <string name="autentication_error">Ошибка аутентификации: %s</string>
+    <string name="autentication_fail">Сбой аутентификации.</string>
+    <string name="none_pin_or_digital_set">PIN-код или отпечаток пальца не настроены.</string>
+    <string name="unsupported_auth">Аутентификация не поддерживается.</string>
+    <string name="cancel">Отмена</string>
+    <string name="setup_lock_screen_prompt">Пожалуйста, установите PIN-код, графический ключ или отпечаток пальца в настройках безопасности
+        вашего устройства.</string>
+
+    <!-- Locked Screen -->
+    <string name="unlock_diary">Разблокировать дневник</string>
+    <string name="locked_diary">Дневник заблокирован</string>
+
+    <!-- Main Screen -->
+    <string name="lock_diary">Заблокировать дневник</string>
+    <string name="ask_for_lock_diary">Вы хотите заблокировать дневник и снова потребовать аутентификацию?</string>
+    <string name="lock_confirm">Да, заблокировать</string>
+    <string name="no">Нет</string>
+    <string name="add_note">Добавить заметку</string>
+    <string name="empty_notes_message">Заметок пока нет.\nНажмите \'+\', чтобы добавить первую!</string>
+    <string name="your_note">Ваша заметка</string>
+    <string name="close">Закрыть</string>
+    <string name="error_decrypting">Ошибка расшифровки</string>
+    <string name="delete">Удалить</string>
+    <string name="confirm_deletion_title">Подтвердить удаление</string>
+    <string name="confirm_deletion_message">Вы уверены, что хотите удалить эту заметку? Это действие нельзя отменить.</string>
+    <string name="confirm">Подтвердить</string>
+
+    <!-- Add Entry Screen -->
+    <string name="new_note">Новая заметка</string>
+    <string name="back">Назад</string>
+    <string name="save_note">Сохранить заметку</string>
+    <string name="note_saved">Заметка сохранена!</string>
+    <string name="write_something_to_save">Напишите что-нибудь, чтобы сохранить.</string>
+    <string name="whats_happened_today">Что сегодня произошло?</string>
+    <string name="start_writing">Начните писать…</string>
+    <string name="new_entry">Новая запись</string>
+    <string name="save_entry">Сохранить запись</string>
+
+    <!-- Password Screen -->
+    <string name="password_too_short">Пароль слишком короткий</string>
+    <string name="passwords_do_not_match">Пароли не совпадают</string>
+    <string name="save_password">Сохранить пароль</string>
+    <string name="create_master_password">Создать мастер-пароль</string>
+    <string name="write_here">Введите здесь</string>
+    <string name="confirm_password">Подтвердите пароль</string>
+    <string name="master_password">Мастер-пароль</string>
+    <string name="master_password_description">Этот мастер-пароль защищает все ваши заметки и является единственным способом доступа к вашему
+        дневнику, если вы смените телефон или переустановите приложение. Храните его в безопасном месте, так как его
+        невозможно восстановить. Если вы его забудете, ваши заметки станут навсегда недоступными.</string>
+    <string name="secure_your_password">Защитите свой пароль</string>
+    <string name="confirm_to_encrypt">Подтвердите свою личность, чтобы зашифровать ваш мастер-пароль</string>
+
+    <!-- Manual Password Recovery Screen -->
+    <string name="master_password_recovery">Восстановление с помощью мастер-пароля</string>
+    <string name="master_password_recovery_desc">Биометрическая разблокировка недоступна. Пожалуйста, введите ваш мастер-пароль для продолжения.</string>
+    <string name="unlock">Разблокировать</string>
+    <string name="incorrect_password_try_again">Неверный пароль. Попробуйте снова.</string>
+    <string name="no_entries_for_verification">Записи для проверки пароля не найдены.</string>
+    <string name="password_verified_re_encrypt">Пароль подтвержден! Пожалуйста, подтвердите с помощью биометрии, чтобы повторно активировать
+        быструю разблокировку на этом устройстве.</string>
+</resources>
