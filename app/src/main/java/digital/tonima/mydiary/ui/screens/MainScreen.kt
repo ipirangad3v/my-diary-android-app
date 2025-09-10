@@ -354,7 +354,7 @@ fun MainScreen(
                             )
                             HorizontalDivider(Modifier, DividerDefaults.Thickness, DividerDefaults.color)
                             NotesListView(
-                                modifier = Modifier.weight(1f),
+                                modifier = Modifier.weight(1f).fillMaxWidth(),
                                 isLoading = isLoading,
                                 allDiaryEntries = allDiaryFiles,
                                 filteredEntries = filteredEntries,
