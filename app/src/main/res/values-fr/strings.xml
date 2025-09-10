@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">Mon journal</string>
-
-    <!-- Biometric Prompt & Toasts -->
     <string name="acess_to_diary">Accès au journal</string>
     <string name="use_pin_or_digital_to_continue">Utilisez votre PIN ou votre empreinte digitale pour continuer</string>
     <string name="sucessful_unlock">Authentification réussie !</string>
@@ -13,12 +11,8 @@
     <string name="cancel">Annuler</string>
     <string name="setup_lock_screen_prompt">Veuillez configurer un PIN, un schéma ou une empreinte digitale dans les paramètres de sécurité
         de votre appareil.</string>
-
-    <!-- Locked Screen -->
     <string name="unlock_diary">Déverrouiller le journal</string>
     <string name="locked_diary">Journal verrouillé</string>
-
-    <!-- Main Screen -->
     <string name="lock_diary">Verrouiller le journal</string>
     <string name="ask_for_lock_diary">Voulez-vous verrouiller le journal et exiger à nouveau une authentification ?</string>
     <string name="lock_confirm">Oui, verrouiller</string>
@@ -32,8 +26,8 @@
     <string name="confirm_deletion_title">Confirmer la suppression</string>
     <string name="confirm_deletion_message">Êtes-vous sûr de vouloir supprimer cette note ? Cette action est irréversible.</string>
     <string name="confirm">Confirmer</string>
-
-    <!-- Add Entry Screen -->
+    <string name="none_note_for_this_day">Aucune note pour ce jour.</string>
+    <string name="select_a_day_to_see_notes">Sélectionnez un jour sur le calendrier pour voir les notes.</string>
     <string name="new_note">Nouvelle note</string>
     <string name="back">Retour</string>
     <string name="save_note">Enregistrer la note</string>
@@ -43,8 +37,6 @@
     <string name="start_writing">Commencez à écrire…</string>
     <string name="new_entry">Nouvelle entrée</string>
     <string name="save_entry">Enregistrer l\'entrée</string>
-
-    <!-- Password Screen -->
     <string name="password_too_short">Mot de passe trop court</string>
     <string name="passwords_do_not_match">Les mots de passe ne correspondent pas</string>
     <string name="save_password">Enregistrer le mot de passe</string>
@@ -57,8 +49,6 @@
         être récupéré. Si vous l\'oubliez, vos notes deviendront inaccessibles en permanence.</string>
     <string name="secure_your_password">Sécurisez votre mot de passe</string>
     <string name="confirm_to_encrypt">Confirmez votre identité pour chiffrer votre mot de passe maître</string>
-
-    <!-- Manual Password Recovery Screen -->
     <string name="master_password_recovery">Récupération avec le mot de passe maître</string>
     <string name="master_password_recovery_desc">Le déverrouillage biométrique n\'est pas disponible. Veuillez saisir votre mot de passe maître
         pour continuer.</string>
@@ -67,4 +57,9 @@
     <string name="no_entries_for_verification">Aucune entrée trouvée pour la vérification du mot de passe.</string>
     <string name="password_verified_re_encrypt">Mot de passe vérifié ! Veuillez confirmer avec vos données biométriques pour réactiver le
         déverrouillage rapide sur cet appareil.</string>
+    <string name="loading">Chargement</string>
+    <string name="content_required">La note doit être remplie</string>
+    <string name="no_title">Sans titre</string>
+    <string name="title">Titre</string>
+    <string name="your_thoughts">Vos pensées</string>
 </resources>

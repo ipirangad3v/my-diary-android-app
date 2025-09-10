@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">Mein Tagebuch</string>
-
-    <!-- Biometric Prompt & Toasts -->
     <string name="acess_to_diary">Zugriff auf das Tagebuch</string>
     <string name="use_pin_or_digital_to_continue">Verwenden Sie Ihre PIN oder Ihren Fingerabdruck, um fortzufahren</string>
     <string name="sucessful_unlock">Authentifizierung erfolgreich!</string>
@@ -13,12 +11,8 @@
     <string name="cancel">Abbrechen</string>
     <string name="setup_lock_screen_prompt">Bitte richten Sie eine PIN, ein Muster oder einen Fingerabdruck in den Sicherheitseinstellungen
         Ihres Geräts ein.</string>
-
-    <!-- Locked Screen -->
     <string name="unlock_diary">Tagebuch entsperren</string>
     <string name="locked_diary">Tagebuch gesperrt</string>
-
-    <!-- Main Screen -->
     <string name="lock_diary">Tagebuch sperren</string>
     <string name="ask_for_lock_diary">Möchten Sie das Tagebuch sperren und erneut eine Authentifizierung verlangen?</string>
     <string name="lock_confirm">Ja, sperren</string>
@@ -33,8 +27,8 @@
     <string name="confirm_deletion_message">Sind Sie sicher, dass Sie diese Notiz löschen möchten? Diese Aktion kann nicht rückgängig
         gemacht werden.</string>
     <string name="confirm">Bestätigen</string>
-
-    <!-- Add Entry Screen -->
+    <string name="none_note_for_this_day">Keine Notizen für diesen Tag.</string>
+    <string name="select_a_day_to_see_notes">Wählen Sie einen Tag im Kalender aus, um die Notizen zu sehen.</string>
     <string name="new_note">Neue Notiz</string>
     <string name="back">Zurück</string>
     <string name="save_note">Notiz speichern</string>
@@ -44,8 +38,6 @@
     <string name="start_writing">Beginnen Sie zu schreiben…</string>
     <string name="new_entry">Neuer Eintrag</string>
     <string name="save_entry">Eintrag speichern</string>
-
-    <!-- Password Screen -->
     <string name="password_too_short">Passwort zu kurz</string>
     <string name="passwords_do_not_match">Passwörter stimmen nicht überein</string>
     <string name="save_password">Passwort speichern</string>
@@ -59,8 +51,6 @@
         unzugänglich.</string>
     <string name="secure_your_password">Sichern Sie Ihr Passwort</string>
     <string name="confirm_to_encrypt">Bestätigen Sie Ihre Identität, um Ihr Master-Passwort zu verschlüsseln</string>
-
-    <!-- Manual Password Recovery Screen -->
     <string name="master_password_recovery">Wiederherstellung mit Master-Passwort</string>
     <string name="master_password_recovery_desc">Biometrisches Entsperren ist nicht verfügbar. Bitte geben Sie Ihr Master-Passwort ein, um
         fortzufahren.</string>
@@ -69,4 +59,9 @@
     <string name="no_entries_for_verification">Keine Einträge zur Passwortüberprüfung gefunden.</string>
     <string name="password_verified_re_encrypt">Passwort bestätigt! Bitte bestätigen Sie mit Ihren biometrischen Daten, um das schnelle
         Entsperren auf diesem Gerät wieder zu aktivieren.</string>
+    <string name="loading">Wird geladen</string>
+    <string name="content_required">Die Notiz muss ausgefüllt werden</string>
+    <string name="no_title">Ohne Titel</string>
+    <string name="title">Titel</string>
+    <string name="your_thoughts">Seus pensamentos</string>
 </resources>

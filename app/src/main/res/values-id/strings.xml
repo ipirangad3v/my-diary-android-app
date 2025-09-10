@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">Buku Harian Saya</string>
-
-    <!-- Biometric Prompt & Toasts -->
     <string name="acess_to_diary">Akses ke Buku Harian</string>
     <string name="use_pin_or_digital_to_continue">Gunakan PIN atau sidik jari Anda untuk melanjutkan</string>
     <string name="sucessful_unlock">Autentikasi berhasil!</string>
@@ -12,12 +10,8 @@
     <string name="unsupported_auth">Autentikasi tidak didukung.</string>
     <string name="cancel">Batal</string>
     <string name="setup_lock_screen_prompt">Harap atur PIN, pola, atau sidik jari di pengaturan keamanan perangkat Anda.</string>
-
-    <!-- Locked Screen -->
     <string name="unlock_diary">Buka Kunci Buku Harian</string>
     <string name="locked_diary">Buku Harian Terkunci</string>
-
-    <!-- Main Screen -->
     <string name="lock_diary">Kunci Buku Harian</string>
     <string name="ask_for_lock_diary">Apakah Anda ingin mengunci buku harian dan meminta autentikasi lagi?</string>
     <string name="lock_confirm">Ya, kunci</string>
@@ -31,8 +25,8 @@
     <string name="confirm_deletion_title">Konfirmasi Penghapusan</string>
     <string name="confirm_deletion_message">Apakah Anda yakin ingin menghapus catatan ini? Tindakan ini tidak dapat diurungkan.</string>
     <string name="confirm">Konfirmasi</string>
-
-    <!-- Add Entry Screen -->
+    <string name="none_note_for_this_day">Tidak ada catatan untuk hari ini.</string>
+    <string name="select_a_day_to_see_notes">Pilih tanggal di kalender untuk melihat catatan.</string>
     <string name="new_note">Catatan Baru</string>
     <string name="back">Kembali</string>
     <string name="save_note">Simpan Catatan</string>
@@ -42,8 +36,6 @@
     <string name="start_writing">Mulai menulis…</string>
     <string name="new_entry">Entri baru</string>
     <string name="save_entry">Simpan entri</string>
-
-    <!-- Password Screen -->
     <string name="password_too_short">Kata sandi terlalu pendek</string>
     <string name="passwords_do_not_match">Kata sandi tidak cocok</string>
     <string name="save_password">Simpan kata sandi</string>
@@ -56,8 +48,6 @@
         karena tidak dapat dipulihkan. Jika Anda lupa, catatan Anda akan menjadi tidak dapat diakses secara permanen.</string>
     <string name="secure_your_password">Amankan kata sandi Anda</string>
     <string name="confirm_to_encrypt">Konfirmasikan identitas Anda untuk mengenkripsi kata sandi utama Anda</string>
-
-    <!-- Manual Password Recovery Screen -->
     <string name="master_password_recovery">Pemulihan dengan Kata Sandi Utama</string>
     <string name="master_password_recovery_desc">Buka kunci biometrik tidak tersedia. Silakan masukkan kata sandi utama Anda untuk melanjutkan.</string>
     <string name="unlock">Buka kunci</string>
@@ -65,4 +55,9 @@
     <string name="no_entries_for_verification">Tidak ada entri yang ditemukan untuk verifikasi kata sandi.</string>
     <string name="password_verified_re_encrypt">Kata sandi terverifikasi! Harap konfirmasi dengan biometrik Anda untuk mengaktifkan kembali buka
         kunci cepat di perangkat ini.</string>
+    <string name="loading">Memuat</string>
+    <string name="content_required">Catatan harus diisi</string>
+    <string name="no_title">Tanpa judul</string>
+    <string name="title">Judul</string>
+    <string name="your_thoughts">Pikiran Anda</string>
 </resources>

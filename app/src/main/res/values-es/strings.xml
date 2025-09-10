@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Mi diario</string>
-
-    <!-- Biometric Prompt & Toasts -->
     <string name="acess_to_diary">Acceso al Diario</string>
     <string name="use_pin_or_digital_to_continue">Usa tu huella o PIN para continuar</string>
     <string name="sucessful_unlock">¡Autenticación exitosa!</string>
@@ -12,12 +10,8 @@
     <string name="none_pin_or_digital_set">No se ha configurado ninguna huella o PIN.</string>
     <string name="unsupported_auth">Autenticación no compatible.</string>
     <string name="cancel">Cancelar</string>
-
-    <!-- Locked Screen -->
     <string name="unlock_diary">Desbloquear Diario</string>
     <string name="locked_diary">Diario Bloqueado</string>
-
-    <!-- Main Screen -->
     <string name="lock_diary">Bloquear Diario</string>
     <string name="ask_for_lock_diary">¿Quieres bloquear el diario y requerir autenticación de nuevo?</string>
     <string name="lock_confirm">Sí, bloquear</string>
@@ -33,8 +27,8 @@
     <string name="confirm">Confirmar</string>
     <string name="setup_lock_screen_prompt">Configure un PIN, un patrón o una huella digital en la configuración de seguridad de su
         dispositivo.</string>
-
-    <!-- Add Entry Screen -->
+    <string name="none_note_for_this_day">Ninguna nota para este día.</string>
+    <string name="select_a_day_to_see_notes">Seleccione un día en el calendario para ver las notas.</string>
     <string name="new_note">Nueva Nota</string>
     <string name="back">Volver</string>
     <string name="save_note">Guardar Nota</string>
@@ -45,8 +39,6 @@
     <string name="write_here">Escribe aquí</string>
     <string name="new_entry">Nueva entrada</string>
     <string name="save_entry">guardar entrada</string>
-
-    <!-- Password Screen -->
     <string name="password_too_short">La contraseña es demasiado corta</string>
     <string name="passwords_do_not_match">Las contraseñas no son las mismas</string>
     <string name="save_password">Guardar contraseña</string>
@@ -58,8 +50,6 @@
         olvidas, tus notas quedarán inaccesibles para siempre.</string>
     <string name="secure_your_password">Protege tu contraseña</string>
     <string name="confirm_to_encrypt">Confirme su identidad para encriptar su contraseña maestra</string>
-
-    <!-- Manual Password Recovery Screen -->
     <string name="master_password_recovery">Recuperación de contraseña maestra</string>
     <string name="master_password_recovery_desc">El desbloqueo biométrico no está disponible. Ingrese su contraseña maestra para continuar.</string>
     <string name="unlock">Desbloquear</string>
@@ -67,4 +57,9 @@
     <string name="no_entries_for_verification">No se encontraron entradas para la verificación de contraseña.</string>
     <string name="password_verified_re_encrypt">¡Contraseña verificada! Confirme con sus datos biométricos para volver a activar el desbloqueo
         rápido en este dispositivo.</string>
+    <string name="loading">Cargando</string>
+    <string name="content_required">La nota debe ser completada</string>
+    <string name="no_title">" Sin título"</string>
+    <string name="title">Título</string>
+    <string name="your_thoughts">Tus pensamientos</string>
 </resources>

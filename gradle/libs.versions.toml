@@ -27,6 +27,7 @@ spotless = "7.2.1"
 compose-calendar= "2.8.0"
 playServicesAdsApi = "24.6.0"
 crashlytics = "3.0.6"
+gson = "2.13.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -62,6 +63,7 @@ core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "coreKtxV
 compose-calendar = { group = "com.kizitonwose.calendar", name = "compose", version.ref = "compose-calendar" }
 play-services-ads-api = { group = "com.google.android.gms", name = "play-services-ads-api", version.ref = "playServicesAdsApi" }
 crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics" }
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
