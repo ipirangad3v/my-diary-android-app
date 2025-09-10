@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">Meu diário</string>
-
-    <!-- Biometric Prompt & Toasts -->
     <string name="acess_to_diary">Acesso ao Diário</string>
     <string name="use_pin_or_digital_to_continue">Use sua digital ou PIN para continuar</string>
     <string name="sucessful_unlock">Autenticação bem-sucedida!</string>
@@ -12,12 +10,8 @@
     <string name="unsupported_auth">Autenticação não suportada.</string>
     <string name="cancel">Cancelar</string>
     <string name="setup_lock_screen_prompt">Por favor, configure um PIN, padrão ou digital nas configurações de segurança do seu aparelho.</string>
-
-    <!-- Locked Screen -->
     <string name="unlock_diary">Desbloquear Diário</string>
     <string name="locked_diary">Diário Bloqueado</string>
-
-    <!-- Main Screen -->
     <string name="lock_diary">Bloquear Diário</string>
     <string name="ask_for_lock_diary">Deseja bloquear o diário e exigir autenticação novamente?</string>
     <string name="lock_confirm">Sim, bloquear</string>
@@ -31,8 +25,7 @@
     <string name="confirm_deletion_title">Confirmar Exclusão</string>
     <string name="confirm_deletion_message">Você tem certeza que deseja deletar esta nota? Esta ação não pode ser desfeita.</string>
     <string name="confirm">Confirmar</string>
-
-    <!-- Add Entry Screen -->
+    <string name="select_a_day_to_see_notes">Selecione um dia no calendário para ver as notas.</string>
     <string name="new_note">Nova Anotação</string>
     <string name="back">Voltar</string>
     <string name="save_note">Salvar Anotação</string>
@@ -42,8 +35,6 @@
     <string name="start_writing">Comece a escrever…</string>
     <string name="new_entry">Nova entrada</string>
     <string name="save_entry">Salvar entrada</string>
-
-    <!-- Password Screen -->
     <string name="password_too_short">Senha muito curta</string>
     <string name="passwords_do_not_match">Senhas não são iguais</string>
     <string name="save_password">Salvar senha</string>
@@ -56,8 +47,6 @@
         Se você a esquecer, suas anotações ficarão permanentemente inacessíveis.</string>
     <string name="secure_your_password">Proteja sua senha</string>
     <string name="confirm_to_encrypt">Confirme sua identidade para criptografar sua senha mestra</string>
-
-    <!-- Manual Password Recovery Screen -->
     <string name="master_password_recovery">Recuperação com Senha Mestra</string>
     <string name="master_password_recovery_desc">O desbloqueio por biometria não está disponível. Por favor, insira sua senha mestra para
         continuar.</string>
@@ -66,4 +55,10 @@
     <string name="no_entries_for_verification">Nenhuma anotação encontrada para verificação da senha.</string>
     <string name="password_verified_re_encrypt">Senha verificada! Por favor, confirme com sua biometria para reativar o desbloqueio rápido neste
         dispositivo.</string>
+    <string name="none_note_for_this_day">Nenhuma nota para este dia.</string>
+    <string name="loading">Carregando</string>
+    <string name="content_required">A nota precisa ser preenchida</string>
+    <string name="no_title">Sem título</string>
+    <string name="title">Título</string>
+    <string name="your_thoughts">Seus pensamentos</string>
 </resources>

@@ -15,7 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import digital.tonima.mydiary.BuildConfig
+import digital.tonima.mydiary.BuildConfig.ADMOB_BANNER_AD_UNIT_LOCKED_DIARY
 import digital.tonima.mydiary.R.string.locked_diary
 import digital.tonima.mydiary.R.string.unlock_diary
 import digital.tonima.mydiary.ui.components.AdBannerView
@@ -36,6 +36,7 @@ fun LockedScreen(onUnlockRequest: () -> Unit) {
                 .fillMaxSize(),
             verticalArrangement = Arrangement.Center
         ) {
+            AdBannerView(adId = ADMOB_BANNER_AD_UNIT_LOCKED_DIARY)
             Box(
                 modifier = Modifier
                     .weight(1f)
@@ -44,8 +45,6 @@ fun LockedScreen(onUnlockRequest: () -> Unit) {
             ) {
                 Text(text = stringResource(id = locked_diary))
             }
-
-            AdBannerView(adId = BuildConfig.ADMOB_BANNER_AD_UNIT_LOCKED_DIARY)
         }
     }
 }

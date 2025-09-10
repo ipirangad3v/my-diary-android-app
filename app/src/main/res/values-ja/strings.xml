@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">私の日記</string>
-
-    <!-- Biometric Prompt & Toasts -->
     <string name="acess_to_diary">日記へのアクセス</string>
     <string name="use_pin_or_digital_to_continue">続行するにはPINまたは指紋を使用してください</string>
     <string name="sucessful_unlock">認証に成功しました！</string>
@@ -12,12 +10,8 @@
     <string name="unsupported_auth">サポートされていない認証です。</string>
     <string name="cancel">キャンセル</string>
     <string name="setup_lock_screen_prompt">デバイスのセキュリティ設定でPIN、パターン、または指紋を設定してください。</string>
-
-    <!-- Locked Screen -->
     <string name="unlock_diary">日記のロックを解除</string>
     <string name="locked_diary">日記はロックされています</string>
-
-    <!-- Main Screen -->
     <string name="lock_diary">日記をロック</string>
     <string name="ask_for_lock_diary">日記をロックして再度認証を要求しますか？</string>
     <string name="lock_confirm">はい、ロックします</string>
@@ -31,8 +25,8 @@
     <string name="confirm_deletion_title">削除の確認</string>
     <string name="confirm_deletion_message">このメモを本当に削除しますか？この操作は元に戻せません。</string>
     <string name="confirm">確認</string>
-
-    <!-- Add Entry Screen -->
+    <string name="none_note_for_this_day">この日のメモはありません。</string>
+    <string name="select_a_day_to_see_notes">カレンダーで日付を選択してメモを表示します。</string>
     <string name="new_note">新しいメモ</string>
     <string name="back">戻る</string>
     <string name="save_note">メモを保存</string>
@@ -42,8 +36,6 @@
     <string name="start_writing">書き始める…</string>
     <string name="new_entry">新しいエントリー</string>
     <string name="save_entry">エントリーを保存</string>
-
-    <!-- Password Screen -->
     <string name="password_too_short">パスワードが短すぎます</string>
     <string name="passwords_do_not_match">パスワードが一致しません</string>
     <string name="save_password">パスワードを保存</string>
@@ -54,12 +46,15 @@
     <string name="master_password_description">このマスターパスワードはすべてのメモを保護し、携帯電話を変更したりアプリを再インストールした場合に日記にアクセスする唯一の方法です。回復できないため、安全な場所に保管してください。忘れた場合、メモは永久にアクセスできなくなります。</string>
     <string name="secure_your_password">パスワードを保護してください</string>
     <string name="confirm_to_encrypt">マスターパスワードを暗号化するために本人確認を行ってください</string>
-
-    <!-- Manual Password Recovery Screen -->
     <string name="master_password_recovery">マスターパスワードによる回復</string>
     <string name="master_password_recovery_desc">生体認証ロック解除は利用できません。続行するにはマスターパスワードを入力してください。</string>
     <string name="unlock">ロック解除</string>
     <string name="incorrect_password_try_again">パスワードが正しくありません。もう一度お試しください。</string>
     <string name="no_entries_for_verification">パスワード確認のためのエントリが見つかりません。</string>
     <string name="password_verified_re_encrypt">パスワードが確認されました！このデバイスでクイックロック解除を再度有効にするには、生体認証で確認してください。</string>
+    <string name="loading">読み込み中</string>
+    <string name="content_required">メモを入力する必要があります</string>
+    <string name="no_title">無題</string>
+    <string name="title">タイトル</string>
+    <string name="your_thoughts">あなたの考え</string>
 </resources>

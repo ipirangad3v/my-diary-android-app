@@ -31,8 +31,8 @@
     <string name="confirm_deletion_title">确认删除</string>
     <string name="confirm_deletion_message">您确定要删除此笔记吗？此操作无法撤销。</string>
     <string name="confirm">确认</string>
-
-    <!-- Add Entry Screen -->
+    <string name="none_note_for_this_day">此日期没有笔记。</string>
+    <string name="select_a_day_to_see_notes">在日历上选择一天以查看笔记。</string>
     <string name="new_note">新笔记</string>
     <string name="back">返回</string>
     <string name="save_note">保存笔记</string>
@@ -42,8 +42,6 @@
     <string name="start_writing">开始写作…</string>
     <string name="new_entry">新条目</string>
     <string name="save_entry">保存条目</string>
-
-    <!-- Password Screen -->
     <string name="password_too_short">密码太短</string>
     <string name="passwords_do_not_match">密码不匹配</string>
     <string name="save_password">保存密码</string>
@@ -54,12 +52,15 @@
     <string name="master_password_description">此主密码保护您的所有笔记，是您更换手机或重新安装应用时访问日记的唯一方式。请将其保存在安全的地方，因为它无法恢复。如果您忘记了，您的笔记将永久无法访问。</string>
     <string name="secure_your_password">保护您的密码</string>
     <string name="confirm_to_encrypt">请确认您的身份以加密您的主密码</string>
-
-    <!-- Manual Password Recovery Screen -->
     <string name="master_password_recovery">使用主密码恢复</string>
     <string name="master_password_recovery_desc">生物识别解锁不可用。请输入您的主密码以继续。</string>
     <string name="unlock">解锁</string>
     <string name="incorrect_password_try_again">密码不正确。请重试。</string>
     <string name="no_entries_for_verification">未找到用于密码验证的条目。</string>
     <string name="password_verified_re_encrypt">密码已验证！请使用您的生物识别信息确认，以在此设备上重新激活快速解锁。</string>
+    <string name="loading">加载中</string>
+    <string name="content_required">需要填写备注</string>
+    <string name="no_title">无标题</string>
+    <string name="title">标题</string>
+    <string name="your_thoughts">你的想法</string>
 </resources>

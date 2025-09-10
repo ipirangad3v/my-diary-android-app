@@ -3,10 +3,12 @@ package digital.tonima.mydiary.utils
 import android.util.Log
 import java.io.File
 import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
 import java.util.Date
+import java.util.Locale
 
 fun getLocalDateFromFile(file: File): LocalDate? {
     return try {
@@ -18,13 +20,12 @@ fun getLocalDateFromFile(file: File): LocalDate? {
     }
 }
 
-fun formatTimestamp(filename: String): String {
+fun formatTimestampToHourAndMinute(filename: String): String {
     return try {
         val timestamp = filename.removePrefix("entry_").removeSuffix(".txt").toLong()
-        val dateFormat = DateFormat.getDateTimeInstance()
-        dateFormat.format(Date(timestamp))
-    } catch (e: Exception) {
-        Log.e("DateFormat", "Error formatting timestamp from filename: $filename", e)
-        "Data Inválida"
+        val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+        sdf.format(Date(timestamp))
+    } catch (_: Exception) {
+        "--:--"
     }
 }

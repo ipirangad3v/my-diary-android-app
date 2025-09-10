@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">مذكراتي</string>
-
-    <!-- Biometric Prompt & Toasts -->
     <string name="acess_to_diary">الوصول إلى المذكرات</string>
     <string name="use_pin_or_digital_to_continue">استخدم رقم التعريف الشخصي أو بصمة الإصبع للمتابعة</string>
     <string name="sucessful_unlock">نجحت المصادقة!</string>
@@ -12,12 +10,8 @@
     <string name="unsupported_auth">المصادقة غير مدعومة.</string>
     <string name="cancel">إلغاء</string>
     <string name="setup_lock_screen_prompt">يرجى إعداد رقم تعريف شخصي أو نمط أو بصمة إصبع في إعدادات أمان جهازك.</string>
-
-    <!-- Locked Screen -->
     <string name="unlock_diary">فتح المذكرات</string>
     <string name="locked_diary">المذكرات مقفلة</string>
-
-    <!-- Main Screen -->
     <string name="lock_diary">قفل المذكرات</string>
     <string name="ask_for_lock_diary">هل تريد قفل المذكرات وطلب المصادقة مرة أخرى؟</string>
     <string name="lock_confirm">نعم، قفل</string>
@@ -31,8 +25,8 @@
     <string name="confirm_deletion_title">تأكيد الحذف</string>
     <string name="confirm_deletion_message">هل أنت متأكد من أنك تريد حذف هذه الملاحظة؟ لا يمكن التراجع عن هذا الإجراء.</string>
     <string name="confirm">تأكيد</string>
-
-    <!-- Add Entry Screen -->
+    <string name="none_note_for_this_day">لا توجد ملاحظات لهذا اليوم.</string>
+    <string name="select_a_day_to_see_notes">حدد يومًا في التقويم لرؤية الملاحظات.</string>
     <string name="new_note">ملاحظة جديدة</string>
     <string name="back">رجوع</string>
     <string name="save_note">حفظ الملاحظة</string>
@@ -42,8 +36,6 @@
     <string name="start_writing">ابدأ الكتابة…</string>
     <string name="new_entry">إدخال جديد</string>
     <string name="save_entry">حفظ الإدخال</string>
-
-    <!-- Password Screen -->
     <string name="password_too_short">كلمة المرور قصيرة جدًا</string>
     <string name="passwords_do_not_match">كلمتا المرور غير متطابقتين</string>
     <string name="save_password">حفظ كلمة المرور</string>
@@ -56,8 +48,6 @@
         غير قابلة للوصول إليها بشكل دائم.</string>
     <string name="secure_your_password">قم بتأمين كلمة المرور الخاصة بك</string>
     <string name="confirm_to_encrypt">قم بتأكيد هويتك لتشفير كلمة المرور الرئيسية الخاصة بك</string>
-
-    <!-- Manual Password Recovery Screen -->
     <string name="master_password_recovery">الاسترداد باستخدام كلمة المرور الرئيسية</string>
     <string name="master_password_recovery_desc">فتح القفل بالقياسات الحيوية غير متاح. يرجى إدخال كلمة المرور الرئيسية للمتابعة.</string>
     <string name="unlock">فتح القفل</string>
@@ -65,4 +55,9 @@
     <string name="no_entries_for_verification">لم يتم العثور على إدخالات للتحقق من كلمة المرور.</string>
     <string name="password_verified_re_encrypt">تم التحقق من كلمة المرور! يرجى التأكيد باستخدام القياسات الحيوية الخاصة بك لإعادة تنشيط الفتح
         السريع على هذا الجهاز.</string>
+    <string name="loading">" جارٍ التحميل"</string>
+    <string name="content_required">يجب ملء الملاحظة</string>
+    <string name="no_title">" بدون عنوان"</string>
+    <string name="title">عنوان</string>
+    <string name="your_thoughts">Seus pensamentos</string>
 </resources>

@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">আমার ডায়েরি</string>
-
-    <!-- Biometric Prompt & Toasts -->
     <string name="acess_to_diary">ডায়েরিতে অ্যাক্সেস</string>
     <string name="use_pin_or_digital_to_continue">চালিয়ে যেতে আপনার পিন বা আঙুলের ছাপ ব্যবহার করুন</string>
     <string name="sucessful_unlock">প্রমাণীকরণ সফল!</string>
@@ -12,12 +10,8 @@
     <string name="unsupported_auth">প্রমাণীকরণ সমর্থিত নয়।</string>
     <string name="cancel">বাতিল</string>
     <string name="setup_lock_screen_prompt">অনুগ্রহ করে আপনার ডিভাইসের সুরক্ষা সেটিংসে একটি পিন, প্যাটার্ন বা আঙুলের ছাপ সেট আপ করুন।</string>
-
-    <!-- Locked Screen -->
     <string name="unlock_diary">ডায়েরি আনলক করুন</string>
     <string name="locked_diary">ডায়েরি লক করা আছে</string>
-
-    <!-- Main Screen -->
     <string name="lock_diary">ডায়েরি লক করুন</string>
     <string name="ask_for_lock_diary">আপনি কি ডায়েরি লক করতে এবং আবার প্রমাণীকরণের প্রয়োজন চান?</string>
     <string name="lock_confirm">হ্যাঁ, লক করুন</string>
@@ -31,8 +25,8 @@
     <string name="confirm_deletion_title">মুছে ফেলা নিশ্চিত করুন</string>
     <string name="confirm_deletion_message">আপনি কি নিশ্চিত যে আপনি এই নোটটি মুছে ফেলতে চান? এই ক্রিয়াটি ফিরিয়ে আনা যাবে না।</string>
     <string name="confirm">নিশ্চিত করুন</string>
-
-    <!-- Add Entry Screen -->
+    <string name="none_note_for_this_day">এই দিনের জন্য কোন নোট নেই।</string>
+    <string name="select_a_day_to_see_notes">নোট দেখতে ক্যালেন্ডারে একটি দিন নির্বাচন করুন।</string>
     <string name="new_note">নতুন নোট</string>
     <string name="back">ফিরে যান</string>
     <string name="save_note">নোট সংরক্ষণ করুন</string>
@@ -42,8 +36,6 @@
     <string name="start_writing">লেখা শুরু করুন…</string>
     <string name="new_entry">নতুন এন্ট্রি</string>
     <string name="save_entry">এন্ট্রি সংরক্ষণ করুন</string>
-
-    <!-- Password Screen -->
     <string name="password_too_short">পাসওয়ার্ড খুব ছোট</string>
     <string name="passwords_do_not_match">পাসওয়ার্ড মেলে না</string>
     <string name="save_password">পাসওয়ার্ড সংরক্ষণ করুন</string>
@@ -56,8 +48,6 @@
         পুনরুদ্ধার করা যাবে না। আপনি যদি এটি ভুলে যান, আপনার নোটগুলি স্থায়ীভাবে অ্যাক্সেসযোগ্য হবে না।</string>
     <string name="secure_your_password">আপনার পাসওয়ার্ড সুরক্ষিত করুন</string>
     <string name="confirm_to_encrypt">আপনার মাস্টার পাসওয়ার্ড এনক্রিপ্ট করতে আপনার পরিচয় নিশ্চিত করুন</string>
-
-    <!-- Manual Password Recovery Screen -->
     <string name="master_password_recovery">মাস্টার পাসওয়ার্ড দিয়ে পুনরুদ্ধার</string>
     <string name="master_password_recovery_desc">বায়োমেট্রিক আনলক উপলব্ধ নয়। চালিয়ে যেতে অনুগ্রহ করে আপনার মাস্টার পাসওয়ার্ড লিখুন।</string>
     <string name="unlock">আনলক</string>
@@ -65,4 +55,9 @@
     <string name="no_entries_for_verification">পাসওয়ার্ড যাচাইকরণের জন্য কোনো এন্ট্রি পাওয়া যায়নি।</string>
     <string name="password_verified_re_encrypt">পাসওয়ার্ড যাচাই করা হয়েছে! এই ডিভাইসে দ্রুত আনলক পুনরায় সক্রিয় করতে অনুগ্রহ করে আপনার
         বায়োমেট্রিক্স দিয়ে নিশ্চিত করুন।</string>
+    <string name="loading">লোড হচ্ছে</string>
+    <string name="content_required">নোটটি পূরণ করতে হবে</string>
+    <string name="no_title">শিরোনামহীন</string>
+    <string name="title">শিরোনাম</string>
+    <string name="your_thoughts">আপনার চিন্তা</string>
 </resources>
