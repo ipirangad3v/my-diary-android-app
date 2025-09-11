@@ -97,6 +97,15 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun resetApp() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                PasswordBasedCryptoManager.deleteAllEntries(applicationContext)
+                passwordRepository.clearPassword()
+            }
+            _uiState.value = SetupPassword
+        }
+    }
     fun lockApp() {
         _uiState.value = Locked
     }

@@ -65,4 +65,18 @@
     <string name="discard_changes_title">Ignorer les modifications ?</string>
     <string name="discard">Ignorer</string>
     <string name="discard_changes_message">Voulez-vous vraiment ignorer les modifications et revenir ?</string>
+    <string name="delete_all_notes">Effacer toutes les notes</string>
+    <string name="reset_master_password">Réinitialiser le mot de passe principal</string>
+    <string name="menu">Menu</string>
+    <string name="delete_all_confirmation_title">Supprimer toutes les notes</string>
+    <string name="delete_all_confirmation_message">Voulez-vous vraiment supprimer toutes les notes ? Cette action est irréversible.</string>
+    <string name="reset_app_confirmation_title">Réinitialiser l\'application</string>
+    <string name="reset_app_confirmation_message">Ceci réinitialisera votre mot de passe principal et supprimera toutes les notes, cette action
+        est irréversible. Voulez-vous vraiment continuer ?</string>
+    <string name="re_authentication_title">Confirmer l\'action</string>
+    <string name="re_authentication_subtitle">Veuillez confirmer votre identité pour continuer.</string>
+    <string name="remove_ads">Supprimer les publicités</string>
+    <string name="upgrade_confirmation_title">Supprimer les publicités ?</string>
+    <string name="upgrade_confirmation_message">Ceci supprimera toutes les publicités de l\'application. (Ceci est une simulation d\'achat à des
+        fins de développement).</string>
 </resources>

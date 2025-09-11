@@ -63,4 +63,17 @@
     <string name="discard_changes_title">परिवर्तनों को त्यागें?</string>
     <string name="discard">त्यागें</string>
     <string name="discard_changes_message">क्या आप वाकई परिवर्तनों को त्यागकर वापस जाना चाहते हैं?</string>
+    <string name="delete_all_notes">सभी नोट्स हटाएं</string>
+    <string name="reset_master_password">मास्टर पासवर्ड रीसेट करें</string>
+    <string name="menu">मेनू</string>
+    <string name="delete_all_confirmation_title">सभी नोट्स हटाएं</string>
+    <string name="delete_all_confirmation_message">क्या आप वाकई सभी नोट्स हटाना चाहते हैं? यह कार्रवाई पूर्ववत् नहीं की जा सकती।</string>
+    <string name="reset_app_confirmation_title">ऐप रीसेट करें</string>
+    <string name="reset_app_confirmation_message">यह आपका मास्टर पासवर्ड रीसेट कर देगा और सभी नोट्स हटा देगा, यह कार्रवाई पूर्ववत् नहीं की जा
+        सकती। क्या आप वाकई जारी रखना चाहते हैं?</string>
+    <string name="re_authentication_title">कार्रवाई की पुष्टि करें</string>
+    <string name="re_authentication_subtitle">कृपया जारी रखने के लिए अपनी पहचान की पुष्टि करें।</string>
+    <string name="remove_ads">विज्ञापन हटाएँ</string>
+    <string name="upgrade_confirmation_title">विज्ञापन हटाएँ?</string>
+    <string name="upgrade_confirmation_message">यह ऐप से सभी विज्ञापन हटा देगा। (यह विकास उद्देश्यों के लिए एक खरीद सिमुलेशन है)।</string>
 </resources>

@@ -1,13 +1,12 @@
 package digital.tonima.mydiary.biometrics
 
-import android.content.Intent
-import android.os.Build
-import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
 import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
+import androidx.biometric.BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED
+import androidx.biometric.BiometricManager.BIOMETRIC_SUCCESS
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
@@ -34,7 +33,7 @@ class BiometricAuthManager(private val activity: FragmentActivity) {
     fun authenticateForEncryption(onSuccess: (Cipher) -> Unit, onEnrollmentRequired: () -> Unit) {
         val biometricManager = BiometricManager.from(activity)
         when (biometricManager.canAuthenticate(allowedAuthenticators)) {
-            BiometricManager.BIOMETRIC_SUCCESS -> {
+            BIOMETRIC_SUCCESS -> {
                 val promptInfo = BiometricPrompt.PromptInfo.Builder()
                     .setTitle(activity.getString(R.string.secure_your_password))
                     .setSubtitle(activity.getString(R.string.confirm_to_encrypt))
@@ -60,7 +59,7 @@ class BiometricAuthManager(private val activity: FragmentActivity) {
                 }
             }
 
-            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
+            BIOMETRIC_ERROR_NONE_ENROLLED -> {
                 // The user can create credentials in settings.
                 onEnrollmentRequired()
             }
@@ -90,7 +89,7 @@ class BiometricAuthManager(private val activity: FragmentActivity) {
     ) {
         val biometricManager = BiometricManager.from(activity)
         when (biometricManager.canAuthenticate(allowedAuthenticators)) {
-            BiometricManager.BIOMETRIC_SUCCESS -> {
+            BIOMETRIC_SUCCESS -> {
                 // Device is ready for authentication.
                 val promptInfo = BiometricPrompt.PromptInfo.Builder()
                     .setTitle(activity.getString(R.string.acess_to_diary))
@@ -115,7 +114,7 @@ class BiometricAuthManager(private val activity: FragmentActivity) {
                 }
             }
 
-            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
+            BIOMETRIC_ERROR_NONE_ENROLLED -> {
                 // The user can create credentials in settings.
                 onEnrollmentRequired()
             }
@@ -156,5 +155,22 @@ class BiometricAuthManager(private val activity: FragmentActivity) {
                     }
                 }
             })
+    }
+
+    fun authenticateForAction(
+        titleResId: Int,
+        subtitleResId: Int,
+        onSuccess: () -> Unit
+    ) {
+        val promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle(activity.getString(titleResId))
+            .setSubtitle(activity.getString(subtitleResId))
+            .setAllowedAuthenticators(BIOMETRIC_STRONG or DEVICE_CREDENTIAL)
+            .build()
+
+        val biometricPrompt = createBiometricPrompt(
+            onSuccess = { onSuccess() }
+        )
+        biometricPrompt.authenticate(promptInfo)
     }
 }

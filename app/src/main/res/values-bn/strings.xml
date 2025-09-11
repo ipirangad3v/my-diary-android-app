@@ -63,4 +63,17 @@
     <string name="discard_changes_title">পরিবর্তনগুলি বাতিল করবেন?</string>
     <string name="discard">বাতিল করুন</string>
     <string name="discard_changes_message">আপনি কি সত্যিই পরিবর্তনগুলি বাতিল করে ফিরে যেতে চান?</string>
+    <string name="delete_all_notes">সমস্ত নোট মুছে ফেলুন</string>
+    <string name="reset_master_password">মাস্টার পাসওয়ার্ড রিসেট করুন</string>
+    <string name="menu">মেনু</string>
+    <string name="delete_all_confirmation_title">সমস্ত নোট মুছে ফেলুন</string>
+    <string name="delete_all_confirmation_message">আপনি কি সত্যিই সমস্ত নোট মুছে ফেলতে চান? এই কাজটি আর ফেরানো যাবে না।</string>
+    <string name="reset_app_confirmation_title">অ্যাপ রিসেট করুন</string>
+    <string name="reset_app_confirmation_message">এটি আপনার মাস্টার পাসওয়ার্ড রিসেট করবে এবং সমস্ত নোট মুছে ফেলবে, এই কাজটি ফিরিয়ে আনা যাবে না।
+        আপনি কি সত্যিই চালিয়ে যেতে চান?</string>
+    <string name="re_authentication_title">অ্যাকশন নিশ্চিত করুন</string>
+    <string name="re_authentication_subtitle">অনুগ্রহ করে চালিয়ে যাওয়ার জন্য আপনার পরিচয় নিশ্চিত করুন।</string>
+    <string name="remove_ads">বিজ্ঞাপন সরান</string>
+    <string name="upgrade_confirmation_title">বিজ্ঞাপন সরাবেন?</string>
+    <string name="upgrade_confirmation_message">এটি অ্যাপ থেকে সমস্ত বিজ্ঞাপন মুছে ফেলবে। (এটি ডেভেলপমেন্টের উদ্দেশ্যে একটি কেনাকাটার সিমুলেশন)।</string>
 </resources>

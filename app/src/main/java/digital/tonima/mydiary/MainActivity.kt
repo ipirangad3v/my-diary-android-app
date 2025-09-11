@@ -28,7 +28,7 @@ import digital.tonima.mydiary.biometrics.BiometricAuthManager
 import digital.tonima.mydiary.ui.screens.AddEntryScreen
 import digital.tonima.mydiary.ui.screens.AppScreen
 import digital.tonima.mydiary.ui.screens.LockedScreen
-import digital.tonima.mydiary.ui.screens.MainScreen
+import digital.tonima.mydiary.ui.screens.PrincipalScreen
 import digital.tonima.mydiary.ui.screens.ManualPasswordScreen
 import digital.tonima.mydiary.ui.screens.PasswordSetupScreen
 import digital.tonima.mydiary.ui.theme.MyDiaryTheme
@@ -110,10 +110,18 @@ class MainActivity : FragmentActivity() {
                     }
 
                     is AppScreen.Main -> {
-                        MainScreen(
+                        PrincipalScreen(
                             masterPassword = currentScreen.masterPassword,
                             onLockRequest = viewModel::lockApp,
-                            onAddEntry = viewModel::navigateToAddEntry
+                            onAddEntry = viewModel::navigateToAddEntry,
+                            onResetApp = viewModel::resetApp,
+                            onReauthenticate = { titleResId, subtitleResId, action ->
+                                biometricAuthManager.authenticateForAction(
+                                    titleResId = titleResId,
+                                    subtitleResId = subtitleResId,
+                                    onSuccess = action
+                                )
+                            }
                         )
                     }
 

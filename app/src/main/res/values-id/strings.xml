@@ -63,4 +63,18 @@
     <string name="discard_changes_title">Buang perubahan?</string>
     <string name="discard">Buang</string>
     <string name="discard_changes_message">Apakah Anda benar-benar ingin membuang</string>
+    <string name="delete_all_notes">Hapus semua catatan</string>
+    <string name="reset_master_password">Atur ulang kata sandi utama</string>
+    <string name="menu">Menu</string>
+    <string name="delete_all_confirmation_title">Hapus semua catatan</string>
+    <string name="delete_all_confirmation_message">Apakah Anda yakin ingin menghapus semua catatan? Tindakan ini tidak dapat diurungkan.</string>
+    <string name="reset_app_confirmation_title">Setel ulang aplikasi</string>
+    <string name="reset_app_confirmation_message">Ini akan mengatur ulang kata sandi utama Anda dan menghapus semua catatan, tindakan ini tidak
+        dapat diurungkan. Apakah Anda benar-benar ingin melanjutkan?</string>
+    <string name="re_authentication_title">Konfirmasi Tindakan</string>
+    <string name="re_authentication_subtitle">Harap konfirmasi identitas Anda untuk melanjutkan.</string>
+    <string name="remove_ads">Hapus iklan</string>
+    <string name="upgrade_confirmation_title">Hapus iklan?</string>
+    <string name="upgrade_confirmation_message">Ini akan menghapus semua iklan dari aplikasi. (Ini adalah simulasi pembelian untuk tujuan
+        pengembangan).</string>
 </resources>

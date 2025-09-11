@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import digital.tonima.mydiary.data.PasswordBasedCryptoManager
+import digital.tonima.mydiary.data.UserRepository
 import digital.tonima.mydiary.data.model.DiaryEntry
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,31 +19,57 @@ import java.io.File
 import java.time.LocalDate
 import javax.inject.Inject
 
-data class MainScreenUiState(
+data class PrincipalScreenUiState(
     val isLoading: Boolean = true,
     val allDecryptedEntries: Map<File, DiaryEntry> = emptyMap(),
     val selectedDate: LocalDate? = LocalDate.now(),
     val selectedEntry: Pair<File, DiaryEntry>? = null,
-    val showDeleteConfirmation: Boolean = false
+    val showDeleteConfirmation: Boolean = false,
+    val showDeleteAllConfirmation: Boolean = false,
+    val showResetAppConfirmation: Boolean = false,
+    val isProUser: Boolean = false,
+    val showUpgradeConfirmation: Boolean = false
 )
 
 @HiltViewModel
-class MainScreenViewModel @Inject constructor(
-    @ApplicationContext private val context: Context
+class PrincipalViewModel @Inject constructor(
+    @ApplicationContext private val context: Context,
+    private val userRepository: UserRepository,
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(MainScreenUiState())
+
+    private val _uiState = MutableStateFlow(PrincipalScreenUiState())
     val uiState = _uiState.asStateFlow()
+
+    fun loadProStatus() {
+        val isPro = userRepository.isProUser()
+        _uiState.update { it.copy(isProUser = isPro) }
+    }
+
+    fun onUpgradeToProRequest() {
+        _uiState.update { it.copy(showUpgradeConfirmation = true) }
+    }
+
+    fun onDismissUpgradeDialog() {
+        _uiState.update { it.copy(showUpgradeConfirmation = false) }
+    }
+
+    fun onConfirmUpgrade() {
+        userRepository.setProUser(true)
+        _uiState.update { it.copy(isProUser = true, showUpgradeConfirmation = false) }
+    }
 
     fun loadEntries(masterPassword: CharArray) {
         viewModelScope.launch {
+            loadProStatus()
             _uiState.update { it.copy(isLoading = true) }
             val decrypted = withContext(Dispatchers.IO) {
                 val files = PasswordBasedCryptoManager.getAllEntryFiles(context)
                 files.mapNotNull { file ->
-                    PasswordBasedCryptoManager.readDiaryEntry(context, file, masterPassword)?.let { entry ->
-                        file to entry
-                    }
+                    PasswordBasedCryptoManager.readDiaryEntry(file, masterPassword)
+                        ?.let { entry ->
+                            file to entry
+                        }
                 }.toMap()
             }
             _uiState.update {
@@ -66,6 +93,22 @@ class MainScreenViewModel @Inject constructor(
         }
     }
 
+    fun onDeleteAllRequest() {
+        _uiState.update { it.copy(showDeleteAllConfirmation = true) }
+    }
+
+    fun onDismissDeleteAllDialog() {
+        _uiState.update { it.copy(showDeleteAllConfirmation = false) }
+    }
+
+    fun onResetAppRequest() {
+        _uiState.update { it.copy(showResetAppConfirmation = true) }
+    }
+
+    fun onDismissResetAppDialog() {
+        _uiState.update { it.copy(showResetAppConfirmation = false, showDeleteAllConfirmation = false) }
+    }
+
     fun onDateSelected(date: LocalDate?) {
         _uiState.update { it.copy(selectedDate = date) }
     }
@@ -84,5 +127,15 @@ class MainScreenViewModel @Inject constructor(
 
     fun onDismissDeleteDialog() {
         _uiState.update { it.copy(showDeleteConfirmation = false) }
+    }
+
+    fun deleteAllEntries(masterPassword: CharArray) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                PasswordBasedCryptoManager.deleteAllEntries(context)
+            }
+            _uiState.update { it.copy(showDeleteAllConfirmation = false, showResetAppConfirmation = false) }
+            loadEntries(masterPassword)
+        }
     }
 }

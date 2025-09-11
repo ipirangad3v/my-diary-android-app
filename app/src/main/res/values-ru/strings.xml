@@ -64,4 +64,17 @@
     <string name="discard_changes_title">Отменить изменения?</string>
     <string name="discard">Отменить</string>
     <string name="discard_changes_message">Вы действительно хотите отменить изменения и вернуться?</string>
+    <string name="delete_all_notes">Удалить все заметки</string>
+    <string name="reset_master_password">Сбросить мастер-пароль</string>
+    <string name="menu">Меню</string>
+    <string name="delete_all_confirmation_title">Удалить все заметки</string>
+    <string name="delete_all_confirmation_message">Вы действительно хотите удалить все заметки? Это действие нельзя отменить.</string>
+    <string name="reset_app_confirmation_title">Сбросить приложение</string>
+    <string name="reset_app_confirmation_message">Это приведет к сбросу вашего мастер-пароля и удалению всех заметок, это действие нельзя
+        отменить. Вы действительно хотите продолжить?</string>
+    <string name="re_authentication_title">Подтвердить действие</string>
+    <string name="re_authentication_subtitle">Пожалуйста, подтвердите свою личность, чтобы продолжить.</string>
+    <string name="remove_ads">Удалить рекламу</string>
+    <string name="upgrade_confirmation_title">Удалить рекламу?</string>
+    <string name="upgrade_confirmation_message">Это удалит всю рекламу из приложения. (Это симуляция покупки в целях разработки).</string>
 </resources>

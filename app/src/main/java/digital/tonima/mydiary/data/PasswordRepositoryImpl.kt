@@ -72,4 +72,15 @@ class PasswordRepositoryImpl @Inject constructor(@ApplicationContext context: Co
     override fun hasPassword(): Boolean {
         return prefs.contains(PREF_KEY_ENCRYPTED_PASSWORD)
     }
+
+    /**
+     * Clears the stored encrypted password from persistent storage.
+     */
+    override fun clearPassword() {
+        prefs.edit {
+            remove(PREF_KEY_ENCRYPTED_PASSWORD)
+            remove(PREF_KEY_PASSWORD_IV)
+        }
+    }
+
 }
