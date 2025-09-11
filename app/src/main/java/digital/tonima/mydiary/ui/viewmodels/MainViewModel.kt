@@ -1,0 +1,88 @@
+package digital.tonima.mydiary.ui.viewmodels
+
+
+import android.content.Context
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
+import digital.tonima.mydiary.data.PasswordBasedCryptoManager
+import digital.tonima.mydiary.data.model.DiaryEntry
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.File
+import java.time.LocalDate
+import javax.inject.Inject
+
+data class MainScreenUiState(
+    val isLoading: Boolean = true,
+    val allDecryptedEntries: Map<File, DiaryEntry> = emptyMap(),
+    val selectedDate: LocalDate? = LocalDate.now(),
+    val selectedEntry: Pair<File, DiaryEntry>? = null,
+    val showDeleteConfirmation: Boolean = false
+)
+
+@HiltViewModel
+class MainScreenViewModel @Inject constructor(
+    @ApplicationContext private val context: Context
+) : ViewModel() {
+
+    private val _uiState = MutableStateFlow(MainScreenUiState())
+    val uiState = _uiState.asStateFlow()
+
+    fun loadEntries(masterPassword: CharArray) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+            val decrypted = withContext(Dispatchers.IO) {
+                val files = PasswordBasedCryptoManager.getAllEntryFiles(context)
+                files.mapNotNull { file ->
+                    PasswordBasedCryptoManager.readDiaryEntry(context, file, masterPassword)?.let { entry ->
+                        file to entry
+                    }
+                }.toMap()
+            }
+            _uiState.update {
+                it.copy(
+                    isLoading = false,
+                    allDecryptedEntries = decrypted
+                )
+            }
+        }
+    }
+
+    fun deleteSelectedEntry(masterPassword: CharArray) {
+        val entryToDelete = _uiState.value.selectedEntry?.first ?: return
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                PasswordBasedCryptoManager.deleteDiaryEntry(entryToDelete)
+            }
+            // Dismiss dialogs and reload entries
+            _uiState.update { it.copy(selectedEntry = null, showDeleteConfirmation = false) }
+            loadEntries(masterPassword)
+        }
+    }
+
+    fun onDateSelected(date: LocalDate?) {
+        _uiState.update { it.copy(selectedDate = date) }
+    }
+
+    fun onEntryClicked(file: File, entry: DiaryEntry) {
+        _uiState.update { it.copy(selectedEntry = file to entry) }
+    }
+
+    fun onDismissEntryDialog() {
+        _uiState.update { it.copy(selectedEntry = null) }
+    }
+
+    fun onDeleteRequest() {
+        _uiState.update { it.copy(showDeleteConfirmation = true) }
+    }
+
+    fun onDismissDeleteDialog() {
+        _uiState.update { it.copy(showDeleteConfirmation = false) }
+    }
+}

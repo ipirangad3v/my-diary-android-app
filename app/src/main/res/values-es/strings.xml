@@ -62,4 +62,7 @@
     <string name="no_title">" Sin título"</string>
     <string name="title">Título</string>
     <string name="your_thoughts">Tus pensamientos</string>
+    <string name="discard_changes_title">¿Descartar cambios?</string>
+    <string name="discard">Descartar</string>
+    <string name="discard_changes_message">¿Realmente desea descartar los cambios y volver?</string>
 </resources>

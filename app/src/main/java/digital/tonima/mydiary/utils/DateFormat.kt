@@ -2,7 +2,6 @@ package digital.tonima.mydiary.utils
 
 import android.util.Log
 import java.io.File
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.time.Instant
 import java.time.LocalDate
@@ -25,7 +24,7 @@ fun formatTimestampToHourAndMinute(filename: String): String {
         val timestamp = filename.removePrefix("entry_").removeSuffix(".txt").toLong()
         val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
         sdf.format(Date(timestamp))
-    } catch (_: Exception) {
+    } catch (e: Exception) {
         "--:--"
     }
 }

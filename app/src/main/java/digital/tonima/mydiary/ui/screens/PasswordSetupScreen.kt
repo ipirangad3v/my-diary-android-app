@@ -13,32 +13,39 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import digital.tonima.mydiary.R.string.confirm_password
 import digital.tonima.mydiary.R.string.create_master_password
 import digital.tonima.mydiary.R.string.master_password
 import digital.tonima.mydiary.R.string.master_password_description
-import digital.tonima.mydiary.R.string.password_too_short
-import digital.tonima.mydiary.R.string.passwords_do_not_match
 import digital.tonima.mydiary.R.string.save_password
+import digital.tonima.mydiary.ui.viewmodels.PasswordSetupEvent
+import digital.tonima.mydiary.ui.viewmodels.PasswordSetupViewModel
+import kotlinx.coroutines.flow.collectLatest
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PasswordSetupScreen(onPasswordSet: (CharArray) -> Unit) {
-    var password by rememberSaveable { mutableStateOf("") }
-    var confirmPassword by rememberSaveable { mutableStateOf("") }
-    var error by rememberSaveable { mutableStateOf<String?>(null) }
+fun PasswordSetupScreen(
+    viewModel: PasswordSetupViewModel = hiltViewModel(),
+    onPasswordSet: (CharArray) -> Unit,
+) {
+    val uiState by viewModel.uiState.collectAsState()
 
-    val context = LocalContext.current
+    LaunchedEffect(Unit) {
+        viewModel.eventFlow.collectLatest { event ->
+            when (event) {
+                is PasswordSetupEvent.PasswordSet -> onPasswordSet(event.password)
+            }
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -52,36 +59,32 @@ fun PasswordSetupScreen(onPasswordSet: (CharArray) -> Unit) {
         Text(text = stringResource(master_password_description), style = MaterialTheme.typography.bodyMedium)
         Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(
-            value = password,
-            onValueChange = { password = it },
+            value = uiState.password,
+            onValueChange = viewModel::onPasswordChange,
             label = { Text(stringResource(master_password)) },
             visualTransformation = PasswordVisualTransformation(),
-            isError = error != null,
+            isError = uiState.errorResId != null,
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
-            value = confirmPassword,
-            onValueChange = { confirmPassword = it },
+            value = uiState.confirmPassword,
+            onValueChange = viewModel::onConfirmPasswordChange,
             label = { Text(stringResource(confirm_password)) },
             visualTransformation = PasswordVisualTransformation(),
-            isError = error != null,
+            isError = uiState.errorResId != null,
             modifier = Modifier.fillMaxWidth()
         )
-        error?.let {
-            Text(text = it, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
+        uiState.errorResId?.let { errorRes ->
+            Text(
+                text = stringResource(errorRes),
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodySmall
+            )
         }
         Spacer(modifier = Modifier.height(16.dp))
         Button(
-            onClick = {
-                if (password.length < 6) {
-                    error = context.getString(password_too_short)
-                } else if (password != confirmPassword) {
-                    error = context.getString(passwords_do_not_match)
-                } else {
-                    onPasswordSet(password.toCharArray())
-                }
-            },
+            onClick = viewModel::onSavePasswordClicked,
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(stringResource(save_password))

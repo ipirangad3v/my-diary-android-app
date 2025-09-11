@@ -60,4 +60,7 @@
     <string name="no_title">শিরোনামহীন</string>
     <string name="title">শিরোনাম</string>
     <string name="your_thoughts">আপনার চিন্তা</string>
+    <string name="discard_changes_title">পরিবর্তনগুলি বাতিল করবেন?</string>
+    <string name="discard">বাতিল করুন</string>
+    <string name="discard_changes_message">আপনি কি সত্যিই পরিবর্তনগুলি বাতিল করে ফিরে যেতে চান?</string>
 </resources>

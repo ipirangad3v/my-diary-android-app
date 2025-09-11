@@ -60,4 +60,7 @@
     <string name="no_title">Untitled</string>
     <string name="title">Title</string>
     <string name="your_thoughts">Seus pensamentos</string>
+    <string name="discard_changes_title">Discard changes?</string>
+    <string name="discard">Discard</string>
+    <string name="discard_changes_message">Do you really want to discard the changes and go back?</string>
 </resources>

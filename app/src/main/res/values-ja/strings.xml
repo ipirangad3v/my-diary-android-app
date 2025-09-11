@@ -57,4 +57,7 @@
     <string name="no_title">無題</string>
     <string name="title">タイトル</string>
     <string name="your_thoughts">あなたの考え</string>
+    <string name="discard_changes_title">変更を破棄しますか？</string>
+    <string name="discard">破棄</string>
+    <string name="discard_changes_message">" 本当に変更を破棄して戻りますか？"</string>
 </resources>

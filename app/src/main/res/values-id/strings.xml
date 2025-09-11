@@ -60,4 +60,7 @@
     <string name="no_title">Tanpa judul</string>
     <string name="title">Judul</string>
     <string name="your_thoughts">Pikiran Anda</string>
+    <string name="discard_changes_title">Buang perubahan?</string>
+    <string name="discard">Buang</string>
+    <string name="discard_changes_message">Apakah Anda benar-benar ingin membuang</string>
 </resources>

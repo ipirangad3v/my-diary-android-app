@@ -64,4 +64,7 @@
     <string name="no_title">Ohne Titel</string>
     <string name="title">Titel</string>
     <string name="your_thoughts">Seus pensamentos</string>
+    <string name="discard_changes_title">Änderungen verwerfen?</string>
+    <string name="discard">Verwerfen</string>
+    <string name="discard_changes_message">Möchten Sie die Änderungen wirklich verwerfen und zurückgehen?</string>
 </resources>
