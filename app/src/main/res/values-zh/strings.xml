@@ -66,4 +66,16 @@
     <string name="discard_changes_title">放弃更改？</string>
     <string name="discard">放弃</string>
     <string name="discard_changes_message">您真的要放弃更改并返回吗？</string>
+    <string name="delete_all_notes">删除所有笔记</string>
+    <string name="reset_master_password">重置主密码</string>
+    <string name="menu">菜单</string>
+    <string name="delete_all_confirmation_title">删除所有笔记</string>
+    <string name="delete_all_confirmation_message">您确定要删除所有笔记吗？此操作无法撤销。</string>
+    <string name="reset_app_confirmation_title">重置应用</string>
+    <string name="reset_app_confirmation_message">这将重置您的主密码并删除所有笔记，此操作无法撤销。您确定要继续吗？</string>
+    <string name="re_authentication_title">确认操作</string>
+    <string name="re_authentication_subtitle">请确认您的身份以继续。</string>
+    <string name="remove_ads">移除广告</string>
+    <string name="upgrade_confirmation_title">移除广告？</string>
+    <string name="upgrade_confirmation_message">这将移除应用程序中的所有广告。（这是用于开发目的的模拟购买）。</string>
 </resources>

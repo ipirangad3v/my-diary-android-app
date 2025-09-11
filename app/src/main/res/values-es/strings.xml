@@ -65,4 +65,18 @@
     <string name="discard_changes_title">¿Descartar cambios?</string>
     <string name="discard">Descartar</string>
     <string name="discard_changes_message">¿Realmente desea descartar los cambios y volver?</string>
+    <string name="delete_all_notes">Borrar todas las notas</string>
+    <string name="reset_master_password">Restablecer contraseña maestra</string>
+    <string name="menu">Menú</string>
+    <string name="delete_all_confirmation_title">Eliminar todas las notas</string>
+    <string name="delete_all_confirmation_message">¿Realmente quieres eliminar todas las notas? Esta acción no se puede deshacer.</string>
+    <string name="reset_app_confirmation_title">Restablecer aplicación</string>
+    <string name="reset_app_confirmation_message">Esto restablecerá su contraseña maestra y eliminará todas las notas, esta acción no se puede
+        deshacer. ¿Realmente desea continuar?</string>
+    <string name="re_authentication_title">Confirmar Acción</string>
+    <string name="re_authentication_subtitle">Por favor, confirme su identidad para continuar.</string>
+    <string name="remove_ads">Eliminar anuncios</string>
+    <string name="upgrade_confirmation_title">¿Eliminar anuncios?</string>
+    <string name="upgrade_confirmation_message">Esto eliminará todos los anuncios de la aplicación. (Esta es una simulación de compra para fines
+        de desarrollo).</string>
 </resources>

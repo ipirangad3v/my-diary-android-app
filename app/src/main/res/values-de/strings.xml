@@ -67,4 +67,18 @@
     <string name="discard_changes_title">Änderungen verwerfen?</string>
     <string name="discard">Verwerfen</string>
     <string name="discard_changes_message">Möchten Sie die Änderungen wirklich verwerfen und zurückgehen?</string>
+    <string name="delete_all_notes">Alle Notizen löschen</string>
+    <string name="reset_master_password">Master-Passwort zurücksetzen</string>
+    <string name="menu">Menü</string>
+    <string name="delete_all_confirmation_title">Alle Notizen löschen</string>
+    <string name="delete_all_confirmation_message">Möchten Sie wirklich alle Notizen löschen? Diese Aktion kann nicht rückgängig gemacht werden.</string>
+    <string name="reset_app_confirmation_title">App zurücksetzen</string>
+    <string name="reset_app_confirmation_message">Dadurch wird Ihr Master-Passwort zurückgesetzt und alle Notizen gelöscht. Diese Aktion kann
+        nicht rückgängig gemacht werden. Möchten Sie wirklich fortfahren?</string>
+    <string name="re_authentication_title">Aktion bestätigen</string>
+    <string name="re_authentication_subtitle">Bitte bestätigen Sie Ihre Identität, um fortzufahren.</string>
+    <string name="remove_ads">Werbung entfernen</string>
+    <string name="upgrade_confirmation_title">Werbung entfernen?</string>
+    <string name="upgrade_confirmation_message">Dadurch werden alle Anzeigen aus der App entfernt. (Dies ist eine Kaufsimulation für
+        Entwicklungszwecke).</string>
 </resources>

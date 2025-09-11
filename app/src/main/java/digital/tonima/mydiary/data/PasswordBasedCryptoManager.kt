@@ -100,7 +100,7 @@ object PasswordBasedCryptoManager {
      * @return The decrypted content as a [String], or `null` if decryption fails
      * (e.g., incorrect password or corrupted file).
      */
-    fun readDiaryEntry(context: Context, file: File, masterPassword: CharArray): DiaryEntry? {
+    fun readDiaryEntry(file: File, masterPassword: CharArray): DiaryEntry? {
         return try {
             file.inputStream().use {
                 val salt = ByteArray(SALT_SIZE)
@@ -156,7 +156,7 @@ object PasswordBasedCryptoManager {
         // Get the latest entry. If none exist, the password is considered valid (first use).
         val firstEntry = getAllEntryFiles(context).firstOrNull() ?: return true
         // Try to read the entry. If it returns non-null, the password was correct.
-        return readDiaryEntry(context, firstEntry, masterPassword) != null
+        return readDiaryEntry(firstEntry, masterPassword) != null
     }
 
     /**
@@ -172,6 +172,12 @@ object PasswordBasedCryptoManager {
             }
         } catch (e: Exception) {
             Log.e("CryptoManager", "Failed to delete entry: $filename", e)
+        }
+    }
+
+    fun deleteAllEntries(context: Context) {
+        getAllEntryFiles(context).forEach { file ->
+            deleteDiaryEntry(file)
         }
     }
 }

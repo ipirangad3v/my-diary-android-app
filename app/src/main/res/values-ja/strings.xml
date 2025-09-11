@@ -60,4 +60,16 @@
     <string name="discard_changes_title">変更を破棄しますか？</string>
     <string name="discard">破棄</string>
     <string name="discard_changes_message">" 本当に変更を破棄して戻りますか？"</string>
+    <string name="delete_all_notes">すべてのメモを削除</string>
+    <string name="reset_master_password">マスターパスワードをリセット</string>
+    <string name="menu">メニュー</string>
+    <string name="delete_all_confirmation_title">すべてのメモを削除</string>
+    <string name="delete_all_confirmation_message">本当にすべてのメモを削除しますか？この操作は元に戻せません。</string>
+    <string name="reset_app_confirmation_title">アプリをリセット</string>
+    <string name="reset_app_confirmation_message">これにより、マスターパスワードがリセットされ、すべてのメモが削除されます。この操作は元に戻せません。本当に続行しますか？</string>
+    <string name="re_authentication_title">アクションの確認</string>
+    <string name="re_authentication_subtitle">続行するには、本人確認を行ってください。</string>
+    <string name="remove_ads">広告を削除</string>
+    <string name="upgrade_confirmation_title">広告を削除しますか？</string>
+    <string name="upgrade_confirmation_message">これにより、アプリからすべての広告が削除されます。（これは開発目的の購入シミュレーションです）。</string>
 </resources>
