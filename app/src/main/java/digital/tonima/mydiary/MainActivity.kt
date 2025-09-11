@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.provider.Settings.ACTION_SECURITY_SETTINGS
+import android.provider.Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED
 import android.widget.Toast.LENGTH_LONG
 import android.widget.Toast.makeText
 import androidx.activity.compose.setContent
@@ -132,17 +134,17 @@ class MainActivity : FragmentActivity() {
             // Directly open biometric enrollment settings on Android 11+
             val enrollIntent = Intent(Settings.ACTION_BIOMETRIC_ENROLL).apply {
                 putExtra(
-                    Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
+                    EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
                     BIOMETRIC_STRONG or DEVICE_CREDENTIAL
                 )
             }
             startActivity(enrollIntent)
         } else {
             // Fallback to general security settings on older versions
-            val intent = Intent(Settings.ACTION_SECURITY_SETTINGS)
+            val intent = Intent(ACTION_SECURITY_SETTINGS)
             startActivity(intent)
         }
-        val enrollIntent = Intent(Settings.ACTION_SECURITY_SETTINGS)
+        val enrollIntent = Intent(ACTION_SECURITY_SETTINGS)
         enrollLauncher.launch(enrollIntent)
     }
 }

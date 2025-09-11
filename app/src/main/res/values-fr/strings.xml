@@ -62,4 +62,7 @@
     <string name="no_title">Sans titre</string>
     <string name="title">Titre</string>
     <string name="your_thoughts">Vos pensées</string>
+    <string name="discard_changes_title">Ignorer les modifications ?</string>
+    <string name="discard">Ignorer</string>
+    <string name="discard_changes_message">Voulez-vous vraiment ignorer les modifications et revenir ?</string>
 </resources>

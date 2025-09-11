@@ -60,4 +60,7 @@
     <string name="no_title">بغیر عنوان</string>
     <string name="title">عنوان</string>
     <string name="your_thoughts">آپ کے خیالات</string>
+    <string name="discard_changes_title">تبدیلیاں منسوخ کریں؟</string>
+    <string name="discard">منسوخ کریں</string>
+    <string name="discard_changes_message">کیا آپ واقعی تبدیلیاں منسوخ کرکے واپس جانا چاہتے ہیں</string>
 </resources>

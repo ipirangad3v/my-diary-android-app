@@ -8,6 +8,6 @@ import dagger.hilt.android.HiltAndroidApp
 class MyDiaryApp : Application(){
     override fun onCreate() {
         super.onCreate()
-        MobileAds.initialize(this) {}
+        MobileAds.initialize(this)
     }
 }

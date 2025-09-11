@@ -61,4 +61,7 @@
     <string name="no_title">Без названия</string>
     <string name="title">Заголовок</string>
     <string name="your_thoughts">Ваши мысли</string>
+    <string name="discard_changes_title">Отменить изменения?</string>
+    <string name="discard">Отменить</string>
+    <string name="discard_changes_message">Вы действительно хотите отменить изменения и вернуться?</string>
 </resources>

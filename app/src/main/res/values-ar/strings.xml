@@ -60,4 +60,7 @@
     <string name="no_title">" بدون عنوان"</string>
     <string name="title">عنوان</string>
     <string name="your_thoughts">Seus pensamentos</string>
+    <string name="discard_changes_title">تجاهل التغييرات؟</string>
+    <string name="discard">تجاهل</string>
+    <string name="discard_changes_message">" هل تريد حقًا تجاهل التغييرات والعودة"</string>
 </resources>

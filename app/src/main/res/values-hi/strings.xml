@@ -60,4 +60,7 @@
     <string name="no_title">बिना शीर्षक</string>
     <string name="title">शीर्षक</string>
     <string name="your_thoughts">आपके विचार</string>
+    <string name="discard_changes_title">परिवर्तनों को त्यागें?</string>
+    <string name="discard">त्यागें</string>
+    <string name="discard_changes_message">क्या आप वाकई परिवर्तनों को त्यागकर वापस जाना चाहते हैं?</string>
 </resources>

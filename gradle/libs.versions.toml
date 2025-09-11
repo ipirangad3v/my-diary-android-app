@@ -15,6 +15,7 @@ google-services = "4.4.3"
 firebase-bom = "34.2.0"
 hilt = "2.57.1"
 hilt-binder="1.1.3"
+hilt-navigations-compose="1.3.0"
 ksp = "2.2.10-2.0.2"
 coroutines-test="1.10.2"
 mockk = "1.14.5"
@@ -53,6 +54,7 @@ hilt-compiler = { group = "com.google.dagger",name= "hilt-compiler" , version.re
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-binder = { group = "com.paulrybitskyi", name = "hilt-binder", version.ref = "hilt-binder" }
 hilt-binder-compiler = { group = "com.paulrybitskyi", name = "hilt-binder-compiler", version.ref = "hilt-binder" }
+hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt-navigations-compose" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines-test" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }

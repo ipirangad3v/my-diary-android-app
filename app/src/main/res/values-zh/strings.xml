@@ -63,4 +63,7 @@
     <string name="no_title">无标题</string>
     <string name="title">标题</string>
     <string name="your_thoughts">你的想法</string>
+    <string name="discard_changes_title">放弃更改？</string>
+    <string name="discard">放弃</string>
+    <string name="discard_changes_message">您真的要放弃更改并返回吗？</string>
 </resources>
