@@ -24,6 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import digital.tonima.mydiary.R.string.incorrect_password_try_again
 import digital.tonima.mydiary.R.string.password_verified_re_encrypt
 import digital.tonima.mydiary.R.string.setup_lock_screen_prompt
+import digital.tonima.mydiary.billing.BillingManager
 import digital.tonima.mydiary.biometrics.BiometricAuthManager
 import digital.tonima.mydiary.ui.screens.AddEntryScreen
 import digital.tonima.mydiary.ui.screens.AppScreen
@@ -32,9 +33,13 @@ import digital.tonima.mydiary.ui.screens.PrincipalScreen
 import digital.tonima.mydiary.ui.screens.ManualPasswordScreen
 import digital.tonima.mydiary.ui.screens.PasswordSetupScreen
 import digital.tonima.mydiary.ui.theme.MyDiaryTheme
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : FragmentActivity() {
+
+    @Inject
+    lateinit var billingManager: BillingManager
 
     private val enrollLauncher = registerForActivityResult(
         StartActivityForResult()
@@ -49,6 +54,7 @@ class MainActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        billingManager.connect()
         biometricAuthManager = BiometricAuthManager(this)
 
         setContent {
@@ -115,6 +121,7 @@ class MainActivity : FragmentActivity() {
                             onLockRequest = viewModel::lockApp,
                             onAddEntry = viewModel::navigateToAddEntry,
                             onResetApp = viewModel::resetApp,
+                            onPurchaseRequest = { billingManager.launchPurchaseFlow(this) },
                             onReauthenticate = { titleResId, subtitleResId, action ->
                                 biometricAuthManager.authenticateForAction(
                                     titleResId = titleResId,
