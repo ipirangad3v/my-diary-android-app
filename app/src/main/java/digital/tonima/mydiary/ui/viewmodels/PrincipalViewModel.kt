@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import digital.tonima.mydiary.billing.BillingManager
 import digital.tonima.mydiary.data.PasswordBasedCryptoManager
-import digital.tonima.mydiary.data.UserRepository
 import digital.tonima.mydiary.data.model.DiaryEntry
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,24 +27,20 @@ data class PrincipalScreenUiState(
     val showDeleteConfirmation: Boolean = false,
     val showDeleteAllConfirmation: Boolean = false,
     val showResetAppConfirmation: Boolean = false,
-    val isProUser: Boolean = false,
     val showUpgradeConfirmation: Boolean = false
 )
 
 @HiltViewModel
 class PrincipalViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val userRepository: UserRepository,
+    billingManager: BillingManager
 ) : ViewModel() {
 
 
     private val _uiState = MutableStateFlow(PrincipalScreenUiState())
     val uiState = _uiState.asStateFlow()
 
-    fun loadProStatus() {
-        val isPro = userRepository.isProUser()
-        _uiState.update { it.copy(isProUser = isPro) }
-    }
+    val isProUser = billingManager.isProUser
 
     fun onUpgradeToProRequest() {
         _uiState.update { it.copy(showUpgradeConfirmation = true) }
@@ -54,14 +50,8 @@ class PrincipalViewModel @Inject constructor(
         _uiState.update { it.copy(showUpgradeConfirmation = false) }
     }
 
-    fun onConfirmUpgrade() {
-        userRepository.setProUser(true)
-        _uiState.update { it.copy(isProUser = true, showUpgradeConfirmation = false) }
-    }
-
     fun loadEntries(masterPassword: CharArray) {
         viewModelScope.launch {
-            loadProStatus()
             _uiState.update { it.copy(isLoading = true) }
             val decrypted = withContext(Dispatchers.IO) {
                 val files = PasswordBasedCryptoManager.getAllEntryFiles(context)

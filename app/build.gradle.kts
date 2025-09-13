@@ -21,8 +21,8 @@ android {
     applicationId = "digital.tonima.mydiary"
     minSdk = 26
     targetSdk = 36
-    versionCode = 5
-    versionName = "1.4.0"
+    versionCode = 7
+    versionName = "1.6.0"
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
@@ -156,6 +156,7 @@ dependencies {
   implementation(libs.hilt.navigation.compose)
   implementation(libs.play.services.ads.api)
   implementation(libs.crashlytics)
+  implementation(libs.billing.ktx)
   ksp(libs.hilt.compiler)
   implementation(libs.hilt.binder)
   ksp(libs.hilt.binder.compiler)

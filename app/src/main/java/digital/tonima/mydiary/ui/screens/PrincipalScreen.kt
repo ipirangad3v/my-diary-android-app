@@ -43,9 +43,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.kizitonwose.calendar.compose.rememberCalendarState
 import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
-import digital.tonima.mydiary.BuildConfig
+import digital.tonima.mydiary.BuildConfig.ADMOB_BANNER_AD_UNIT_HOME
+import digital.tonima.mydiary.R
 import digital.tonima.mydiary.R.string.add_note
-import digital.tonima.mydiary.R.string.app_name
 import digital.tonima.mydiary.R.string.close
 import digital.tonima.mydiary.R.string.confirm_deletion_message
 import digital.tonima.mydiary.R.string.confirm_deletion_title
@@ -78,9 +78,11 @@ fun PrincipalScreen(
     onLockRequest: () -> Unit,
     onResetApp: () -> Unit,
     onReauthenticate: (titleResId: Int, subtitleResId: Int, action: () -> Unit) -> Unit,
+    onPurchaseRequest: () -> Unit,
     viewModel: PrincipalViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val isProUser by viewModel.isProUser.collectAsState()
     val configuration = LocalConfiguration.current
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -116,7 +118,7 @@ fun PrincipalScreen(
         drawerState = drawerState,
         drawerContent = {
             DrawerContent(
-                isProUser = uiState.isProUser,
+                isProUser = isProUser,
                 onDeleteAll = viewModel::onDeleteAllRequest,
                 onResetApp = viewModel::onResetAppRequest,
                 onUpgradeToPro = viewModel::onUpgradeToProRequest,
@@ -127,7 +129,7 @@ fun PrincipalScreen(
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title = { Text(stringResource(app_name)) },
+                    title = { Text(stringResource(R.string.app_name)) },
                     navigationIcon = {
                         IconButton(onClick = { scope.launch { drawerState.open() } }) {
                             Icon(Icons.Default.Menu, contentDescription = stringResource(menu))
@@ -203,9 +205,9 @@ fun PrincipalScreen(
                         }
                     }
                 }
-                if (!uiState.isProUser) {
+                if (!isProUser) {
                     AdBannerView(
-                        adId = BuildConfig.ADMOB_BANNER_AD_UNIT_HOME
+                        adId = ADMOB_BANNER_AD_UNIT_HOME
                     )
                 }
             }
@@ -279,7 +281,10 @@ fun PrincipalScreen(
         ConfirmationDialog(
             title = stringResource(upgrade_confirmation_title),
             text = stringResource(upgrade_confirmation_message),
-            onConfirm = viewModel::onConfirmUpgrade,
+            onConfirm = {
+                viewModel.onDismissUpgradeDialog()
+                onPurchaseRequest()
+            },
             onDismiss = viewModel::onDismissUpgradeDialog
         )
     }
