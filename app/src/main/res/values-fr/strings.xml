@@ -76,4 +76,13 @@
     <string name="re_authentication_title">Confirmer l\'action</string>
     <string name="re_authentication_subtitle">Veuillez confirmer votre identité pour continuer.</string>
     <string name="remove_ads">Supprimer les publicités</string>
+    <string name="diary">Journal</string>
+    <string name="vault">Coffre-fort d\'images</string>
+    <string name="add_image">Ajouter une image</string>
+    <string name="vault_empty_message">Votre coffre-fort est vide. Appuyez sur + pour ajouter votre première image sécurisée.</string>
+    <string name="delete_image_title">Supprimer l\'image ?</string>
+    <string name="delete_image_message">Cette action est permanente et ne peut pas être annulée. L\'image sera supprimée de votre
+        coffre-fort.</string>
+    <string name="share">Partager</string>
+    <string name="share_image">Partager l\'image</string>
 </resources>

@@ -74,4 +74,12 @@
     <string name="re_authentication_title">অ্যাকশন নিশ্চিত করুন</string>
     <string name="re_authentication_subtitle">অনুগ্রহ করে চালিয়ে যাওয়ার জন্য আপনার পরিচয় নিশ্চিত করুন।</string>
     <string name="remove_ads">বিজ্ঞাপন সরান</string>
+    <string name="diary">ডায়েরি</string>
+    <string name="vault">ছবির ভল্ট</string>
+    <string name="add_image">ছবি যোগ করুন</string>
+    <string name="vault_empty_message">আপনার ভল্ট খালি। আপনার প্রথম নিরাপদ ছবি যোগ করতে + এ আলতো চাপুন।</string>
+    <string name="delete_image_title">ছবি মুছবেন?</string>
+    <string name="delete_image_message">এই কাজটি স্থায়ী এবং ফেরানো যাবে না। ছবিটি আপনার ভল্ট থেকে মুছে ফেলা হবে।</string>
+    <string name="share">শেয়ার করুন</string>
+    <string name="share_image">ছবি শেয়ার করুন</string>
 </resources>

@@ -75,5 +75,12 @@
     <string name="re_authentication_title">Confirmar Ação</string>
     <string name="re_authentication_subtitle">Por favor, confirme sua identidade para continuar.</string>
     <string name="remove_ads">Remover anúncios</string>
-
+    <string name="diary">Diário</string>
+    <string name="vault">Cofre de Imagens</string>
+    <string name="add_image">Adicionar Imagem</string>
+    <string name="vault_empty_message">Seu cofre está vazio. Toque em + para adicionar sua primeira imagem segura.</string>
+    <string name="delete_image_title">Deletar imagem?</string>
+    <string name="delete_image_message">Esta ação é permanente e não pode ser desfeita. A imagem será apagada do seu cofre.</string>
+    <string name="share">Partilhar</string>
+    <string name="share_image">Partilhar Imagem</string>
 </resources>

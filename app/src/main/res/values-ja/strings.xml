@@ -70,4 +70,12 @@
     <string name="re_authentication_title">アクションの確認</string>
     <string name="re_authentication_subtitle">続行するには、本人確認を行ってください。</string>
     <string name="remove_ads">広告を削除</string>
+    <string name="diary">日記</string>
+    <string name="vault">画像保管庫</string>
+    <string name="add_image">画像を追加</string>
+    <string name="vault_empty_message">保管庫は空です。+ をタップして最初の安全な画像を追加してください。</string>
+    <string name="delete_image_title">画像を削除しますか？</string>
+    <string name="delete_image_message">この操作は永続的であり、元に戻すことはできません。画像は保管庫から削除されます。</string>
+    <string name="share">共有</string>
+    <string name="share_image">画像を共有</string>
 </resources>

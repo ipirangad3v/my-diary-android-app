@@ -1,4 +1,4 @@
-package digital.tonima.mydiary.data
+package digital.tonima.mydiary.encrypting
 
 /**
  * Data class to hold the encrypted master password and its initialization vector (IV).

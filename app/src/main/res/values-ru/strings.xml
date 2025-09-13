@@ -75,4 +75,13 @@
     <string name="re_authentication_title">Подтвердить действие</string>
     <string name="re_authentication_subtitle">Пожалуйста, подтвердите свою личность, чтобы продолжить.</string>
     <string name="remove_ads">Удалить рекламу</string>
+    <string name="diary">Дневник</string>
+    <string name="vault">Хранилище изображений</string>
+    <string name="add_image">Добавить изображение</string>
+    <string name="vault_empty_message">Ваше хранилище пусто. Нажмите +, чтобы добавить первое защищенное изображение.</string>
+    <string name="delete_image_title">Удалить изображение?</string>
+    <string name="delete_image_message">Это действие является постоянным и не может быть отменено. Изображение будет удалено из вашего
+        хранилища.</string>
+    <string name="share">Поделиться</string>
+    <string name="share_image">Поделиться изображением</string>
 </resources>

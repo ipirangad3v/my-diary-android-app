@@ -74,4 +74,12 @@
     <string name="re_authentication_title">کارروائی کی تصدیق کریں</string>
     <string name="re_authentication_subtitle">براہ کرم جاری رکھنے کے لیے اپنی شناخت کی تصدیق کریں۔</string>
     <string name="remove_ads">اشتہارات ہٹائیں</string>
+    <string name="diary">ڈائری</string>
+    <string name="vault">تصویر والٹ</string>
+    <string name="add_image">تصویر شامل کریں</string>
+    <string name="vault_empty_message">آپ کا والٹ خالی ہے۔ اپنی پہلی محفوظ تصویر شامل کرنے کے لیے + پر ٹیپ کریں۔</string>
+    <string name="delete_image_title">تصویر حذف کریں؟</string>
+    <string name="delete_image_message">یہ کارروائی مستقل ہے اور اسے واپس نہیں کیا جا سکتا۔ تصویر آپ کے والٹ سے حذف کر دی جائے گی۔</string>
+    <string name="share">شیئر کریں</string>
+    <string name="share_image">تصویر شیئر کریں</string>
 </resources>

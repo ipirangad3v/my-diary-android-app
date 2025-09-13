@@ -74,4 +74,12 @@
     <string name="re_authentication_title">कार्रवाई की पुष्टि करें</string>
     <string name="re_authentication_subtitle">कृपया जारी रखने के लिए अपनी पहचान की पुष्टि करें।</string>
     <string name="remove_ads">विज्ञापन हटाएँ</string>
+    <string name="diary">डायरी</string>
+    <string name="vault">छवि तिजोरी</string>
+    <string name="add_image">छवि जोड़ें</string>
+    <string name="vault_empty_message">आपकी तिजोरी खाली है। अपनी पहली सुरक्षित छवि जोड़ने के लिए + पर टैप करें।</string>
+    <string name="delete_image_title">छवि हटाएं?</string>
+    <string name="delete_image_message">यह क्रिया स्थायी है और इसे पूर्ववत् नहीं किया जा सकता है। छवि आपकी तिजोरी से हटा दी जाएगी।</string>
+    <string name="share">साझा करें</string>
+    <string name="share_image">छवि साझा करें</string>
 </resources>
