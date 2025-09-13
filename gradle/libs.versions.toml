@@ -31,6 +31,7 @@ crashlytics = "3.0.6"
 gson = "2.13.1"
 billingKtx = "8.0.0"
 coil = "2.7.0"
+richeditor = "1.0.0-rc13"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -70,6 +71,7 @@ crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 billing-ktx = { group = "com.android.billingclient", name = "billing-ktx", version.ref = "billingKtx" }
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+richeditor = { group = "com.mohamedrejeb.richeditor", name = "richeditor-compose", version.ref = "richeditor" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

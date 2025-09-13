@@ -50,7 +50,7 @@ class MainViewModel @Inject constructor(
             val encryptedPasswordBytes = cipher.doFinal(password.concatToString().toByteArray())
             val iv = cipher.iv
             passwordRepository.saveEncryptedPassword(EncryptedPassword(encryptedPasswordBytes, iv))
-            _uiState.value = AppScreen.Main(password)
+            _uiState.value = AppScreen.Principal(password)
         }
     }
 
@@ -66,7 +66,7 @@ class MainViewModel @Inject constructor(
                 val decryptedPasswordBytes = withContext(Dispatchers.IO) {
                     cipher.doFinal(encryptedPasswordData.value)
                 }
-                _uiState.value = AppScreen.Main(String(decryptedPasswordBytes).toCharArray())
+                _uiState.value = AppScreen.Principal(String(decryptedPasswordBytes).toCharArray())
             } catch (_: Exception) {
                 _uiState.value = AppScreen.RecoverPassword
             }
@@ -93,17 +93,17 @@ class MainViewModel @Inject constructor(
 
     fun onScreenSelected(screen: BottomBarScreen) {
         val currentState = _uiState.value
-        if (currentState is AppScreen.Main) {
+        if (currentState is AppScreen.Principal) {
             _uiState.update {
                 currentState.copy(currentScreen = screen)
             }
         }
     }
 
-    fun navigateToAddEntry() {
+    fun navigateToAddEntry(fileName: String? = null) {
         val currentState = _uiState.value
-        if (currentState is AppScreen.Main) {
-            _uiState.value = AppScreen.AddEntry(currentState.masterPassword)
+        if (currentState is AppScreen.Principal) {
+            _uiState.value = AppScreen.AddEntry(currentState.masterPassword, fileName)
         }
     }
 
@@ -111,9 +111,9 @@ class MainViewModel @Inject constructor(
         val currentState = _uiState.value
         if (currentState is AppScreen.AddEntry) {
             // Volta para a tela principal, mantendo a seleção da BottomBar
-            _uiState.value = AppScreen.Main(
+            _uiState.value = AppScreen.Principal(
                 masterPassword = currentState.masterPassword,
-                currentScreen = (uiState.value as? AppScreen.Main)?.currentScreen ?: BottomBarScreen.Diary
+                currentScreen = (uiState.value as? AppScreen.Principal)?.currentScreen ?: BottomBarScreen.Diary
             )
         }
     }

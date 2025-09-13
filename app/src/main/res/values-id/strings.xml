@@ -82,4 +82,5 @@
     <string name="delete_image_message">Tindakan ini permanen dan tidak dapat diurungkan. Gambar akan dihapus dari brankas Anda.</string>
     <string name="share">Bagikan</string>
     <string name="share_image">Bagikan Gambar</string>
+    <string name="edit_entry">Edit catatan</string>
 </resources>

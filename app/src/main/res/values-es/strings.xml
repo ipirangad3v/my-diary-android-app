@@ -84,4 +84,5 @@
     <string name="delete_image_message">Esta acción es permanente y no se puede deshacer. La imagen se eliminará de tu bóveda.</string>
     <string name="share">Compartir</string>
     <string name="share_image">Compartir Imagen</string>
+    <string name="edit_entry">Editar nota</string>
 </resources>

@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import digital.tonima.mydiary.billing.BillingManager
 import digital.tonima.mydiary.data.model.DiaryEntry
+import digital.tonima.mydiary.delegates.ProUserProvider
 import digital.tonima.mydiary.encrypting.PasswordBasedCryptoManager
 import digital.tonima.mydiary.ui.screens.BottomBarScreen
 import digital.tonima.mydiary.ui.screens.BottomBarScreen.Diary
@@ -36,14 +36,11 @@ data class PrincipalScreenUiState(
 @HiltViewModel
 class PrincipalViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
-    billingManager: BillingManager
-) : ViewModel() {
-
-
+    proUserProvider: ProUserProvider
+) : ViewModel(), ProUserProvider by proUserProvider {
     private val _uiState = MutableStateFlow(PrincipalScreenUiState())
     val uiState = _uiState.asStateFlow()
 
-    val isProUser = billingManager.isProUser
 
     fun onUpgradeToProRequest() {
         _uiState.update { it.copy(showUpgradeConfirmation = true) }
@@ -51,10 +48,6 @@ class PrincipalViewModel @Inject constructor(
 
     fun onDismissUpgradeDialog() {
         _uiState.update { it.copy(showUpgradeConfirmation = false) }
-    }
-
-    fun onScreenSelected(screen: BottomBarScreen) {
-        _uiState.update { it.copy(currentScreen = screen) }
     }
 
     fun loadEntries(masterPassword: CharArray) {
@@ -78,18 +71,6 @@ class PrincipalViewModel @Inject constructor(
         }
     }
 
-    fun deleteSelectedEntry(masterPassword: CharArray) {
-        val entryToDelete = _uiState.value.selectedEntry?.first ?: return
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                PasswordBasedCryptoManager.deleteEncryptedFile(entryToDelete)
-            }
-            // Dismiss dialogs and reload entries
-            _uiState.update { it.copy(selectedEntry = null, showDeleteConfirmation = false) }
-            loadEntries(masterPassword)
-        }
-    }
-
     fun onDeleteAllRequest() {
         _uiState.update { it.copy(showDeleteAllConfirmation = true) }
     }
@@ -108,22 +89,6 @@ class PrincipalViewModel @Inject constructor(
 
     fun onDateSelected(date: LocalDate?) {
         _uiState.update { it.copy(selectedDate = date) }
-    }
-
-    fun onEntryClicked(file: File, entry: DiaryEntry) {
-        _uiState.update { it.copy(selectedEntry = file to entry) }
-    }
-
-    fun onDismissEntryDialog() {
-        _uiState.update { it.copy(selectedEntry = null) }
-    }
-
-    fun onDeleteRequest() {
-        _uiState.update { it.copy(showDeleteConfirmation = true) }
-    }
-
-    fun onDismissDeleteDialog() {
-        _uiState.update { it.copy(showDeleteConfirmation = false) }
     }
 
     fun deleteAllEntries(masterPassword: CharArray) {

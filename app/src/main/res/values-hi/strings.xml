@@ -82,4 +82,5 @@
     <string name="delete_image_message">यह क्रिया स्थायी है और इसे पूर्ववत् नहीं किया जा सकता है। छवि आपकी तिजोरी से हटा दी जाएगी।</string>
     <string name="share">साझा करें</string>
     <string name="share_image">छवि साझा करें</string>
+    <string name="edit_entry">नोट संपादित करें</string>
 </resources>

@@ -9,14 +9,22 @@ import digital.tonima.mydiary.data.model.DiaryEntry
 import digital.tonima.mydiary.encrypting.PasswordBasedCryptoManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.File
 import javax.inject.Inject
 
-/**
- * Sealed class to represent one-time events from the ViewModel to the UI.
- */
+data class AddEntryUiState(
+    val isLoading: Boolean = false,
+    val initialTitle: String = "",
+    val initialContentHtml: String = "",
+    val showDeleteConfirmation: Boolean = false
+)
+
 sealed class AddEntryEvent {
     data object NavigateBack : AddEntryEvent()
     data class ShowSnackbar(val messageResId: Int) : AddEntryEvent()
@@ -27,26 +35,57 @@ class AddEntryViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
 ) : ViewModel() {
 
+    private val _uiState = MutableStateFlow(AddEntryUiState())
+    val uiState = _uiState.asStateFlow()
+
     private val _eventFlow = MutableSharedFlow<AddEntryEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
-    /**
-     * Validates and saves a diary entry asynchronously.
-     *
-     * @param title The title of the entry.
-     * @param content The content of the entry.
-     * @param fallbackTitle The title to use if the user-provided title is blank.
-     * @param masterPassword The master password for encryption.
-     * @param contentRequiredMessageResId The resource ID for the error message if content is blank.
-     */
+    private var currentFileName: String? = null
+
+    fun initialize(fileName: String?, masterPassword: CharArray) {
+        if (fileName != null && currentFileName == fileName) return
+
+        currentFileName = fileName
+        if (fileName != null) {
+            loadEntryForEditing(fileName, masterPassword)
+        } else {
+            _uiState.update { AddEntryUiState() }
+        }
+    }
+
+    private fun loadEntryForEditing(fileName: String, masterPassword: CharArray) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+            val entry = withContext(Dispatchers.IO) {
+                PasswordBasedCryptoManager.readDiaryEntry(
+                    context,
+                    File(context.filesDir, fileName),
+                    masterPassword
+                )
+            }
+            if (entry != null) {
+                _uiState.update {
+                    it.copy(
+                        isLoading = false,
+                        initialTitle = entry.title,
+                        initialContentHtml = entry.contentHtml
+                    )
+                }
+            } else {
+                _uiState.update { it.copy(isLoading = false) }
+            }
+        }
+    }
+
     fun saveEntry(
         title: String,
-        content: String,
+        contentHtml: String,
         fallbackTitle: String,
         masterPassword: CharArray,
         contentRequiredMessageResId: Int
     ) {
-        if (content.isBlank()) {
+        if (contentHtml.isBlank() || contentHtml == "<p><br></p>") {
             viewModelScope.launch {
                 _eventFlow.emit(AddEntryEvent.ShowSnackbar(contentRequiredMessageResId))
             }
@@ -59,12 +98,32 @@ class AddEntryViewModel @Inject constructor(
                     context,
                     DiaryEntry(
                         title = title.takeIf { it.isNotBlank() } ?: fallbackTitle,
-                        content = content
+                        contentHtml = contentHtml
                     ),
-                    masterPassword
+                    masterPassword,
+                    fileName = currentFileName
                 )
             }
-            // Notify the UI to navigate back after saving is complete.
+            _eventFlow.emit(AddEntryEvent.NavigateBack)
+        }
+    }
+
+    fun onDeleteRequest() {
+        _uiState.update { it.copy(showDeleteConfirmation = true) }
+    }
+
+    fun onDismissDeleteDialog() {
+        _uiState.update { it.copy(showDeleteConfirmation = false) }
+    }
+
+    fun deleteEntry() {
+        val fileToDelete = currentFileName ?: return
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                PasswordBasedCryptoManager.deleteEncryptedFile(File(context.filesDir, fileToDelete))
+            }
+            currentFileName = null
+            _uiState.update { AddEntryUiState() }
             _eventFlow.emit(AddEntryEvent.NavigateBack)
         }
     }

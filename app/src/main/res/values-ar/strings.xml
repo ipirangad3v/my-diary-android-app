@@ -82,4 +82,5 @@
     <string name="delete_image_message">هذا الإجراء دائم ولا يمكن التراجع عنه. سيتم حذف الصورة من خزنتك.</string>
     <string name="share">مشاركة</string>
     <string name="share_image">مشاركة الصورة</string>
+    <string name="edit_entry">تحرير ملاحظة</string>
 </resources>

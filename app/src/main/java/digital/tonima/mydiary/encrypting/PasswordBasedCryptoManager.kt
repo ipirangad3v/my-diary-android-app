@@ -40,7 +40,12 @@ object PasswordBasedCryptoManager {
         return factory.generateSecret(spec)
     }
 
-    fun saveDiaryEntry(context: Context, entry: DiaryEntry, masterPassword: CharArray) {
+    fun saveDiaryEntry(
+        context: Context,
+        entry: DiaryEntry,
+        masterPassword: CharArray,
+        fileName: String? = null // <-- Parâmetro adicionado para edição
+    ) {
         val salt = ByteArray(SALT_SIZE)
         SecureRandom().nextBytes(salt)
 
@@ -54,8 +59,15 @@ object PasswordBasedCryptoManager {
         val jsonString = gson.toJson(entry)
         val encryptedContent = cipher.doFinal(jsonString.toByteArray())
 
-        val timestamp = System.currentTimeMillis()
-        val file = File(context.filesDir, "entry_$timestamp.txt")
+        // Lógica atualizada para criar um novo ficheiro ou sobrescrever um existente
+        val file = if (fileName != null) {
+            // Se um nome de ficheiro for fornecido, use-o (sobrescrevendo o existente)
+            File(context.filesDir, fileName)
+        } else {
+            // Caso contrário, crie um novo ficheiro com um novo timestamp
+            val timestamp = System.currentTimeMillis()
+            File(context.filesDir, "entry_$timestamp.txt")
+        }
 
         file.outputStream().use {
             it.write(salt)
