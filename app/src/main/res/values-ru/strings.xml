@@ -75,6 +75,4 @@
     <string name="re_authentication_title">Подтвердить действие</string>
     <string name="re_authentication_subtitle">Пожалуйста, подтвердите свою личность, чтобы продолжить.</string>
     <string name="remove_ads">Удалить рекламу</string>
-    <string name="upgrade_confirmation_title">Удалить рекламу?</string>
-    <string name="upgrade_confirmation_message">Это удалит всю рекламу из приложения. (Это симуляция покупки в целях разработки).</string>
 </resources>

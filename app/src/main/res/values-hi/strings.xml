@@ -74,6 +74,4 @@
     <string name="re_authentication_title">कार्रवाई की पुष्टि करें</string>
     <string name="re_authentication_subtitle">कृपया जारी रखने के लिए अपनी पहचान की पुष्टि करें।</string>
     <string name="remove_ads">विज्ञापन हटाएँ</string>
-    <string name="upgrade_confirmation_title">विज्ञापन हटाएँ?</string>
-    <string name="upgrade_confirmation_message">यह ऐप से सभी विज्ञापन हटा देगा। (यह विकास उद्देश्यों के लिए एक खरीद सिमुलेशन है)।</string>
 </resources>

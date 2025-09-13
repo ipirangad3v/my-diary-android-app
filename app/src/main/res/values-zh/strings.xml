@@ -76,6 +76,4 @@
     <string name="re_authentication_title">确认操作</string>
     <string name="re_authentication_subtitle">请确认您的身份以继续。</string>
     <string name="remove_ads">移除广告</string>
-    <string name="upgrade_confirmation_title">移除广告？</string>
-    <string name="upgrade_confirmation_message">这将移除应用程序中的所有广告。（这是用于开发目的的模拟购买）。</string>
 </resources>

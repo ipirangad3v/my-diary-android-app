@@ -75,8 +75,5 @@
     <string name="re_authentication_title">Confirmar Ação</string>
     <string name="re_authentication_subtitle">Por favor, confirme sua identidade para continuar.</string>
     <string name="remove_ads">Remover anúncios</string>
-    <string name="upgrade_confirmation_title">Remover anúncios?</string>
-    <string name="upgrade_confirmation_message">Isso removerá todos os anúncios do aplicativo. (Esta é uma simulação de compra para fins de
-        desenvolvimento).</string>
 
 </resources>

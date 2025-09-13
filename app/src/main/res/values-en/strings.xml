@@ -74,6 +74,4 @@
     <string name="re_authentication_title">Confirm Action</string>
     <string name="re_authentication_subtitle">Please confirm your identity to continue.</string>
     <string name="remove_ads">Remove ads</string>
-    <string name="upgrade_confirmation_title">Remove ads?</string>
-    <string name="upgrade_confirmation_message">This will remove all ads from the app. (This is a purchase simulation for development purposes).</string>
 </resources>

@@ -74,7 +74,4 @@
     <string name="re_authentication_title">Konfirmasi Tindakan</string>
     <string name="re_authentication_subtitle">Harap konfirmasi identitas Anda untuk melanjutkan.</string>
     <string name="remove_ads">Hapus iklan</string>
-    <string name="upgrade_confirmation_title">Hapus iklan?</string>
-    <string name="upgrade_confirmation_message">Ini akan menghapus semua iklan dari aplikasi. (Ini adalah simulasi pembelian untuk tujuan
-        pengembangan).</string>
 </resources>
