@@ -10,9 +10,12 @@ import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 
 @Composable
-fun AdBannerView(modifier: Modifier = Modifier,adId: String) {
+fun AdBannerView(modifier: Modifier = Modifier, adId: String, isProUser: Boolean) {
+    if (isProUser) return
     AndroidView(
-        modifier = modifier.fillMaxWidth().wrapContentHeight(),
+        modifier = modifier
+            .fillMaxWidth()
+            .wrapContentHeight(),
         factory = { context ->
             AdView(context).apply {
                 setAdSize(AdSize.BANNER)

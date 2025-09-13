@@ -205,11 +205,11 @@ fun PrincipalScreen(
                         }
                     }
                 }
-                if (!isProUser) {
-                    AdBannerView(
-                        adId = ADMOB_BANNER_AD_UNIT_HOME
-                    )
-                }
+                AdBannerView(
+                    adId = ADMOB_BANNER_AD_UNIT_HOME,
+                    isProUser = isProUser
+                )
+
             }
         }
     }
