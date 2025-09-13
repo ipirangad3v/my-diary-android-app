@@ -2,54 +2,50 @@ package digital.tonima.mydiary.ui.screens
 
 import android.content.Intent
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import coil.ImageLoader
 import coil.compose.AsyncImage
-import digital.tonima.mydiary.R
+import digital.tonima.mydiary.BuildConfig.ADMOB_BANNER_AD_UNIT_VAULT_SCREEN
+import digital.tonima.mydiary.R.string.add_image
+import digital.tonima.mydiary.R.string.delete_image_message
+import digital.tonima.mydiary.R.string.delete_image_title
+import digital.tonima.mydiary.R.string.share_image
+import digital.tonima.mydiary.R.string.vault_empty_message
 import digital.tonima.mydiary.imagevault.EncryptedImageFetcher
+import digital.tonima.mydiary.ui.components.AdBannerView
 import digital.tonima.mydiary.ui.components.ConfirmationDialog
+import digital.tonima.mydiary.ui.components.ImageViewerDialog
 import digital.tonima.mydiary.ui.viewmodels.VaultEvent
 import digital.tonima.mydiary.ui.viewmodels.VaultViewModel
 import kotlinx.coroutines.flow.collectLatest
-import java.io.File
 
 @Composable
 fun VaultScreen(
@@ -57,6 +53,7 @@ fun VaultScreen(
     onAddImage: () -> Unit,
     viewModel: VaultViewModel = hiltViewModel()
 ) {
+    val isProUser by viewModel.isProUser.collectAsState()
     val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current
 
@@ -71,9 +68,8 @@ fun VaultScreen(
     LaunchedEffect(Unit) {
         viewModel.loadVaultImages()
 
-        // Listen for one-time share events
         viewModel.eventFlow.collectLatest { event ->
-            when(event) {
+            when (event) {
                 is VaultEvent.ShareImage -> {
                     val shareIntent: Intent = Intent().apply {
                         action = Intent.ACTION_SEND
@@ -81,7 +77,7 @@ fun VaultScreen(
                         type = "image/jpeg"
                         addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                     }
-                    context.startActivity(Intent.createChooser(shareIntent, context.getString(R.string.share_image)))
+                    context.startActivity(Intent.createChooser(shareIntent, context.getString(share_image)))
                 }
             }
         }
@@ -89,21 +85,25 @@ fun VaultScreen(
 
     Box(modifier = Modifier.fillMaxSize()) {
         if (uiState.isLoading) {
-            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            CircularProgressIndicator(modifier = Modifier.align(Center))
         } else if (uiState.vaultImages.isEmpty()) {
             Text(
-                text = stringResource(R.string.vault_empty_message),
+                text = stringResource(vault_empty_message),
                 textAlign = TextAlign.Center,
                 modifier = Modifier
-                    .align(Alignment.Center)
+                    .align(Center)
                     .padding(16.dp)
             )
         } else {
+            AdBannerView(
+                adId = ADMOB_BANNER_AD_UNIT_VAULT_SCREEN,
+                isProUser = isProUser
+            )
             LazyVerticalGrid(
                 columns = GridCells.Adaptive(minSize = 128.dp),
                 modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.spacedBy(4.dp),
-                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                verticalArrangement = spacedBy(4.dp),
+                horizontalArrangement = spacedBy(4.dp),
                 contentPadding = PaddingValues(4.dp)
             ) {
                 items(uiState.vaultImages, key = { it.name }) { file ->
@@ -126,7 +126,7 @@ fun VaultScreen(
                 .align(Alignment.BottomEnd)
                 .padding(16.dp)
         ) {
-            Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add_image))
+            Icon(Icons.Default.Add, contentDescription = stringResource(add_image))
         }
     }
 
@@ -142,62 +142,10 @@ fun VaultScreen(
 
     if (uiState.showDeleteConfirmation) {
         ConfirmationDialog(
-            title = stringResource(R.string.delete_image_title),
-            text = stringResource(R.string.delete_image_message),
+            title = stringResource(delete_image_title),
+            text = stringResource(delete_image_message),
             onConfirm = viewModel::deleteSelectedImage,
             onDismiss = viewModel::onDismissDeleteDialog
         )
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun ImageViewerDialog(
-    file: File,
-    imageLoader: ImageLoader,
-    onDismiss: () -> Unit,
-    onDeleteRequest: () -> Unit,
-    onShareRequest: () -> Unit
-) {
-    Dialog(
-        onDismissRequest = onDismiss,
-        properties = DialogProperties(usePlatformDefaultWidth = false)
-    ) {
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = { },
-                    navigationIcon = {
-                        IconButton(onClick = onDismiss) {
-                            Icon(Icons.Default.Close, contentDescription = stringResource(R.string.close))
-                        }
-                    },
-                    actions = {
-                        Row {
-                            IconButton(onClick = onShareRequest) {
-                                Icon(Icons.Default.Share, contentDescription = stringResource(R.string.share))
-                            }
-                            IconButton(onClick = onDeleteRequest) {
-                                Icon(Icons.Default.Delete, contentDescription = stringResource(R.string.delete))
-                            }
-                        }
-                    }
-                )
-            }
-        ) { paddingValues ->
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues),
-                contentAlignment = Alignment.Center
-            ) {
-                AsyncImage(
-                    model = file,
-                    imageLoader = imageLoader,
-                    contentDescription = "Full screen encrypted image",
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-        }
     }
 }

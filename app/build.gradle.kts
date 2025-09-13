@@ -21,8 +21,8 @@ android {
     applicationId = "digital.tonima.mydiary"
     minSdk = 26
     targetSdk = 36
-    versionCode = 11
-    versionName = "1.10.0"
+    versionCode = 12
+    versionName = "1.11.0"
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
@@ -36,6 +36,8 @@ android {
       buildConfigField("String", "ADMOB_BANNER_AD_UNIT_HOME", "\"$admobBannerAdUnitIdTest\"")
       buildConfigField(
           "String", "ADMOB_BANNER_AD_UNIT_LOCKED_DIARY", "\"$admobBannerAdUnitIdTest\"")
+      buildConfigField(
+          "String", "ADMOB_BANNER_AD_UNIT_VAULT_SCREEN", "\"$admobBannerAdUnitIdTest\"")
     }
     release {
       isMinifyEnabled = false
@@ -51,6 +53,7 @@ android {
       val admobAppId: String
       val admobBannerAdUnitIdHome: String
       val admobBannerAdUnitIdLockedDiary: String
+      val admobBannerAdUnitIdVaultScreen: String
 
       if (isRunningReleaseTask) {
         // Se for uma tarefa de release, carrega os segredos reais
@@ -74,17 +77,25 @@ android {
             System.getenv("ADMOB_BANNER_AD_UNIT_LOCKED_DIARY")
                 ?: localProperties.getProperty("admob.banner.ad.unit.locked.diary")
                 ?: admobBannerAdUnitIdTest
+
+        admobBannerAdUnitIdVaultScreen =
+            System.getenv("ADMOB_BANNER_AD_UNIT_VAULT_SCREEN")
+                ?: localProperties.getProperty("admob.banner.ad.unit.vault.screen")
+                ?: admobBannerAdUnitIdTest
       } else {
         // Para qualquer outra tarefa (como spotlessCheck), usa os IDs de teste
         admobAppId = admobAppIdTest
         admobBannerAdUnitIdHome = admobBannerAdUnitIdTest
         admobBannerAdUnitIdLockedDiary = admobBannerAdUnitIdTest
+        admobBannerAdUnitIdVaultScreen = admobBannerAdUnitIdTest
       }
 
       resValue("string", "admob_app_id", admobAppId)
       buildConfigField("String", "ADMOB_BANNER_AD_UNIT_HOME", "\"$admobBannerAdUnitIdHome\"")
       buildConfigField(
           "String", "ADMOB_BANNER_AD_UNIT_LOCKED_DIARY", "\"$admobBannerAdUnitIdLockedDiary\"")
+      buildConfigField(
+          "String", "ADMOB_BANNER_AD_UNIT_VAULT_SCREEN", "\"$admobBannerAdUnitIdVaultScreen\"")
     }
   }
   compileOptions {
