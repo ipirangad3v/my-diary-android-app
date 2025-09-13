@@ -17,6 +17,7 @@ import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.QueryProductDetailsParams
 import com.android.billingclient.api.QueryPurchasesParams
 import com.paulrybitskyi.hiltbinder.BindType
+import com.paulrybitskyi.hiltbinder.BindType.Component.SINGLETON
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -25,7 +26,7 @@ import javax.inject.Singleton
 
 private const val PRODUCT_ID_REMOVE_ADS = "remove_ads_premium"
 @Singleton
-@BindType(installIn = BindType.Component.SINGLETON, to = BillingManager::class)
+@BindType(installIn = SINGLETON, to = BillingManager::class)
 class BillingManagerImpl @Inject constructor(
     @ApplicationContext private val context: Context
 ) : BillingManager {
