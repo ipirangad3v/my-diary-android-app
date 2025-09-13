@@ -22,10 +22,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="digital.tonima.mydiary" />
+                  <option name="mobileSdkAppId" value="1:549889825144:android:6eef387cb9959e69cb908d" />
+                  <option name="projectId" value="my-diary-551b7" />
+                  <option name="projectNumber" value="549889825144" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

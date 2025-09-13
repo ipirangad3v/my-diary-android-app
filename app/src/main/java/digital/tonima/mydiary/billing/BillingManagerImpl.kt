@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
-import android.widget.Toast.LENGTH_SHORT
 import com.android.billingclient.api.AcknowledgePurchaseParams
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClient.BillingResponseCode.OK
@@ -13,6 +12,7 @@ import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.PendingPurchasesParams
 import com.android.billingclient.api.Purchase
+import com.android.billingclient.api.Purchase.PurchaseState.PURCHASED
 import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.QueryProductDetailsParams
 import com.android.billingclient.api.QueryPurchasesParams
@@ -84,7 +84,6 @@ class BillingManagerImpl @Inject constructor(
     override fun launchPurchaseFlow(activity: Activity) {
         if (!billingClient.isReady) {
             Log.e("BillingManager", "Billing client not ready. Attempting to reconnect.")
-            Toast.makeText(context, "Conectando à loja, por favor tente novamente em breve.", LENGTH_SHORT).show()
             connect()
             return
         }
@@ -118,7 +117,7 @@ class BillingManagerImpl @Inject constructor(
     }
 
     private fun handlePurchase(purchase: Purchase) {
-        if (purchase.purchaseState == Purchase.PurchaseState.PURCHASED && !purchase.isAcknowledged) {
+        if (purchase.purchaseState == PURCHASED && !purchase.isAcknowledged) {
             val acknowledgePurchaseParams = AcknowledgePurchaseParams.newBuilder()
                 .setPurchaseToken(purchase.purchaseToken)
                 .build()

@@ -70,6 +70,4 @@
     <string name="re_authentication_title">アクションの確認</string>
     <string name="re_authentication_subtitle">続行するには、本人確認を行ってください。</string>
     <string name="remove_ads">広告を削除</string>
-    <string name="upgrade_confirmation_title">広告を削除しますか？</string>
-    <string name="upgrade_confirmation_message">これにより、アプリからすべての広告が削除されます。（これは開発目的の購入シミュレーションです）。</string>
 </resources>

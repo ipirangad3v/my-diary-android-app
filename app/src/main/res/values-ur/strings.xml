@@ -74,6 +74,4 @@
     <string name="re_authentication_title">کارروائی کی تصدیق کریں</string>
     <string name="re_authentication_subtitle">براہ کرم جاری رکھنے کے لیے اپنی شناخت کی تصدیق کریں۔</string>
     <string name="remove_ads">اشتہارات ہٹائیں</string>
-    <string name="upgrade_confirmation_title">اشتہارات ہٹائیں؟</string>
-    <string name="upgrade_confirmation_message">اس سے ایپ سے تمام اشتہارات ہٹ جائیں گے۔ (یہ ترقیاتی مقاصد کے لیے خریداری کا تخروپن ہے)۔</string>
 </resources>

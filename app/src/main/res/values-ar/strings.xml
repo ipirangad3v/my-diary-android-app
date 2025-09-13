@@ -74,6 +74,4 @@
     <string name="re_authentication_title">تأكيد الإجراء</string>
     <string name="re_authentication_subtitle">يرجى تأكيد هويتك للمتابعة.</string>
     <string name="remove_ads">إزالة الإعلانات</string>
-    <string name="upgrade_confirmation_title">إزالة الإعلانات؟</string>
-    <string name="upgrade_confirmation_message">سيؤدي هذا إلى إزالة جميع الإعلانات من التطبيق. (هذه محاكاة شراء لأغراض التطوير).</string>
 </resources>

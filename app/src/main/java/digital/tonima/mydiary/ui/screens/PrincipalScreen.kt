@@ -58,8 +58,6 @@ import digital.tonima.mydiary.R.string.re_authentication_subtitle
 import digital.tonima.mydiary.R.string.re_authentication_title
 import digital.tonima.mydiary.R.string.reset_app_confirmation_message
 import digital.tonima.mydiary.R.string.reset_app_confirmation_title
-import digital.tonima.mydiary.R.string.upgrade_confirmation_message
-import digital.tonima.mydiary.R.string.upgrade_confirmation_title
 import digital.tonima.mydiary.ui.components.AdBannerView
 import digital.tonima.mydiary.ui.components.CalendarView
 import digital.tonima.mydiary.ui.components.ConfirmationDialog
@@ -278,14 +276,7 @@ fun PrincipalScreen(
     }
 
     if (uiState.showUpgradeConfirmation) {
-        ConfirmationDialog(
-            title = stringResource(upgrade_confirmation_title),
-            text = stringResource(upgrade_confirmation_message),
-            onConfirm = {
-                viewModel.onDismissUpgradeDialog()
-                onPurchaseRequest()
-            },
-            onDismiss = viewModel::onDismissUpgradeDialog
-        )
+        viewModel.onDismissUpgradeDialog()
+        onPurchaseRequest()
     }
 }
