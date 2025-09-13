@@ -76,4 +76,12 @@
     <string name="re_authentication_title">Confirmar Acción</string>
     <string name="re_authentication_subtitle">Por favor, confirme su identidad para continuar.</string>
     <string name="remove_ads">Eliminar anuncios</string>
+    <string name="diary">Diario</string>
+    <string name="vault">Bóveda de Imágenes</string>
+    <string name="add_image">Añadir Imagen</string>
+    <string name="vault_empty_message">Tu bóveda está vacía. Toca + para añadir tu primera imagen segura.</string>
+    <string name="delete_image_title">¿Eliminar imagen?</string>
+    <string name="delete_image_message">Esta acción es permanente y no se puede deshacer. La imagen se eliminará de tu bóveda.</string>
+    <string name="share">Compartir</string>
+    <string name="share_image">Compartir Imagen</string>
 </resources>

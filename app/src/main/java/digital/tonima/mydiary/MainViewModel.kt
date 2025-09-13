@@ -5,15 +5,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import digital.tonima.mydiary.data.EncryptedPassword
-import digital.tonima.mydiary.data.PasswordBasedCryptoManager
-import digital.tonima.mydiary.data.PasswordRepository
+import digital.tonima.mydiary.encrypting.EncryptedPassword
+import digital.tonima.mydiary.encrypting.PasswordBasedCryptoManager
+import digital.tonima.mydiary.encrypting.PasswordRepository
 import digital.tonima.mydiary.ui.screens.AppScreen
-import digital.tonima.mydiary.ui.screens.AppScreen.Locked
-import digital.tonima.mydiary.ui.screens.AppScreen.SetupPassword
+import digital.tonima.mydiary.ui.screens.BottomBarScreen
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.crypto.Cipher
@@ -26,16 +26,23 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(
-        if (passwordRepository.hasPassword()) Locked else SetupPassword
+        if (passwordRepository.hasPassword()) AppScreen.Locked else AppScreen.SetupPassword
     )
     val uiState = _uiState.asStateFlow()
 
-    /**
-     * Retrieves the Initialization Vector (IV) needed to unlock the master password.
-     * This is required by the BiometricPrompt.
-     */
+    private var pendingBiometricAction: (() -> Unit)? = null
+
     fun getIvForDecryption(): ByteArray {
         return passwordRepository.getEncryptedPassword()?.iv ?: byteArrayOf()
+    }
+
+    fun setPendingBiometricAction(action: () -> Unit) {
+        pendingBiometricAction = action
+    }
+
+    fun retryBiometricAction() {
+        pendingBiometricAction?.invoke()
+        pendingBiometricAction = null
     }
 
     fun onPasswordSetup(password: CharArray, cipher: Cipher) {
@@ -80,7 +87,17 @@ class MainViewModel @Inject constructor(
     }
 
     fun onRecoverySuccess(password: CharArray, cipher: Cipher) {
-        onPasswordSetup(password, cipher) // The logic is the same as the initial setup
+        // A lógica é a mesma da configuração inicial
+        onPasswordSetup(password, cipher)
+    }
+
+    fun onScreenSelected(screen: BottomBarScreen) {
+        val currentState = _uiState.value
+        if (currentState is AppScreen.Main) {
+            _uiState.update {
+                currentState.copy(currentScreen = screen)
+            }
+        }
     }
 
     fun navigateToAddEntry() {
@@ -93,8 +110,16 @@ class MainViewModel @Inject constructor(
     fun navigateToMain() {
         val currentState = _uiState.value
         if (currentState is AppScreen.AddEntry) {
-            _uiState.value = AppScreen.Main(currentState.masterPassword)
+            // Volta para a tela principal, mantendo a seleção da BottomBar
+            _uiState.value = AppScreen.Main(
+                masterPassword = currentState.masterPassword,
+                currentScreen = (uiState.value as? AppScreen.Main)?.currentScreen ?: BottomBarScreen.Diary
+            )
         }
+    }
+
+    fun lockApp() {
+        _uiState.value = AppScreen.Locked
     }
 
     fun resetApp() {
@@ -103,15 +128,7 @@ class MainViewModel @Inject constructor(
                 PasswordBasedCryptoManager.deleteAllEntries(applicationContext)
                 passwordRepository.clearPassword()
             }
-            _uiState.value = SetupPassword
+            _uiState.value = AppScreen.SetupPassword
         }
     }
-    fun lockApp() {
-        _uiState.value = Locked
-    }
-
-    fun retryBiometricAction() {
-        _uiState.value = _uiState.value
-    }
-
 }

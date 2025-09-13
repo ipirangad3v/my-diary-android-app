@@ -5,9 +5,9 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.core.app.ApplicationProvider
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
-import digital.tonima.mydiary.data.EncryptedPassword
-import digital.tonima.mydiary.data.PasswordBasedCryptoManager
-import digital.tonima.mydiary.data.PasswordRepository
+import digital.tonima.mydiary.encrypting.EncryptedPassword
+import digital.tonima.mydiary.encrypting.PasswordBasedCryptoManager
+import digital.tonima.mydiary.encrypting.PasswordRepository
 import digital.tonima.mydiary.ui.screens.AppScreen
 import io.mockk.every
 import io.mockk.mockk

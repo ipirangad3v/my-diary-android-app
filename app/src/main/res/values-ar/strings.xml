@@ -59,7 +59,7 @@
     <string name="content_required">يجب ملء الملاحظة</string>
     <string name="no_title">" بدون عنوان"</string>
     <string name="title">عنوان</string>
-    <string name="your_thoughts">Seus pensamentos</string>
+    <string name="your_thoughts">أفكارك</string>
     <string name="discard_changes_title">تجاهل التغييرات؟</string>
     <string name="discard">تجاهل</string>
     <string name="discard_changes_message">" هل تريد حقًا تجاهل التغييرات والعودة"</string>
@@ -74,4 +74,12 @@
     <string name="re_authentication_title">تأكيد الإجراء</string>
     <string name="re_authentication_subtitle">يرجى تأكيد هويتك للمتابعة.</string>
     <string name="remove_ads">إزالة الإعلانات</string>
+    <string name="diary">يوميات</string>
+    <string name="vault">خزنة الصور</string>
+    <string name="add_image">إضافة صورة</string>
+    <string name="vault_empty_message">خزنتك فارغة. اضغط على + لإضافة أول صورة آمنة لك.</string>
+    <string name="delete_image_title">حذف الصورة؟</string>
+    <string name="delete_image_message">هذا الإجراء دائم ولا يمكن التراجع عنه. سيتم حذف الصورة من خزنتك.</string>
+    <string name="share">مشاركة</string>
+    <string name="share_image">مشاركة الصورة</string>
 </resources>

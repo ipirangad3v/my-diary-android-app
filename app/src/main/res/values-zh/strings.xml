@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">我的日记</string>
 
-    <!-- Biometric Prompt & Toasts -->
     <string name="acess_to_diary">访问日记</string>
     <string name="use_pin_or_digital_to_continue">请使用您的 PIN 码或指纹以继续</string>
     <string name="sucessful_unlock">验证成功！</string>
@@ -13,11 +12,9 @@
     <string name="cancel">取消</string>
     <string name="setup_lock_screen_prompt">请在您设备的系统安全设置中设置 PIN 码、图案或指纹。</string>
 
-    <!-- Locked Screen -->
     <string name="unlock_diary">解锁日记</string>
     <string name="locked_diary">日记已锁定</string>
 
-    <!-- Main Screen -->
     <string name="lock_diary">锁定日记</string>
     <string name="ask_for_lock_diary">您想锁定日记并再次要求验证吗？</string>
     <string name="lock_confirm">是的，锁定</string>
@@ -76,4 +73,12 @@
     <string name="re_authentication_title">确认操作</string>
     <string name="re_authentication_subtitle">请确认您的身份以继续。</string>
     <string name="remove_ads">移除广告</string>
+    <string name="diary">日记</string>
+    <string name="vault">图片保险库</string>
+    <string name="add_image">添加图片</string>
+    <string name="vault_empty_message">您的保险库是空的。点击 + 添加您的第一张安全图片。</string>
+    <string name="delete_image_title">删除图片？</string>
+    <string name="delete_image_message">此操作是永久性的，无法撤销。图片将从您的保险库中删除。</string>
+    <string name="share">分享</string>
+    <string name="share_image">分享图片</string>
 </resources>

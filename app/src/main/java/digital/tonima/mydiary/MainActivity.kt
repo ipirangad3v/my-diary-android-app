@@ -3,14 +3,14 @@ package digital.tonima.mydiary
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
+import android.provider.Settings.ACTION_BIOMETRIC_ENROLL
 import android.provider.Settings.ACTION_SECURITY_SETTINGS
 import android.provider.Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED
-import android.widget.Toast.LENGTH_LONG
-import android.widget.Toast.makeText
+import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
 import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
@@ -21,18 +21,18 @@ import androidx.compose.runtime.setValue
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dagger.hilt.android.AndroidEntryPoint
-import digital.tonima.mydiary.R.string.incorrect_password_try_again
-import digital.tonima.mydiary.R.string.password_verified_re_encrypt
 import digital.tonima.mydiary.R.string.setup_lock_screen_prompt
 import digital.tonima.mydiary.billing.BillingManager
 import digital.tonima.mydiary.biometrics.BiometricAuthManager
+import digital.tonima.mydiary.biometrics.BiometricAuthManagerImpl
 import digital.tonima.mydiary.ui.screens.AddEntryScreen
 import digital.tonima.mydiary.ui.screens.AppScreen
 import digital.tonima.mydiary.ui.screens.LockedScreen
-import digital.tonima.mydiary.ui.screens.PrincipalScreen
+import digital.tonima.mydiary.ui.screens.MainAppContainer
 import digital.tonima.mydiary.ui.screens.ManualPasswordScreen
 import digital.tonima.mydiary.ui.screens.PasswordSetupScreen
 import digital.tonima.mydiary.ui.theme.MyDiaryTheme
+import digital.tonima.mydiary.ui.viewmodels.VaultViewModel
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -40,22 +40,32 @@ class MainActivity : FragmentActivity() {
 
     @Inject
     lateinit var billingManager: BillingManager
+    @Inject
+    lateinit var biometricAuthManager: BiometricAuthManager
 
+
+    private val viewModel: MainViewModel by viewModels()
+    private val vaultViewModel: VaultViewModel by viewModels()
     private val enrollLauncher = registerForActivityResult(
-        StartActivityForResult()
-    ) { result ->
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+        // After returning from settings, retry the stored biometric action.
         viewModel.retryBiometricAction()
     }
 
-
-    private lateinit var biometricAuthManager: BiometricAuthManager
-    private val viewModel: MainViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         billingManager.connect()
-        biometricAuthManager = BiometricAuthManager(this)
+        enableEdgeToEdge()
+        biometricAuthManager = BiometricAuthManagerImpl(this)
+
+        val pickImageLauncher = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            if (uri != null) {
+                (viewModel.uiState.value as? AppScreen.Main)?.masterPassword?.let { password ->
+                    vaultViewModel.saveImage(uri, password)
+                }
+            }
+        }
 
         setContent {
             MyDiaryTheme {
@@ -63,25 +73,27 @@ class MainActivity : FragmentActivity() {
 
                 when (val currentScreen = screen) {
                     is AppScreen.SetupPassword -> {
-                        PasswordSetupScreen { password ->
+                        PasswordSetupScreen(onPasswordSet = { password ->
                             biometricAuthManager.authenticateForEncryption(
                                 onSuccess = { cipher ->
                                     viewModel.onPasswordSetup(password, cipher)
                                 },
-                                onEnrollmentRequired = {
+                                onEnrollmentRequired = { actionToRetry ->
+                                    viewModel.setPendingBiometricAction(actionToRetry)
                                     launchEnrollment()
-                                })
-                        }
+                                }
+                            )
+                        })
                     }
 
                     is AppScreen.Locked -> {
                         LockedScreen(onUnlockRequest = {
-                            val iv = viewModel.getIvForDecryption()
                             biometricAuthManager.authenticateForDecryption(
-                                iv = iv,
+                                iv = viewModel.getIvForDecryption(),
                                 onSuccess = viewModel::onUnlockSuccess,
                                 onFailure = viewModel::onUnlockFailure,
-                                onEnrollmentRequired = {
+                                onEnrollmentRequired = { actionToRetry ->
+                                    viewModel.setPendingBiometricAction(actionToRetry)
                                     launchEnrollment()
                                 }
                             )
@@ -95,20 +107,21 @@ class MainActivity : FragmentActivity() {
                             onPasswordSubmit = { passwordAttempt ->
                                 viewModel.onRecoveryPasswordSubmit(passwordAttempt) { isCorrect ->
                                     if (isCorrect) {
-                                        makeText(
-                                            this, getString(password_verified_re_encrypt),
-                                            LENGTH_LONG
+                                        Toast.makeText(
+                                            this, getString(R.string.password_verified_re_encrypt),
+                                            Toast.LENGTH_LONG
                                         ).show()
                                         biometricAuthManager.authenticateForEncryption(
                                             onSuccess = { cipher ->
                                                 viewModel.onRecoverySuccess(passwordAttempt, cipher)
                                             },
-                                            onEnrollmentRequired = {
+                                            onEnrollmentRequired = { actionToRetry ->
+                                                viewModel.setPendingBiometricAction(actionToRetry)
                                                 launchEnrollment()
                                             }
                                         )
                                     } else {
-                                        error = getString(incorrect_password_try_again)
+                                        error = getString(R.string.incorrect_password_try_again)
                                     }
                                 }
                             }
@@ -116,19 +129,22 @@ class MainActivity : FragmentActivity() {
                     }
 
                     is AppScreen.Main -> {
-                        PrincipalScreen(
+                        MainAppContainer(
+                            mainViewModel = viewModel,
                             masterPassword = currentScreen.masterPassword,
-                            onLockRequest = viewModel::lockApp,
-                            onAddEntry = viewModel::navigateToAddEntry,
-                            onResetApp = viewModel::resetApp,
-                            onPurchaseRequest = { billingManager.launchPurchaseFlow(this) },
+                            onAddImage = {
+                                pickImageLauncher.launch(
+                                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                                )
+                            },
                             onReauthenticate = { titleResId, subtitleResId, action ->
                                 biometricAuthManager.authenticateForAction(
                                     titleResId = titleResId,
                                     subtitleResId = subtitleResId,
                                     onSuccess = action
                                 )
-                            }
+                            },
+                            onPurchaseRequest = { billingManager.launchPurchaseFlow(this) }
                         )
                     }
 
@@ -144,22 +160,18 @@ class MainActivity : FragmentActivity() {
     }
 
     private fun launchEnrollment() {
-        makeText(this, getString(setup_lock_screen_prompt), LENGTH_LONG).show()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            // Directly open biometric enrollment settings on Android 11+
-            val enrollIntent = Intent(Settings.ACTION_BIOMETRIC_ENROLL).apply {
+        Toast.makeText(this, getString(setup_lock_screen_prompt), Toast.LENGTH_LONG).show()
+
+        val enrollIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            Intent(ACTION_BIOMETRIC_ENROLL).apply {
                 putExtra(
                     EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
                     BIOMETRIC_STRONG or DEVICE_CREDENTIAL
                 )
             }
-            startActivity(enrollIntent)
         } else {
-            // Fallback to general security settings on older versions
-            val intent = Intent(ACTION_SECURITY_SETTINGS)
-            startActivity(intent)
+            Intent(ACTION_SECURITY_SETTINGS)
         }
-        val enrollIntent = Intent(ACTION_SECURITY_SETTINGS)
         enrollLauncher.launch(enrollIntent)
     }
 }

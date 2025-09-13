@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import digital.tonima.mydiary.data.model.DiaryEntry
-import digital.tonima.mydiary.data.PasswordBasedCryptoManager
+import digital.tonima.mydiary.encrypting.PasswordBasedCryptoManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -24,7 +24,7 @@ sealed class AddEntryEvent {
 
 @HiltViewModel
 class AddEntryViewModel @Inject constructor(
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
 ) : ViewModel() {
 
     private val _eventFlow = MutableSharedFlow<AddEntryEvent>()

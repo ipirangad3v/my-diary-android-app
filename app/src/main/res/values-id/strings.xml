@@ -74,4 +74,12 @@
     <string name="re_authentication_title">Konfirmasi Tindakan</string>
     <string name="re_authentication_subtitle">Harap konfirmasi identitas Anda untuk melanjutkan.</string>
     <string name="remove_ads">Hapus iklan</string>
+    <string name="diary">Buku Harian</string>
+    <string name="vault">Brankas Gambar</string>
+    <string name="add_image">Tambah Gambar</string>
+    <string name="vault_empty_message">Brankas Anda kosong. Ketuk + untuk menambahkan gambar aman pertama Anda.</string>
+    <string name="delete_image_title">Hapus gambar?</string>
+    <string name="delete_image_message">Tindakan ini permanen dan tidak dapat diurungkan. Gambar akan dihapus dari brankas Anda.</string>
+    <string name="share">Bagikan</string>
+    <string name="share_image">Bagikan Gambar</string>
 </resources>

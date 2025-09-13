@@ -3,13 +3,16 @@ package digital.tonima.mydiary.data
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import com.google.common.truth.Truth.assertThat
+import digital.tonima.mydiary.encrypting.EncryptedPassword
+import digital.tonima.mydiary.encrypting.PasswordRepository
+import digital.tonima.mydiary.encrypting.PasswordRepositoryImpl
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 
 /**
- * Unit tests for the [PasswordRepositoryImpl] class.
+ * Unit tests for the [digital.tonima.mydiary.encrypting.PasswordRepositoryImpl] class.
  * This test class uses Robolectric to provide a real Android Context
  * and an in-memory SharedPreferences implementation.
  */

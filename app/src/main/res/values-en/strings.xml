@@ -59,7 +59,7 @@
     <string name="content_required">The note must be filled in</string>
     <string name="no_title">Untitled</string>
     <string name="title">Title</string>
-    <string name="your_thoughts">Seus pensamentos</string>
+    <string name="your_thoughts">Your thoughts</string>
     <string name="discard_changes_title">Discard changes?</string>
     <string name="discard">Discard</string>
     <string name="discard_changes_message">Do you really want to discard the changes and go back?</string>
@@ -74,4 +74,12 @@
     <string name="re_authentication_title">Confirm Action</string>
     <string name="re_authentication_subtitle">Please confirm your identity to continue.</string>
     <string name="remove_ads">Remove ads</string>
+    <string name="diary">Diary</string>
+    <string name="vault">Image Vault</string>
+    <string name="add_image">Add Image</string>
+    <string name="vault_empty_message">Your vault is empty. Tap + to add your first secure image.</string>
+    <string name="delete_image_title">Delete image?</string>
+    <string name="delete_image_message">This action is permanent and cannot be undone. The image will be deleted from your vault.</string>
+    <string name="share">Share</string>
+    <string name="share_image">Share Image</string>
 </resources>

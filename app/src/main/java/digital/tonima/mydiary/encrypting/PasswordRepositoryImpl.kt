@@ -1,4 +1,4 @@
-package digital.tonima.mydiary.data
+package digital.tonima.mydiary.encrypting
 
 import android.content.Context
 import android.content.SharedPreferences

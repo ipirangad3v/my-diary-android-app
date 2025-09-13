@@ -7,8 +7,10 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import digital.tonima.mydiary.billing.BillingManager
-import digital.tonima.mydiary.data.PasswordBasedCryptoManager
 import digital.tonima.mydiary.data.model.DiaryEntry
+import digital.tonima.mydiary.encrypting.PasswordBasedCryptoManager
+import digital.tonima.mydiary.ui.screens.BottomBarScreen
+import digital.tonima.mydiary.ui.screens.BottomBarScreen.Diary
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -27,7 +29,8 @@ data class PrincipalScreenUiState(
     val showDeleteConfirmation: Boolean = false,
     val showDeleteAllConfirmation: Boolean = false,
     val showResetAppConfirmation: Boolean = false,
-    val showUpgradeConfirmation: Boolean = false
+    val showUpgradeConfirmation: Boolean = false,
+    val currentScreen: BottomBarScreen = Diary
 )
 
 @HiltViewModel
@@ -50,13 +53,17 @@ class PrincipalViewModel @Inject constructor(
         _uiState.update { it.copy(showUpgradeConfirmation = false) }
     }
 
+    fun onScreenSelected(screen: BottomBarScreen) {
+        _uiState.update { it.copy(currentScreen = screen) }
+    }
+
     fun loadEntries(masterPassword: CharArray) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
             val decrypted = withContext(Dispatchers.IO) {
                 val files = PasswordBasedCryptoManager.getAllEntryFiles(context)
                 files.mapNotNull { file ->
-                    PasswordBasedCryptoManager.readDiaryEntry(file, masterPassword)
+                    PasswordBasedCryptoManager.readDiaryEntry(context, file, masterPassword)
                         ?.let { entry ->
                             file to entry
                         }
@@ -75,7 +82,7 @@ class PrincipalViewModel @Inject constructor(
         val entryToDelete = _uiState.value.selectedEntry?.first ?: return
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                PasswordBasedCryptoManager.deleteDiaryEntry(entryToDelete)
+                PasswordBasedCryptoManager.deleteEncryptedFile(entryToDelete)
             }
             // Dismiss dialogs and reload entries
             _uiState.update { it.copy(selectedEntry = null, showDeleteConfirmation = false) }

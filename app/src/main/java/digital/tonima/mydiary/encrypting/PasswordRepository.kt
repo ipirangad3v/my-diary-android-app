@@ -1,4 +1,4 @@
-package digital.tonima.mydiary.data
+package digital.tonima.mydiary.encrypting
 
 /**
  * A repository for managing the persistence of the encrypted master password.

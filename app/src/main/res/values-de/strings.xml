@@ -63,7 +63,7 @@
     <string name="content_required">Die Notiz muss ausgefüllt werden</string>
     <string name="no_title">Ohne Titel</string>
     <string name="title">Titel</string>
-    <string name="your_thoughts">Seus pensamentos</string>
+    <string name="your_thoughts">Deine Gedanken</string>
     <string name="discard_changes_title">Änderungen verwerfen?</string>
     <string name="discard">Verwerfen</string>
     <string name="discard_changes_message">Möchten Sie die Änderungen wirklich verwerfen und zurückgehen?</string>
@@ -78,4 +78,13 @@
     <string name="re_authentication_title">Aktion bestätigen</string>
     <string name="re_authentication_subtitle">Bitte bestätigen Sie Ihre Identität, um fortzufahren.</string>
     <string name="remove_ads">Werbung entfernen</string>
+    <string name="diary">Tagebuch</string>
+    <string name="vault">Bilder-Tresor</string>
+    <string name="add_image">Bild hinzufügen</string>
+    <string name="vault_empty_message">Ihr Tresor ist leer. Tippen Sie auf +, um Ihr erstes sicheres Bild hinzuzufügen.</string>
+    <string name="delete_image_title">Bild löschen?</string>
+    <string name="delete_image_message">Diese Aktion ist dauerhaft und kann nicht rückgängig gemacht werden. Das Bild wird aus Ihrem
+        Tresor gelöscht.</string>
+    <string name="share">Teilen</string>
+    <string name="share_image">Bild teilen</string>
 </resources>
