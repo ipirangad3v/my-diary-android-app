@@ -2,5 +2,5 @@ package digital.tonima.mydiary.data.model
 
 data class DiaryEntry(
     val title: String,
-    val content: String
+    val contentHtml: String
 )

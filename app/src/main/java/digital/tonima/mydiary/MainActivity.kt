@@ -3,17 +3,14 @@ package digital.tonima.mydiary
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.provider.Settings.ACTION_BIOMETRIC_ENROLL
-import android.provider.Settings.ACTION_SECURITY_SETTINGS
-import android.provider.Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED
+import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
-import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
+import androidx.biometric.BiometricManager
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,10 +18,8 @@ import androidx.compose.runtime.setValue
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dagger.hilt.android.AndroidEntryPoint
-import digital.tonima.mydiary.R.string.setup_lock_screen_prompt
 import digital.tonima.mydiary.billing.BillingManager
 import digital.tonima.mydiary.biometrics.BiometricAuthManager
-import digital.tonima.mydiary.biometrics.BiometricAuthManagerImpl
 import digital.tonima.mydiary.ui.screens.AddEntryScreen
 import digital.tonima.mydiary.ui.screens.AppScreen
 import digital.tonima.mydiary.ui.screens.LockedScreen
@@ -40,16 +35,16 @@ class MainActivity : FragmentActivity() {
 
     @Inject
     lateinit var billingManager: BillingManager
+
     @Inject
     lateinit var biometricAuthManager: BiometricAuthManager
 
-
     private val viewModel: MainViewModel by viewModels()
     private val vaultViewModel: VaultViewModel by viewModels()
+
     private val enrollLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {
-        // After returning from settings, retry the stored biometric action.
         viewModel.retryBiometricAction()
     }
 
@@ -57,11 +52,10 @@ class MainActivity : FragmentActivity() {
         super.onCreate(savedInstanceState)
         billingManager.connect()
         enableEdgeToEdge()
-        biometricAuthManager = BiometricAuthManagerImpl(this)
 
         val pickImageLauncher = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             if (uri != null) {
-                (viewModel.uiState.value as? AppScreen.Main)?.masterPassword?.let { password ->
+                (viewModel.uiState.value as? AppScreen.Principal)?.masterPassword?.let { password ->
                     vaultViewModel.saveImage(uri, password)
                 }
             }
@@ -128,7 +122,7 @@ class MainActivity : FragmentActivity() {
                         )
                     }
 
-                    is AppScreen.Main -> {
+                    is AppScreen.Principal -> {
                         MainAppContainer(
                             mainViewModel = viewModel,
                             masterPassword = currentScreen.masterPassword,
@@ -144,14 +138,16 @@ class MainActivity : FragmentActivity() {
                                     onSuccess = action
                                 )
                             },
-                            onPurchaseRequest = { billingManager.launchPurchaseFlow(this) }
+                            onPurchaseRequest = { billingManager.launchPurchaseFlow(this) },
+                            onEditEntry = { fileName -> viewModel.navigateToAddEntry(fileName) }
                         )
                     }
 
                     is AppScreen.AddEntry -> {
                         AddEntryScreen(
                             masterPassword = currentScreen.masterPassword,
-                            onNavigateBack = viewModel::navigateToMain
+                            onNavigateBack = viewModel::navigateToMain,
+                            fileNameToEdit = currentScreen.fileNameToEdit
                         )
                     }
                 }
@@ -160,17 +156,17 @@ class MainActivity : FragmentActivity() {
     }
 
     private fun launchEnrollment() {
-        Toast.makeText(this, getString(setup_lock_screen_prompt), Toast.LENGTH_LONG).show()
+        Toast.makeText(this, getString(R.string.setup_lock_screen_prompt), Toast.LENGTH_LONG).show()
 
         val enrollIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            Intent(ACTION_BIOMETRIC_ENROLL).apply {
+            Intent(Settings.ACTION_BIOMETRIC_ENROLL).apply {
                 putExtra(
-                    EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
-                    BIOMETRIC_STRONG or DEVICE_CREDENTIAL
+                    Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
+                    BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.DEVICE_CREDENTIAL
                 )
             }
         } else {
-            Intent(ACTION_SECURITY_SETTINGS)
+            Intent(Settings.ACTION_SECURITY_SETTINGS)
         }
         enrollLauncher.launch(enrollIntent)
     }

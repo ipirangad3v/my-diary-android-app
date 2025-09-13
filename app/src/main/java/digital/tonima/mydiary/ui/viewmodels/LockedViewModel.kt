@@ -2,13 +2,10 @@ package digital.tonima.mydiary.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import digital.tonima.mydiary.billing.BillingManager
+import digital.tonima.mydiary.delegates.ProUserProvider
 import javax.inject.Inject
 
 @HiltViewModel
 class LockedViewModel @Inject constructor(
-    billingManager: BillingManager
-) : ViewModel() {
-    val isProUser = billingManager.isProUser
-
-}
+    proUserProvider: ProUserProvider
+) : ViewModel() , ProUserProvider by proUserProvider

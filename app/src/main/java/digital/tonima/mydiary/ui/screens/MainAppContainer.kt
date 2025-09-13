@@ -9,8 +9,6 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import digital.tonima.mydiary.MainViewModel
 import digital.tonima.mydiary.ui.components.AppBottomNavigation
-import digital.tonima.mydiary.ui.screens.BottomBarScreen.Diary
-import digital.tonima.mydiary.ui.screens.BottomBarScreen.Vault
 
 @Composable
 fun MainAppContainer(
@@ -19,9 +17,10 @@ fun MainAppContainer(
     onAddImage: () -> Unit,
     onReauthenticate: (titleResId: Int, subtitleResId: Int, action: () -> Unit) -> Unit,
     onPurchaseRequest: () -> Unit,
+    onEditEntry: (fileName: String) -> Unit
 ) {
     val uiState by mainViewModel.uiState.collectAsStateWithLifecycle()
-    val principalScreenState = uiState as? AppScreen. Main ?: return
+    val principalScreenState = uiState as? AppScreen.Principal ?: return
 
     Scaffold(
         bottomBar = {
@@ -33,16 +32,17 @@ fun MainAppContainer(
     ) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)) {
             when (principalScreenState.currentScreen) {
-                Diary -> PrincipalScreen(
+                BottomBarScreen.Diary -> PrincipalScreen(
                     masterPassword = masterPassword,
-                    onAddEntry = mainViewModel::navigateToAddEntry,
+                    onAddEntry = { mainViewModel.navigateToAddEntry() },
+                    onEditEntry = onEditEntry,
                     onLockRequest = mainViewModel::lockApp,
                     onResetApp = mainViewModel::resetApp,
                     onReauthenticate = onReauthenticate,
                     onPurchaseRequest = onPurchaseRequest
                 )
 
-                Vault -> VaultScreen(
+                BottomBarScreen.Vault -> VaultScreen(
                     masterPassword = masterPassword,
                     onAddImage = onAddImage
                 )

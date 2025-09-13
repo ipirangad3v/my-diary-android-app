@@ -82,4 +82,5 @@
     <string name="delete_image_message">یہ کارروائی مستقل ہے اور اسے واپس نہیں کیا جا سکتا۔ تصویر آپ کے والٹ سے حذف کر دی جائے گی۔</string>
     <string name="share">شیئر کریں</string>
     <string name="share_image">تصویر شیئر کریں</string>
+    <string name="edit_entry">نوٹ میں ترمیم کریں</string>
 </resources>

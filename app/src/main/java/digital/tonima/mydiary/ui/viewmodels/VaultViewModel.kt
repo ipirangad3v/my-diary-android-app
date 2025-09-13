@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import digital.tonima.mydiary.BuildConfig
-import digital.tonima.mydiary.billing.BillingManager
+import digital.tonima.mydiary.delegates.ProUserProvider
 import digital.tonima.mydiary.encrypting.PasswordBasedCryptoManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -35,10 +35,9 @@ sealed class VaultEvent {
 @HiltViewModel
 class VaultViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
-    billingManager: BillingManager
-) : ViewModel() {
+    proUserProvider: ProUserProvider
+) : ViewModel(), ProUserProvider by proUserProvider {
 
-    val isProUser = billingManager.isProUser
 
     private val _uiState = MutableStateFlow(VaultUiState())
     val uiState = _uiState.asStateFlow()

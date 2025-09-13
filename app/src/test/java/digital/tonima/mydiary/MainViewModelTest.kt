@@ -108,7 +108,7 @@ class MainViewModelTest {
             viewModel.onPasswordSetup(password, cipher)
 
             // New state should be Main
-            val newState = awaitItem() as AppScreen.Main
+            val newState = awaitItem() as AppScreen.Principal
             assertThat(newState.masterPassword).isEqualTo(password)
 
             // Verify that the password was saved correctly using a slot to capture the argument
@@ -138,7 +138,7 @@ class MainViewModelTest {
             assertThat(awaitItem()).isEqualTo(AppScreen.Locked)
             viewModel.onUnlockSuccess(cipher)
 
-            val newState = awaitItem() as AppScreen.Main
+            val newState = awaitItem() as AppScreen.Principal
             assertThat(String(newState.masterPassword)).isEqualTo(decryptedPassword)
         }
     }
@@ -210,7 +210,7 @@ class MainViewModelTest {
         viewModel.uiState.test {
             // Initial states
             awaitItem() // SetupPassword
-            assertThat(awaitItem()).isInstanceOf(AppScreen.Main::class.java)
+            assertThat(awaitItem()).isInstanceOf(AppScreen.Principal::class.java)
 
             // Act
             viewModel.lockApp()

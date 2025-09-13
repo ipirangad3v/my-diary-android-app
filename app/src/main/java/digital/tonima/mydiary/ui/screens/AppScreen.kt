@@ -23,14 +23,14 @@ sealed class AppScreen {
      * @param masterPassword The decrypted master password, required for all crypto operations.
      * @param currentScreen The currently selected screen on the bottom navigation bar.
      */
-    data class Main(
+    data class Principal(
         val masterPassword: CharArray,
         val currentScreen: BottomBarScreen = Diary
     ) : AppScreen() {
         override fun equals(other: Any?): Boolean {
             if (this === other) return true
             if (javaClass != other?.javaClass) return false
-            other as Main
+            other as Principal
             if (!masterPassword.contentEquals(other.masterPassword)) return false
             if (currentScreen != other.currentScreen) return false
             return true
@@ -47,16 +47,23 @@ sealed class AppScreen {
      * Represents the screen for adding a new diary entry.
      * @param masterPassword The master password, needed to save the new entry.
      */
-    data class AddEntry(val masterPassword: CharArray) : AppScreen() {
+    data class AddEntry(val masterPassword: CharArray, val fileNameToEdit: String? = null) : AppScreen() {
         override fun equals(other: Any?): Boolean {
             if (this === other) return true
             if (javaClass != other?.javaClass) return false
+
             other as AddEntry
-            return masterPassword.contentEquals(other.masterPassword)
+
+            if (!masterPassword.contentEquals(other.masterPassword)) return false
+            if (fileNameToEdit != other.fileNameToEdit) return false
+
+            return true
         }
 
         override fun hashCode(): Int {
-            return masterPassword.contentHashCode()
+            var result = masterPassword.contentHashCode()
+            result = 31 * result + (fileNameToEdit?.hashCode() ?: 0)
+            return result
         }
     }
 }

@@ -83,4 +83,5 @@
     <string name="delete_image_message">Esta ação é permanente e não pode ser desfeita. A imagem será apagada do seu cofre.</string>
     <string name="share">Partilhar</string>
     <string name="share_image">Partilhar Imagem</string>
+    <string name="edit_entry">Editar nota</string>
 </resources>

@@ -78,4 +78,5 @@
     <string name="delete_image_message">この操作は永続的であり、元に戻すことはできません。画像は保管庫から削除されます。</string>
     <string name="share">共有</string>
     <string name="share_image">画像を共有</string>
+    <string name="edit_entry">ノートを編集</string>
 </resources>

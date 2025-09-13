@@ -82,4 +82,5 @@
     <string name="delete_image_message">এই কাজটি স্থায়ী এবং ফেরানো যাবে না। ছবিটি আপনার ভল্ট থেকে মুছে ফেলা হবে।</string>
     <string name="share">শেয়ার করুন</string>
     <string name="share_image">ছবি শেয়ার করুন</string>
+    <string name="edit_entry">নোট সম্পাদনা করুন</string>
 </resources>

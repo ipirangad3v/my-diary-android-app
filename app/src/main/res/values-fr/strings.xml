@@ -85,4 +85,5 @@
         coffre-fort.</string>
     <string name="share">Partager</string>
     <string name="share_image">Partager l\'image</string>
+    <string name="edit_entry">Modifier la note</string>
 </resources>

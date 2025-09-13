@@ -82,4 +82,5 @@
     <string name="delete_image_message">This action is permanent and cannot be undone. The image will be deleted from your vault.</string>
     <string name="share">Share</string>
     <string name="share_image">Share Image</string>
+    <string name="edit_entry">Edit note</string>
 </resources>
