@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">मेरी डायरी</string>
     <string name="acess_to_diary">डायरी तक पहुंच</string>
@@ -83,4 +84,9 @@
     <string name="share">साझा करें</string>
     <string name="share_image">छवि साझा करें</string>
     <string name="edit_entry">नोट संपादित करें</string>
+    <string name="password_requirements">यह अनुशंसा की जाती है कि पासवर्ड में कम से कम 8 अक्षर हों और इसमें अक्षरों, संख्याओं और प्रतीकों
+        का संयोजन शामिल हो।</string>
+    <string name="password_strength_weak">कमज़ोर</string>
+    <string name="password_strength_medium">मध्यम</string>
+    <string name="password_strength_strong">मज़बूत</string>
 </resources>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Buku Harian Saya</string>
     <string name="acess_to_diary">Akses ke Buku Harian</string>
@@ -62,14 +63,14 @@
     <string name="your_thoughts">Pikiran Anda</string>
     <string name="discard_changes_title">Buang perubahan?</string>
     <string name="discard">Buang</string>
-    <string name="discard_changes_message">Apakah Anda benar-benar ingin membuang</string>
+    <string name="discard_changes_message">Apakah Anda benar-benar ingin membuang perubahan dan kembali?</string>
     <string name="delete_all_notes">Hapus semua catatan</string>
     <string name="reset_master_password">Atur ulang kata sandi utama</string>
     <string name="menu">Menu</string>
     <string name="delete_all_confirmation_title">Hapus semua catatan</string>
     <string name="delete_all_confirmation_message">Apakah Anda yakin ingin menghapus semua catatan? Tindakan ini tidak dapat diurungkan.</string>
     <string name="reset_app_confirmation_title">Setel ulang aplikasi</string>
-    <string name="reset_app_confirmation_message">Ini akan mengatur ulang kata sandi utama Anda dan menghapus semua catatan, tindakan ini tidak
+    <string name="reset_app_confirmation_message">Ini akan mengatur ulang kata sandi utama Anda dan menghapus semua catatan. Tindakan ini tidak
         dapat diurungkan. Apakah Anda benar-benar ingin melanjutkan?</string>
     <string name="re_authentication_title">Konfirmasi Tindakan</string>
     <string name="re_authentication_subtitle">Harap konfirmasi identitas Anda untuk melanjutkan.</string>
@@ -83,4 +84,9 @@
     <string name="share">Bagikan</string>
     <string name="share_image">Bagikan Gambar</string>
     <string name="edit_entry">Edit catatan</string>
+    <string name="password_requirements">Disarankan agar kata sandi memiliki setidaknya 8 karakter dan menyertakan kombinasi huruf,
+        angka, dan simbol.</string>
+    <string name="password_strength_weak">Lemah</string>
+    <string name="password_strength_medium">Sedang</string>
+    <string name="password_strength_strong">Kuat</string>
 </resources>

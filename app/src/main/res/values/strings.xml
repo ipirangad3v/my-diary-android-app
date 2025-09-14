@@ -84,4 +84,9 @@
     <string name="share">Partilhar</string>
     <string name="share_image">Partilhar Imagem</string>
     <string name="edit_entry">Editar nota</string>
+    <string name="password_requirements">É recomendado que senha tenha pelo menos 8 caracteres e inclua uma combinação de letras, números
+        e símbolos.</string>
+    <string name="password_strength_weak">Fraca</string>
+    <string name="password_strength_medium">Média</string>
+    <string name="password_strength_strong">Forte</string>
 </resources>

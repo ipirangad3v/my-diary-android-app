@@ -83,4 +83,8 @@
     <string name="share">শেয়ার করুন</string>
     <string name="share_image">ছবি শেয়ার করুন</string>
     <string name="edit_entry">নোট সম্পাদনা করুন</string>
+    <string name="password_requirements">পাসওয়ার্ডে কমপক্ষে ৮টি অক্ষর এবং অক্ষর, সংখ্যা ও প্রতীকের সংমিশ্রণ থাকা বাঞ্ছনীয়।</string>
+    <string name="password_strength_weak">দুর্বল</string>
+    <string name="password_strength_medium">মাঝারি</string>
+    <string name="password_strength_strong">শক্তিশালী</string>
 </resources>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Mi diario</string>
+    <string name="app_name">Mi Diario</string>
     <string name="acess_to_diary">Acceso al Diario</string>
     <string name="use_pin_or_digital_to_continue">Usa tu huella o PIN para continuar</string>
     <string name="sucessful_unlock">¡Autenticación exitosa!</string>
@@ -10,6 +10,8 @@
     <string name="none_pin_or_digital_set">No se ha configurado ninguna huella o PIN.</string>
     <string name="unsupported_auth">Autenticación no compatible.</string>
     <string name="cancel">Cancelar</string>
+    <string name="setup_lock_screen_prompt">Configure un PIN, un patrón o una huella digital en la configuración de seguridad de su
+        dispositivo.</string>
     <string name="unlock_diary">Desbloquear Diario</string>
     <string name="locked_diary">Diario Bloqueado</string>
     <string name="lock_diary">Bloquear Diario</string>
@@ -20,13 +22,11 @@
     <string name="empty_notes_message">Aún no hay entradas.\n¡Toca \'+\' para añadir la primera!</string>
     <string name="your_note">Tu Nota</string>
     <string name="close">Cerrar</string>
-    <string name="error_decrypting">Error de cifrado</string>
+    <string name="error_decrypting">Error de descifrado</string>
     <string name="delete">Eliminar</string>
     <string name="confirm_deletion_title">Confirmar eliminación</string>
     <string name="confirm_deletion_message">¿Seguro que desea eliminar esta nota? Esta acción no se puede deshacer.</string>
     <string name="confirm">Confirmar</string>
-    <string name="setup_lock_screen_prompt">Configure un PIN, un patrón o una huella digital en la configuración de seguridad de su
-        dispositivo.</string>
     <string name="none_note_for_this_day">Ninguna nota para este día.</string>
     <string name="select_a_day_to_see_notes">Seleccione un día en el calendario para ver las notas.</string>
     <string name="new_note">Nueva Nota</string>
@@ -37,10 +37,10 @@
     <string name="whats_happened_today">¿Qué pasó hoy?</string>
     <string name="start_writing">Empieza a escribir…</string>
     <string name="write_here">Escribe aquí</string>
-    <string name="new_entry">Nueva entrada</string>
-    <string name="save_entry">guardar entrada</string>
+    <string name="new_entry">Nueva Entrada</string>
+    <string name="save_entry">Guardar Entrada</string>
     <string name="password_too_short">La contraseña es demasiado corta</string>
-    <string name="passwords_do_not_match">Las contraseñas no son las mismas</string>
+    <string name="passwords_do_not_match">Las contraseñas no coinciden</string>
     <string name="save_password">Guardar contraseña</string>
     <string name="create_master_password">Crear contraseña maestra</string>
     <string name="confirm_password">Confirmar Contraseña</string>
@@ -58,8 +58,8 @@
     <string name="password_verified_re_encrypt">¡Contraseña verificada! Confirme con sus datos biométricos para volver a activar el desbloqueo
         rápido en este dispositivo.</string>
     <string name="loading">Cargando</string>
-    <string name="content_required">La nota debe ser completada</string>
-    <string name="no_title">" Sin título"</string>
+    <string name="content_required">La nota debe ser completada.</string>
+    <string name="no_title">Sin título</string>
     <string name="title">Título</string>
     <string name="your_thoughts">Tus pensamientos</string>
     <string name="discard_changes_title">¿Descartar cambios?</string>
@@ -71,7 +71,7 @@
     <string name="delete_all_confirmation_title">Eliminar todas las notas</string>
     <string name="delete_all_confirmation_message">¿Realmente quieres eliminar todas las notas? Esta acción no se puede deshacer.</string>
     <string name="reset_app_confirmation_title">Restablecer aplicación</string>
-    <string name="reset_app_confirmation_message">Esto restablecerá su contraseña maestra y eliminará todas las notas, esta acción no se puede
+    <string name="reset_app_confirmation_message">Esto restablecerá su contraseña maestra y eliminará todas las notas. Esta acción no se puede
         deshacer. ¿Realmente desea continuar?</string>
     <string name="re_authentication_title">Confirmar Acción</string>
     <string name="re_authentication_subtitle">Por favor, confirme su identidad para continuar.</string>
@@ -84,5 +84,10 @@
     <string name="delete_image_message">Esta acción es permanente y no se puede deshacer. La imagen se eliminará de tu bóveda.</string>
     <string name="share">Compartir</string>
     <string name="share_image">Compartir Imagen</string>
-    <string name="edit_entry">Editar nota</string>
+    <string name="edit_entry">Editar Nota</string>
+    <string name="password_requirements">Se recomienda que la contraseña tenga al menos 8 caracteres e incluya una combinación de letras,
+        números y símbolos.</string>
+    <string name="password_strength_weak">Débil</string>
+    <string name="password_strength_medium">Media</string>
+    <string name="password_strength_strong">Fuerte</string>
 </resources>

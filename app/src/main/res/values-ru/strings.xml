@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Мой дневник</string>
     <string name="acess_to_diary">Доступ к дневнику</string>
@@ -70,7 +71,7 @@
     <string name="delete_all_confirmation_title">Удалить все заметки</string>
     <string name="delete_all_confirmation_message">Вы действительно хотите удалить все заметки? Это действие нельзя отменить.</string>
     <string name="reset_app_confirmation_title">Сбросить приложение</string>
-    <string name="reset_app_confirmation_message">Это приведет к сбросу вашего мастер-пароля и удалению всех заметок, это действие нельзя
+    <string name="reset_app_confirmation_message">Это приведет к сбросу вашего мастер-пароля и удалению всех заметок. Это действие нельзя
         отменить. Вы действительно хотите продолжить?</string>
     <string name="re_authentication_title">Подтвердить действие</string>
     <string name="re_authentication_subtitle">Пожалуйста, подтвердите свою личность, чтобы продолжить.</string>
@@ -85,4 +86,9 @@
     <string name="share">Поделиться</string>
     <string name="share_image">Поделиться изображением</string>
     <string name="edit_entry">Редактировать заметку</string>
+    <string name="password_requirements">Рекомендуется, чтобы пароль содержал не менее 8 символов и включал комбинацию букв, цифр и
+        символов.</string>
+    <string name="password_strength_weak">Слабый</string>
+    <string name="password_strength_medium">Средний</string>
+    <string name="password_strength_strong">Сильный</string>
 </resources>
