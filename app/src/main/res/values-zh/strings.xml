@@ -1,6 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">我的日记</string>
-
     <string name="acess_to_diary">访问日记</string>
     <string name="use_pin_or_digital_to_continue">请使用您的 PIN 码或指纹以继续</string>
     <string name="sucessful_unlock">验证成功！</string>
@@ -11,10 +11,8 @@
     <string name="unsupported_auth">不支持的验证方式。</string>
     <string name="cancel">取消</string>
     <string name="setup_lock_screen_prompt">请在您设备的系统安全设置中设置 PIN 码、图案或指纹。</string>
-
     <string name="unlock_diary">解锁日记</string>
     <string name="locked_diary">日记已锁定</string>
-
     <string name="lock_diary">锁定日记</string>
     <string name="ask_for_lock_diary">您想锁定日记并再次要求验证吗？</string>
     <string name="lock_confirm">是的，锁定</string>
@@ -82,4 +80,8 @@
     <string name="share">分享</string>
     <string name="share_image">分享图片</string>
     <string name="edit_entry">编辑笔记</string>
+    <string name="password_requirements">建议密码长度至少为8个字符，并包含字母、数字和符号的组合。</string>
+    <string name="password_strength_weak">弱</string>
+    <string name="password_strength_medium">中</string>
+    <string name="password_strength_strong">强</string>
 </resources>

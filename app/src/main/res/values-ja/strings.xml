@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">私の日記</string>
     <string name="acess_to_diary">日記へのアクセス</string>
@@ -59,7 +60,7 @@
     <string name="your_thoughts">あなたの考え</string>
     <string name="discard_changes_title">変更を破棄しますか？</string>
     <string name="discard">破棄</string>
-    <string name="discard_changes_message">" 本当に変更を破棄して戻りますか？"</string>
+    <string name="discard_changes_message">本当に変更を破棄して戻りますか？</string>
     <string name="delete_all_notes">すべてのメモを削除</string>
     <string name="reset_master_password">マスターパスワードをリセット</string>
     <string name="menu">メニュー</string>
@@ -78,5 +79,9 @@
     <string name="delete_image_message">この操作は永続的であり、元に戻すことはできません。画像は保管庫から削除されます。</string>
     <string name="share">共有</string>
     <string name="share_image">画像を共有</string>
-    <string name="edit_entry">ノートを編集</string>
+    <string name="edit_entry">メモを編集</string>
+    <string name="password_requirements">パスワードは8文字以上で、文字、数字、記号を組み合わせることが推奨されます。</string>
+    <string name="password_strength_weak">弱い</string>
+    <string name="password_strength_medium">中</string>
+    <string name="password_strength_strong">強い</string>
 </resources>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">My diary</string>
+    <string name="app_name">My Diary</string>
     <string name="acess_to_diary">Diary Access</string>
     <string name="use_pin_or_digital_to_continue">Use your fingerprint or PIN to continue</string>
     <string name="sucessful_unlock">Authentication successful!</string>
@@ -21,7 +21,7 @@
     <string name="empty_notes_message">No entries yet.\nTap \'+\' to add your first one!</string>
     <string name="your_note">Your Note</string>
     <string name="close">Close</string>
-    <string name="error_decrypting">Encryption error</string>
+    <string name="error_decrypting">Decryption error</string>
     <string name="delete">Delete</string>
     <string name="confirm_deletion_title">Confirm Deletion</string>
     <string name="confirm_deletion_message">Are you sure you want to delete this note? This action cannot be undone.</string>
@@ -36,18 +36,18 @@
     <string name="whats_happened_today">What happened today?</string>
     <string name="start_writing">Start writing…</string>
     <string name="write_here">Write here</string>
-    <string name="new_entry">New entry</string>
-    <string name="save_entry">Save entry</string>
+    <string name="new_entry">New Entry</string>
+    <string name="save_entry">Save Entry</string>
     <string name="password_too_short">Password too short</string>
-    <string name="passwords_do_not_match">Passwords are not the same</string>
-    <string name="save_password">Save password</string>
-    <string name="create_master_password">Create master password</string>
-    <string name="confirm_password">Confirm password</string>
-    <string name="master_password">Master password</string>
+    <string name="passwords_do_not_match">Passwords do not match</string>
+    <string name="save_password">Save Password</string>
+    <string name="create_master_password">Create Master Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="master_password">Master Password</string>
     <string name="master_password_description">This master password protects all your notes and is the only way to access your journal if you
-        change phones or reinstall the app. Keep it in a safe place, as it is irretrievable. If you forget it, your
+        change phones or reinstall the app. Keep it in a safe place, as it cannot be recovered. If you forget it, your
         notes will be permanently inaccessible.</string>
-    <string name="secure_your_password">Secure your password</string>
+    <string name="secure_your_password">Secure Your Password</string>
     <string name="confirm_to_encrypt">Confirm your identity to encrypt your master password</string>
     <string name="master_password_recovery">Master Password Recovery</string>
     <string name="master_password_recovery_desc">Biometric unlocking is not available. Please enter your Master Password to continue.</string>
@@ -56,24 +56,24 @@
     <string name="no_entries_for_verification">No entries found for password verification.</string>
     <string name="password_verified_re_encrypt">Password verified! Please confirm with your biometrics to re-enable Quick Unlock on this device.</string>
     <string name="loading">Loading</string>
-    <string name="content_required">The note must be filled in</string>
+    <string name="content_required">The note must be filled in.</string>
     <string name="no_title">Untitled</string>
     <string name="title">Title</string>
     <string name="your_thoughts">Your thoughts</string>
     <string name="discard_changes_title">Discard changes?</string>
     <string name="discard">Discard</string>
     <string name="discard_changes_message">Do you really want to discard the changes and go back?</string>
-    <string name="delete_all_notes">Delete all notes</string>
-    <string name="reset_master_password">Reset master password</string>
+    <string name="delete_all_notes">Delete All Notes</string>
+    <string name="reset_master_password">Reset Master Password</string>
     <string name="menu">Menu</string>
-    <string name="delete_all_confirmation_title">Delete all notes</string>
+    <string name="delete_all_confirmation_title">Delete All Notes</string>
     <string name="delete_all_confirmation_message">Do you really want to delete all notes? This action cannot be undone.</string>
-    <string name="reset_app_confirmation_title">Reset app</string>
-    <string name="reset_app_confirmation_message">This will reset your master password and delete all notes, this action cannot be undone. Do you
+    <string name="reset_app_confirmation_title">Reset App</string>
+    <string name="reset_app_confirmation_message">This will reset your master password and delete all notes. This action cannot be undone. Do you
         really want to continue?</string>
     <string name="re_authentication_title">Confirm Action</string>
     <string name="re_authentication_subtitle">Please confirm your identity to continue.</string>
-    <string name="remove_ads">Remove ads</string>
+    <string name="remove_ads">Remove Ads</string>
     <string name="diary">Diary</string>
     <string name="vault">Image Vault</string>
     <string name="add_image">Add Image</string>
@@ -82,5 +82,10 @@
     <string name="delete_image_message">This action is permanent and cannot be undone. The image will be deleted from your vault.</string>
     <string name="share">Share</string>
     <string name="share_image">Share Image</string>
-    <string name="edit_entry">Edit note</string>
+    <string name="edit_entry">Edit Note</string>
+    <string name="password_requirements">It is recommended that the password has at least 8 characters and includes a combination of
+        letters, numbers, and symbols.</string>
+    <string name="password_strength_weak">Weak</string>
+    <string name="password_strength_medium">Medium</string>
+    <string name="password_strength_strong">Strong</string>
 </resources>

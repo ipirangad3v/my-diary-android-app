@@ -88,4 +88,9 @@
     <string name="share">Teilen</string>
     <string name="share_image">Bild teilen</string>
     <string name="edit_entry">Notiz bearbeiten</string>
+    <string name="password_requirements">Es wird empfohlen, dass das Passwort mindestens 8 Zeichen lang ist und eine Kombination aus
+        Buchstaben, Zahlen und Symbolen enthält.</string>
+    <string name="password_strength_weak">Schwach</string>
+    <string name="password_strength_medium">Mittel</string>
+    <string name="password_strength_strong">Stark</string>
 </resources>

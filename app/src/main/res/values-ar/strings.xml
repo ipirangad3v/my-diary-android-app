@@ -55,17 +55,17 @@
     <string name="no_entries_for_verification">لم يتم العثور على إدخالات للتحقق من كلمة المرور.</string>
     <string name="password_verified_re_encrypt">تم التحقق من كلمة المرور! يرجى التأكيد باستخدام القياسات الحيوية الخاصة بك لإعادة تنشيط الفتح
         السريع على هذا الجهاز.</string>
-    <string name="loading">" جارٍ التحميل"</string>
+    <string name="loading">جارٍ التحميل</string>
     <string name="content_required">يجب ملء الملاحظة</string>
-    <string name="no_title">" بدون عنوان"</string>
+    <string name="no_title">بدون عنوان</string>
     <string name="title">عنوان</string>
     <string name="your_thoughts">أفكارك</string>
     <string name="discard_changes_title">تجاهل التغييرات؟</string>
     <string name="discard">تجاهل</string>
-    <string name="discard_changes_message">" هل تريد حقًا تجاهل التغييرات والعودة"</string>
+    <string name="discard_changes_message">هل تريد حقًا تجاهل التغييرات والعودة؟</string>
     <string name="delete_all_notes">محو جميع الملاحظات</string>
-    <string name="reset_master_password">"إعادة تعيين كلمة المرور الرئيسية "</string>
-    <string name="menu">"قائمة "</string>
+    <string name="reset_master_password">إعادة تعيين كلمة المرور الرئيسية</string>
+    <string name="menu">قائمة</string>
     <string name="delete_all_confirmation_title">حذف جميع الملاحظات</string>
     <string name="delete_all_confirmation_message">هل تريد حقًا حذف جميع الملاحظات؟ هذا الإجراء لا يمكن التراجع عنه.</string>
     <string name="reset_app_confirmation_title">إعادة ضبط التطبيق</string>
@@ -83,4 +83,8 @@
     <string name="share">مشاركة</string>
     <string name="share_image">مشاركة الصورة</string>
     <string name="edit_entry">تحرير ملاحظة</string>
+    <string name="password_requirements">يُنصح بأن تتكون كلمة المرور من 8 أحرف على الأقل وأن تشتمل على مزيج من الأحرف والأرقام والرموز.</string>
+    <string name="password_strength_weak">ضعيفة</string>
+    <string name="password_strength_medium">متوسطة</string>
+    <string name="password_strength_strong">قوية</string>
 </resources>

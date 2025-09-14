@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">میری ڈائری</string>
     <string name="acess_to_diary">ڈائری تک رسائی</string>
@@ -23,7 +24,7 @@
     <string name="error_decrypting">ڈکرپشن میں خرابی</string>
     <string name="delete">حذف کریں</string>
     <string name="confirm_deletion_title">حذف کرنے کی تصدیق کریں</string>
-    <string name="confirm_deletion_message">کیا آپ واقعی اس نوٹ کو حذف کرنا چاہتے ہیں؟ اس کارروائی کو واپس نہیں لیا جا سکتا۔</string>
+    <string name="confirm_deletion_message">کیا آپ واقعی اس نوٹ کو حذف کرنا چاہتے ہیں؟ یہ عمل ناقابلِ واپسی ہے۔</string>
     <string name="confirm">تصدیق کریں</string>
     <string name="none_note_for_this_day">اس دن کے لئے کوئی نوٹ نہیں ہے۔</string>
     <string name="select_a_day_to_see_notes">نوٹ دیکھنے کے لیے کیلنڈر پر ایک دن منتخب کریں۔</string>
@@ -62,15 +63,15 @@
     <string name="your_thoughts">آپ کے خیالات</string>
     <string name="discard_changes_title">تبدیلیاں منسوخ کریں؟</string>
     <string name="discard">منسوخ کریں</string>
-    <string name="discard_changes_message">کیا آپ واقعی تبدیلیاں منسوخ کرکے واپس جانا چاہتے ہیں</string>
-    <string name="delete_all_notes">تمام نوٹس حذف کریں۔</string>
-    <string name="reset_master_password">"ماسٹر پاس ورڈ ری سیٹ کریں۔ "</string>
+    <string name="discard_changes_message">کیا آپ واقعی تبدیلیاں منسوخ کرکے واپس جانا چاہتے ہیں؟</string>
+    <string name="delete_all_notes">تمام نوٹس حذف کریں</string>
+    <string name="reset_master_password">ماسٹر پاس ورڈ ری سیٹ کریں</string>
     <string name="menu">مینو</string>
     <string name="delete_all_confirmation_title">تمام نوٹس حذف کریں</string>
-    <string name="delete_all_confirmation_message">کیا آپ واقعی تمام نوٹس حذف کرنا چاہتے ہیں؟ یہ عمل واپس نہیں کیا جا सकता۔</string>
-    <string name="reset_app_confirmation_title">ایپ ری سیٹ کریں۔</string>
-    <string name="reset_app_confirmation_message">اس سے آپ کا ماسٹر پاس ورڈ دوبارہ ترتیب دیا جائے گا اور تمام نوٹس حذف ہو جائیں گے، یہ عمل واپس
-        نہیں کیا جا سکتا۔ کیا آپ واقعی جاری رکھنا چاہتے ہیں؟</string>
+    <string name="delete_all_confirmation_message">کیا آپ واقعی تمام نوٹس حذف کرنا چاہتے ہیں؟ یہ عمل ناقابلِ واپسی ہے۔</string>
+    <string name="reset_app_confirmation_title">ایپ ری سیٹ کریں</string>
+    <string name="reset_app_confirmation_message">اس سے آپ کا ماسٹر پاس ورڈ دوبارہ ترتیب دیا جائے گا اور تمام نوٹس حذف ہو جائیں گے۔ یہ عمل ناقابلِ
+        واپسی ہے۔ کیا آپ واقعی جاری رکھنا چاہتے ہیں؟</string>
     <string name="re_authentication_title">کارروائی کی تصدیق کریں</string>
     <string name="re_authentication_subtitle">براہ کرم جاری رکھنے کے لیے اپنی شناخت کی تصدیق کریں۔</string>
     <string name="remove_ads">اشتہارات ہٹائیں</string>
@@ -83,4 +84,9 @@
     <string name="share">شیئر کریں</string>
     <string name="share_image">تصویر شیئر کریں</string>
     <string name="edit_entry">نوٹ میں ترمیم کریں</string>
+    <string name="password_requirements">یہ تجویز کیا جاتا ہے کہ پاس ورڈ کم از کم 8 حروف پر مشتمل ہو اور اس میں حروف، اعداد اور علامات کا
+        مجموعہ شامل ہو۔</string>
+    <string name="password_strength_weak">کمزور</string>
+    <string name="password_strength_medium">درمیانہ</string>
+    <string name="password_strength_strong">مضبوط</string>
 </resources>

@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Mon journal</string>
+    <string name="app_name">Mon Journal</string>
     <string name="acess_to_diary">Accès au journal</string>
     <string name="use_pin_or_digital_to_continue">Utilisez votre PIN ou votre empreinte digitale pour continuer</string>
     <string name="sucessful_unlock">Authentification réussie !</string>
@@ -71,7 +72,7 @@
     <string name="delete_all_confirmation_title">Supprimer toutes les notes</string>
     <string name="delete_all_confirmation_message">Voulez-vous vraiment supprimer toutes les notes ? Cette action est irréversible.</string>
     <string name="reset_app_confirmation_title">Réinitialiser l\'application</string>
-    <string name="reset_app_confirmation_message">Ceci réinitialisera votre mot de passe principal et supprimera toutes les notes, cette action
+    <string name="reset_app_confirmation_message">Ceci réinitialisera votre mot de passe principal et supprimera toutes les notes. Cette action
         est irréversible. Voulez-vous vraiment continuer ?</string>
     <string name="re_authentication_title">Confirmer l\'action</string>
     <string name="re_authentication_subtitle">Veuillez confirmer votre identité pour continuer.</string>
@@ -86,4 +87,9 @@
     <string name="share">Partager</string>
     <string name="share_image">Partager l\'image</string>
     <string name="edit_entry">Modifier la note</string>
+    <string name="password_requirements">Il est recommandé que le mot de passe contienne au moins 8 caractères et inclue une combinaison
+        de lettres, de chiffres et de symboles.</string>
+    <string name="password_strength_weak">Faible</string>
+    <string name="password_strength_medium">Moyen</string>
+    <string name="password_strength_strong">Fort</string>
 </resources>

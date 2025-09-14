@@ -12,10 +12,15 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+enum class PasswordStrength {
+    EMPTY, WEAK, MEDIUM, STRONG
+}
+
 data class PasswordSetupUiState(
-    val password:  String = "",
-    val confirmPassword:  String = "",
-    val errorResId: Int? = null
+    val password: String = "",
+    val confirmPassword: String = "",
+    val errorResId: Int? = null,
+    val passwordStrength: PasswordStrength = PasswordStrength.EMPTY
 )
 
 sealed class PasswordSetupEvent {
@@ -47,7 +52,32 @@ class PasswordSetupViewModel @Inject constructor() : ViewModel() {
     val eventFlow = _eventFlow.asSharedFlow()
 
     fun onPasswordChange(password: String) {
-        _uiState.update { it.copy(password = password, errorResId = null) }
+        val strength = calculatePasswordStrength(password)
+        _uiState.update {
+            it.copy(
+                password = password,
+                errorResId = null,
+                passwordStrength = strength
+            )
+        }
+    }
+
+    private fun calculatePasswordStrength(password: String): PasswordStrength {
+        if (password.isEmpty()) return PasswordStrength.EMPTY
+
+        val hasLowercase = password.any { it.isLowerCase() }
+        val hasUppercase = password.any { it.isUpperCase() }
+        val hasDigit = password.any { it.isDigit() }
+        val hasSpecialChar = password.any { !it.isLetterOrDigit() }
+
+        val criteriaCount = listOf(hasLowercase, hasUppercase, hasDigit, hasSpecialChar).count { it }
+
+        return when {
+            password.length < 8 -> PasswordStrength.WEAK
+            criteriaCount >= 3 -> PasswordStrength.STRONG
+            criteriaCount >= 2 -> PasswordStrength.MEDIUM
+            else -> PasswordStrength.WEAK
+        }
     }
 
     fun onConfirmPasswordChange(confirmPassword: String) {

@@ -21,12 +21,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import digital.tonima.mydiary.R.string.confirm_password
 import digital.tonima.mydiary.R.string.create_master_password
 import digital.tonima.mydiary.R.string.master_password
 import digital.tonima.mydiary.R.string.master_password_description
+import digital.tonima.mydiary.R.string.password_requirements
 import digital.tonima.mydiary.R.string.save_password
+import digital.tonima.mydiary.ui.components.PasswordStrengthIndicator
 import digital.tonima.mydiary.ui.viewmodels.PasswordSetupEvent
 import digital.tonima.mydiary.ui.viewmodels.PasswordSetupViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -58,6 +60,7 @@ fun PasswordSetupScreen(
         Spacer(modifier = Modifier.height(8.dp))
         Text(text = stringResource(master_password_description), style = MaterialTheme.typography.bodyMedium)
         Spacer(modifier = Modifier.height(16.dp))
+
         OutlinedTextField(
             value = uiState.password,
             onValueChange = viewModel::onPasswordChange,
@@ -67,6 +70,17 @@ fun PasswordSetupScreen(
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(8.dp))
+
+        PasswordStrengthIndicator(strength = uiState.passwordStrength)
+        Spacer(modifier = Modifier.height(4.dp))
+        Text(
+            text = stringResource(password_requirements),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+
+
         OutlinedTextField(
             value = uiState.confirmPassword,
             onValueChange = viewModel::onConfirmPasswordChange,
@@ -75,14 +89,17 @@ fun PasswordSetupScreen(
             isError = uiState.errorResId != null,
             modifier = Modifier.fillMaxWidth()
         )
+
         uiState.errorResId?.let { errorRes ->
             Text(
                 text = stringResource(errorRes),
                 color = MaterialTheme.colorScheme.error,
-                style = MaterialTheme.typography.bodySmall
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier.padding(top = 8.dp)
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
+
         Button(
             onClick = viewModel::onSavePasswordClicked,
             modifier = Modifier.fillMaxWidth()
