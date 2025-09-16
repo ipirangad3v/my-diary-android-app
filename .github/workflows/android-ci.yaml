@@ -5,7 +5,6 @@ on:
         branches: [ "master" ]
     pull_request:
         branches: [ "master" ]
-
     workflow_dispatch:
 
 jobs:
@@ -16,6 +15,8 @@ jobs:
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
+              with:
+                  token: ${{ secrets.GH_PAT }}
 
             - name: Set up JDK 21
               uses: actions/setup-java@v4
@@ -48,8 +49,28 @@ jobs:
             - name: Upload coverage reports to Codecov
               uses: codecov/codecov-action@v4
               with:
-                  token: ${{ secrets.CODECOV_TOKEN }}
+                  token: ${{ secrets.CODE_COV_TOKEN }}
                   slug: ipirangad3v/my-diary-android-app
+
+            - name: Bump version properties
+              if: github.event_name == 'workflow_dispatch'
+              run: |
+                  git config --global user.name "GitHub Actions"
+                  git config --global user.email "actions@github.com"
+
+                  echo "Setting versionCode to $GITHUB_RUN_NUMBER"
+                  sed -i "s/APP_VERSION_CODE=.*/APP_VERSION_CODE=$GITHUB_RUN_NUMBER/" gradle.properties
+
+                  VERSION_NAME=$(grep "APP_VERSION_NAME" gradle.properties | cut -d'=' -f2)
+                  IFS='.' read -r -a VERSION_PARTS <<< "$VERSION_NAME"
+                  VERSION_PARTS[2]=$((VERSION_PARTS[2] + 1))
+                  NEW_VERSION_NAME="${VERSION_PARTS[0]}.${VERSION_PARTS[1]}.${VERSION_PARTS[2]}"
+                  echo "Bumping versionName to $NEW_VERSION_NAME"
+                  sed -i "s/APP_VERSION_NAME=.*/APP_VERSION_NAME=$NEW_VERSION_NAME/" gradle.properties
+
+                  git add gradle.properties
+                  git commit -m "ci: Bump version to $NEW_VERSION_NAME ($GITHUB_RUN_NUMBER)"
+                  git push
 
             - name: Build Release App Bundle
               run: ./gradlew bundleRelease
@@ -64,6 +85,7 @@ jobs:
         name: Deploy to Play Store
         needs: build
         runs-on: ubuntu-latest
+        if: github.event_name == 'workflow_dispatch'
 
         steps:
             - name: Download App Bundle
@@ -88,4 +110,3 @@ jobs:
                   packageName: digital.tonima.mydiary
                   releaseFiles: ${{ steps.sign.outputs.signedReleaseFile }}
                   track: internal
-                  whatsNewDirectory: whatsnew/

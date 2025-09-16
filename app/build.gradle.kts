@@ -21,8 +21,8 @@ android {
     applicationId = "digital.tonima.mydiary"
     minSdk = 26
     targetSdk = 36
-    versionCode = 16
-    versionName = "1.15.0"
+    versionCode = rootProject.extra["APP_VERSION_CODE"].toString().toInt()
+    versionName = rootProject.extra["APP_VERSION_NAME"].toString()
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
@@ -40,9 +40,9 @@ android {
           "String", "ADMOB_BANNER_AD_UNIT_VAULT_SCREEN", "\"$admobBannerAdUnitIdTest\"")
     }
     release {
-      isMinifyEnabled = false
+      isMinifyEnabled = true
+      isShrinkResources = true
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-      signingConfig = signingConfigs.getByName("debug")
 
       val isRunningReleaseTask =
           gradle.startParameter.taskNames.any { it.contains("release", ignoreCase = true) }
