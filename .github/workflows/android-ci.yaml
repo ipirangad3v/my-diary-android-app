@@ -12,6 +12,9 @@ jobs:
         if: "!contains(github.event.head_commit.message, 'ci: Bump version')"
         runs-on: ubuntu-latest
 
+        outputs:
+            version_name: ${{ steps.version_bumper.outputs.version_name }}
+
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
@@ -33,15 +36,13 @@ jobs:
                   key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
                   restore-keys: |
                       ${{ runner.os }}-gradle-
-
             - name: Create google-services.json
               run: echo "${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}" | base64 --decode > app/google-services.json
-
             - name: Grant execute permission for gradlew
               run: chmod +x gradlew
 
             - name: Bump version properties
-              if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+              id: version_bumper
               run: |
                   git config --global user.name "GitHub Actions"
                   git config --global user.email "actions@github.com"
@@ -55,6 +56,8 @@ jobs:
                   NEW_VERSION_NAME="${VERSION_PARTS[0]}.${VERSION_PARTS[1]}.${VERSION_PARTS[2]}"
                   echo "Bumping versionName to $NEW_VERSION_NAME"
                   sed -i "s/APP_VERSION_NAME=.*/APP_VERSION_NAME=$NEW_VERSION_NAME/" gradle.properties
+
+                  echo "version_name=$NEW_VERSION_NAME" >> $GITHUB_OUTPUT
 
                   git add gradle.properties
                   if ! git diff --staged --quiet; then
@@ -81,13 +84,11 @@ jobs:
 
     deploy:
         name: Deploy to Play Store
+        if: "!contains(github.event.head_commit.message, 'ci: Bump version')"
         needs: build
         runs-on: ubuntu-latest
-
         environment:
             name: play-store-release
-
-        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
 
         steps:
             - name: Download App Bundle
@@ -112,3 +113,11 @@ jobs:
                   packageName: digital.tonima.mydiary
                   releaseFiles: ${{ steps.sign.outputs.signedReleaseFile }}
                   track: internal
+
+            - name: Create GitHub Tag and Release
+              uses: softprops/action-gh-release@v1
+              with:
+                  tag_name: v${{ needs.build.outputs.version_name }}
+                  name: Release v${{ needs.build.outputs.version_name }}
+                  files: ${{ steps.sign.outputs.signedReleaseFile }}
+                  body: "Release automático da versão ${{ needs.build.outputs.version_name }} via GitHub Actions."
