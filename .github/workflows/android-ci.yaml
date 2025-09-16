@@ -9,6 +9,7 @@ on:
 jobs:
     build:
         name: Lint, Test and Build
+        if: "!contains(github.event.head_commit.message, 'ci: Bump version')"
         runs-on: ubuntu-latest
 
         steps:
