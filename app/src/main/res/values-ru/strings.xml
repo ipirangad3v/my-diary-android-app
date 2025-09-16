@@ -91,4 +91,7 @@
     <string name="password_strength_weak">Слабый</string>
     <string name="password_strength_medium">Средний</string>
     <string name="password_strength_strong">Сильный</string>
+    <string name="bulleted_list">Маркированный список</string>
+    <string name="numbered_list">Нумерованный список</string>
+    <string name="checkbox_list">Список дел</string>
 </resources>

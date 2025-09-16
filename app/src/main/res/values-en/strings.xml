@@ -88,4 +88,7 @@
     <string name="password_strength_weak">Weak</string>
     <string name="password_strength_medium">Medium</string>
     <string name="password_strength_strong">Strong</string>
+    <string name="bulleted_list">Bulleted list</string>
+    <string name="numbered_list">Numbered list</string>
+    <string name="checkbox_list">To-do list</string>
 </resources>

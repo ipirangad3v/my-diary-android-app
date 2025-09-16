@@ -1,6 +1,7 @@
 package digital.tonima.mydiary.ui.screens
 
 import android.content.res.Configuration
+import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -96,12 +97,15 @@ private fun NotesListView(
                 modifier = Modifier.padding(16.dp)
             )
         } else {
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
+            LazyColumn(modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp), verticalArrangement = spacedBy(4.dp)
+            ) {
                 items(filteredEntries, key = { it.first.name }) { (file, entry) ->
                     EntryListItem(
                         title = entry.title,
                         time = formatTimestampToHourAndMinute(file.name),
-                        onClick = { onNoteClick(file) } // Lógica de clique atualizada
+                        onClick = { onNoteClick(file) }
                     )
                 }
             }

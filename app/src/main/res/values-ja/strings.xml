@@ -84,4 +84,7 @@
     <string name="password_strength_weak">弱い</string>
     <string name="password_strength_medium">中</string>
     <string name="password_strength_strong">強い</string>
+    <string name="bulleted_list">箇条書きリスト</string>
+    <string name="numbered_list">番号付きリスト</string>
+    <string name="checkbox_list">ToDoリスト</string>
 </resources>

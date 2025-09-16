@@ -87,4 +87,7 @@
     <string name="password_strength_weak">ضعيفة</string>
     <string name="password_strength_medium">متوسطة</string>
     <string name="password_strength_strong">قوية</string>
+    <string name="bulleted_list">قائمة نقطية</string>
+    <string name="numbered_list">قائمة مرقمة</string>
+    <string name="checkbox_list">قائمة المهام</string>
 </resources>

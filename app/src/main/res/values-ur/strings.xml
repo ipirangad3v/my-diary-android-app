@@ -89,4 +89,7 @@
     <string name="password_strength_weak">کمزور</string>
     <string name="password_strength_medium">درمیانہ</string>
     <string name="password_strength_strong">مضبوط</string>
+    <string name="bulleted_list">نشان زدہ فہرست</string>
+    <string name="numbered_list">عدد والی فہرست</string>
+    <string name="checkbox_list">کاموں کی فہرست</string>
 </resources>
