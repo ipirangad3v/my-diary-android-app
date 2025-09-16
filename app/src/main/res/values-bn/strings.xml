@@ -90,4 +90,13 @@
     <string name="bulleted_list">বুলেটযুক্ত তালিকা</string>
     <string name="numbered_list">সংখ্যাযুক্ত তালিকা</string>
     <string name="checkbox_list">করণীয় তালিকা</string>
+    <string name="nfc_secrets">এনএফসি গোপনীয়তা</string>
+    <string name="write_secret_to_nfc">এনএফসি ট্যাগে লিখুন</string>
+    <string name="nfc_write_instructions">নীচে গোপনীয়টি টাইপ করুন এবং এটি একটি এনএফসি ট্যাগে লিখতে বোতামটি আলতো চাপুন।</string>
+    <string name="your_secret">আপনার গোপনীয়তা…</string>
+    <string name="waiting_for_nfc_tag">এনএফসি ট্যাগের জন্য অপেক্ষা করা হচ্ছে…</string>
+    <string name="nfc_write_success">গোপনীয়তা সফলভাবে লেখা হয়েছে!</string>
+    <string name="nfc_write_error">ট্যাগে লিখতে ত্রুটি। অনুগ্রহ করে আবার চেষ্টা করুন।</string>
+    <string name="nfc_read_error">এই ট্যাগ থেকে গোপনীয়তা পড়া যায়নি।</string>
+    <string name="decrypted_secret">ডিক্রিপ্ট করা গোপনীয়তা</string>
 </resources>

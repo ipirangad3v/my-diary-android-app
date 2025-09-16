@@ -87,4 +87,13 @@
     <string name="bulleted_list">箇条書きリスト</string>
     <string name="numbered_list">番号付きリスト</string>
     <string name="checkbox_list">ToDoリスト</string>
+    <string name="nfc_secrets">NFCの秘密</string>
+    <string name="write_secret_to_nfc">NFCタグに書き込む</string>
+    <string name="nfc_write_instructions">以下に秘密を入力し、ボタンをタップしてNFCタグに書き込みます。</string>
+    <string name="your_secret">あなたの秘密…</string>
+    <string name="waiting_for_nfc_tag">NFCタグを待っています…</string>
+    <string name="nfc_write_success">秘密の書き込みに成功しました！</string>
+    <string name="nfc_write_error">タグへの書き込み中にエラーが発生しました。もう一度お試しください。</string>
+    <string name="nfc_read_error">このタグから秘密を読み取れませんでした。</string>
+    <string name="decrypted_secret">復号化された秘密</string>
 </resources>

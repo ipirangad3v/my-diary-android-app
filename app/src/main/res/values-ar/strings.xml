@@ -90,4 +90,13 @@
     <string name="bulleted_list">قائمة نقطية</string>
     <string name="numbered_list">قائمة مرقمة</string>
     <string name="checkbox_list">قائمة المهام</string>
+    <string name="nfc_secrets">أسرار NFC</string>
+    <string name="write_secret_to_nfc">الكتابة على بطاقة NFC</string>
+    <string name="nfc_write_instructions">اكتب السر أدناه وانقر على الزر لكتابته على بطاقة NFC.</string>
+    <string name="your_secret">سرك…</string>
+    <string name="waiting_for_nfc_tag">في انتظار بطاقة NFC…</string>
+    <string name="nfc_write_success">تم كتابة السر بنجاح!</string>
+    <string name="nfc_write_error">خطأ في الكتابة على البطاقة. يرجى المحاولة مرة أخرى.</string>
+    <string name="nfc_read_error">تعذر قراءة السر من هذه البطاقة.</string>
+    <string name="decrypted_secret">السر المفكوك تشفيره</string>
 </resources>

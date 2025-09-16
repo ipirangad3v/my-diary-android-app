@@ -44,7 +44,7 @@ object PasswordBasedCryptoManager {
         context: Context,
         entry: DiaryEntry,
         masterPassword: CharArray,
-        fileName: String? = null // <-- Parâmetro adicionado para edição
+        fileName: String? = null
     ) {
         val salt = ByteArray(SALT_SIZE)
         SecureRandom().nextBytes(salt)
@@ -59,12 +59,9 @@ object PasswordBasedCryptoManager {
         val jsonString = gson.toJson(entry)
         val encryptedContent = cipher.doFinal(jsonString.toByteArray())
 
-        // Lógica atualizada para criar um novo ficheiro ou sobrescrever um existente
         val file = if (fileName != null) {
-            // Se um nome de ficheiro for fornecido, use-o (sobrescrevendo o existente)
             File(context.filesDir, fileName)
         } else {
-            // Caso contrário, crie um novo ficheiro com um novo timestamp
             val timestamp = System.currentTimeMillis()
             File(context.filesDir, "entry_$timestamp.txt")
         }
@@ -119,8 +116,6 @@ object PasswordBasedCryptoManager {
             deleteEncryptedFile(file)
         }
     }
-
-    // --- Image Vault Functions ---
 
     fun saveEncryptedImage(context: Context, imageUri: Uri, masterPassword: CharArray) {
         val salt = ByteArray(SALT_SIZE)
@@ -177,6 +172,41 @@ object PasswordBasedCryptoManager {
         } catch (e: Exception) {
             Log.e("CryptoManager", "Failed to decrypt image to file", e)
             false
+        }
+    }
+
+    fun encryptForNfc(secret: String, masterPassword: CharArray): ByteArray? {
+        return try {
+            val salt = ByteArray(SALT_SIZE)
+            SecureRandom().nextBytes(salt)
+            val key = deriveKey(masterPassword, salt)
+            val cipher = Cipher.getInstance(TRANSFORMATION)
+            cipher.init(Cipher.ENCRYPT_MODE, key)
+            val iv = cipher.iv
+            val encryptedContent = cipher.doFinal(secret.toByteArray())
+
+            salt + iv + encryptedContent
+        } catch (e: Exception) {
+            Log.e("CryptoManager", "Failed to decrypt NFC data", e)
+            null
+        }
+    }
+
+    fun decryptFromNfc(data: ByteArray, masterPassword: CharArray): String? {
+        return try {
+            val salt = data.copyOfRange(0, SALT_SIZE)
+            val iv = data.copyOfRange(SALT_SIZE, SALT_SIZE + IV_SIZE)
+            val encryptedContent = data.copyOfRange(SALT_SIZE + IV_SIZE, data.size)
+
+            val key = deriveKey(masterPassword, salt)
+            val spec = GCMParameterSpec(GCM_TAG_LENGTH, iv)
+            val cipher = Cipher.getInstance(TRANSFORMATION)
+            cipher.init(Cipher.DECRYPT_MODE, key, spec)
+            val decryptedBytes = cipher.doFinal(encryptedContent)
+            String(decryptedBytes)
+        } catch (e: Exception) {
+            Log.e("CryptoManager", "Failed to decrypt NFC data", e)
+            null
         }
     }
 

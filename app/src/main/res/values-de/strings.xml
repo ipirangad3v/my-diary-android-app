@@ -96,4 +96,14 @@
     <string name="bulleted_list">Aufzählung</string>
     <string name="numbered_list">Nummerierte Liste</string>
     <string name="checkbox_list">Aufgabenliste</string>
+    <string name="nfc_secrets">NFC-Geheimnisse</string>
+    <string name="write_secret_to_nfc">Auf NFC-Tag schreiben</string>
+    <string name="nfc_write_instructions">Geben Sie das Geheimnis unten ein und tippen Sie auf die Schaltfläche, um es auf einen NFC-Tag
+        zu schreiben.</string>
+    <string name="your_secret">Dein Geheimnis…</string>
+    <string name="waiting_for_nfc_tag">Warte auf NFC-Tag…</string>
+    <string name="nfc_write_success">Geheimnis erfolgreich geschrieben!</string>
+    <string name="nfc_write_error">Fehler beim Schreiben auf den Tag. Bitte versuchen Sie es erneut.</string>
+    <string name="nfc_read_error">Das Geheimnis von diesem Tag konnte nicht gelesen werden.</string>
+    <string name="decrypted_secret">Entschlüsseltes Geheimnis</string>
 </resources>

@@ -107,10 +107,9 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun navigateToMain() {
+    fun navigateToPrincipal() {
         val currentState = _uiState.value
         if (currentState is AppScreen.AddEntry) {
-            // Volta para a tela principal, mantendo a seleção da BottomBar
             _uiState.value = AppScreen.Principal(
                 masterPassword = currentState.masterPassword,
                 currentScreen = (uiState.value as? AppScreen.Principal)?.currentScreen ?: BottomBarScreen.Diary
@@ -129,6 +128,23 @@ class MainViewModel @Inject constructor(
                 passwordRepository.clearPassword()
             }
             _uiState.value = AppScreen.SetupPassword
+        }
+    }
+
+    fun onNfcTagRead(data: ByteArray) {
+        val currentState = _uiState.value as? AppScreen.Principal ?: return
+        viewModelScope.launch {
+            val decrypted = withContext(Dispatchers.IO) {
+                PasswordBasedCryptoManager.decryptFromNfc(data, currentState.masterPassword)
+            }
+            _uiState.update { (it as AppScreen.Principal).copy(decryptedNfcSecret = decrypted) }
+        }
+    }
+
+    fun onDismissNfcSecretDialog() {
+        val currentState = _uiState.value
+        if (currentState is AppScreen.Principal) {
+            _uiState.update { currentState.copy(decryptedNfcSecret = null) }
         }
     }
 }

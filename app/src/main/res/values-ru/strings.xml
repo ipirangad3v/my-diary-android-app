@@ -94,4 +94,13 @@
     <string name="bulleted_list">Маркированный список</string>
     <string name="numbered_list">Нумерованный список</string>
     <string name="checkbox_list">Список дел</string>
+    <string name="nfc_secrets">Секреты NFC</string>
+    <string name="write_secret_to_nfc">Записать на метку NFC</string>
+    <string name="nfc_write_instructions">Введите секрет ниже и нажмите кнопку, чтобы записать его на метку NFC.</string>
+    <string name="your_secret">Ваш секрет…</string>
+    <string name="waiting_for_nfc_tag">Ожидание метки NFC…</string>
+    <string name="nfc_write_success">Секрет успешно записан!</string>
+    <string name="nfc_write_error">Ошибка записи на метку. Пожалуйста, попробуйте еще раз.</string>
+    <string name="nfc_read_error">Не удалось прочитать секрет с этой метки.</string>
+    <string name="decrypted_secret">Расшифрованный секрет</string>
 </resources>
