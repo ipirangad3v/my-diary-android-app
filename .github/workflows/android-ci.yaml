@@ -8,18 +8,13 @@ on:
 
 jobs:
     build:
-        name: Lint, Test and Build
+        name: Lint and Test
         if: "!contains(github.event.head_commit.message, 'ci: Bump version')"
         runs-on: ubuntu-latest
-
-        outputs:
-            version_name: ${{ steps.version_bumper.outputs.version_name }}
 
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
-              with:
-                  token: ${{ secrets.GH_PAT }}
 
             - name: Set up JDK 21
               uses: actions/setup-java@v4
@@ -36,29 +31,47 @@ jobs:
                   key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
                   restore-keys: |
                       ${{ runner.os }}-gradle-
+
             - name: Create google-services.json
               run: echo "${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}" | base64 --decode > app/google-services.json
+
             - name: Grant execute permission for gradlew
               run: chmod +x gradlew
+
+            - name: Run Spotless Check
+              run: ./gradlew spotlessCheck
+
+            - name: Run unit tests
+              run: ./gradlew testDebugUnitTest
+
+    deploy:
+        name: Build, Sign and Deploy
+        if: "!contains(github.event.head_commit.message, 'ci: Bump version')"
+        needs: build
+        runs-on: ubuntu-latest
+        environment:
+            name: play-store-release
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+              with:
+                  token: ${{ secrets.GH_PAT }}
 
             - name: Bump version properties
               id: version_bumper
               run: |
                   git config --global user.name "GitHub Actions"
                   git config --global user.email "actions@github.com"
-
                   echo "Setting versionCode to $GITHUB_RUN_NUMBER"
                   sed -i "s/APP_VERSION_CODE=.*/APP_VERSION_CODE=$GITHUB_RUN_NUMBER/" gradle.properties
-
                   VERSION_NAME=$(grep "APP_VERSION_NAME" gradle.properties | cut -d'=' -f2)
                   IFS='.' read -r -a VERSION_PARTS <<< "$VERSION_NAME"
                   VERSION_PARTS[2]=$((VERSION_PARTS[2] + 1))
                   NEW_VERSION_NAME="${VERSION_PARTS[0]}.${VERSION_PARTS[1]}.${VERSION_PARTS[2]}"
                   echo "Bumping versionName to $NEW_VERSION_NAME"
                   sed -i "s/APP_VERSION_NAME=.*/APP_VERSION_NAME=$NEW_VERSION_NAME/" gradle.properties
-
                   echo "version_name=$NEW_VERSION_NAME" >> $GITHUB_OUTPUT
-
                   git add gradle.properties
                   if ! git diff --staged --quiet; then
                     git commit -m "ci: Bump version to $NEW_VERSION_NAME ($GITHUB_RUN_NUMBER)"
@@ -67,40 +80,36 @@ jobs:
                     echo "No version changes to commit."
                   fi
 
-            - name: Run Spotless Check
-              run: ./gradlew spotlessCheck
+            - name: Set up JDK 21
+              uses: actions/setup-java@v4
+              with:
+                  java-version: '21'
+                  distribution: 'temurin'
 
-            - name: Run unit tests
-              run: ./gradlew testDebugUnitTest
+            - name: Cache Gradle packages
+              uses: actions/cache@v4
+              with:
+                  path: |
+                      ~/.gradle/caches
+                      ~/.gradle/wrapper
+                  key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+                  restore-keys: |
+                      ${{ runner.os }}-gradle-
+
+            - name: Create google-services.json
+              run: echo "${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}" | base64 --decode > app/google-services.json
+
+            - name: Grant execute permission for gradlew
+              run: chmod +x gradlew
 
             - name: Build Release App Bundle
               run: ./gradlew bundleRelease
-
-            - name: Upload App Bundle Artifact
-              uses: actions/upload-artifact@v4
-              with:
-                  name: my-diary-app-bundle
-                  path: app/build/outputs/bundle/release/app-release.aab
-
-    deploy:
-        name: Deploy to Play Store
-        if: "!contains(github.event.head_commit.message, 'ci: Bump version')"
-        needs: build
-        runs-on: ubuntu-latest
-        environment:
-            name: play-store-release
-
-        steps:
-            - name: Download App Bundle
-              uses: actions/download-artifact@v4
-              with:
-                  name: my-diary-app-bundle
 
             - name: Sign App Bundle
               id: sign
               uses: r0adkll/sign-android-release@v1
               with:
-                  releaseDirectory: .
+                  releaseDirectory: app/build/outputs/bundle/release/
                   signingKeyBase64: ${{ secrets.SIGNING_KEY_BASE64 }}
                   alias: ${{ secrets.SIGNING_KEY_ALIAS }}
                   keyStorePassword: ${{ secrets.SIGNING_KEY_PASSWORD }}
@@ -117,7 +126,7 @@ jobs:
             - name: Create GitHub Tag and Release
               uses: softprops/action-gh-release@v1
               with:
-                  tag_name: v${{ needs.build.outputs.version_name }}
-                  name: Release v${{ needs.build.outputs.version_name }}
+                  tag_name: v${{ steps.version_bumper.outputs.version_name }}
+                  name: Release v${{ steps.version_bumper.outputs.version_name }}
                   files: ${{ steps.sign.outputs.signedReleaseFile }}
-                  body: "Release automático da versão ${{ needs.build.outputs.version_name }} via GitHub Actions."
+                  body: "Release automático da versão ${{ steps.version_bumper.outputs.version_name }} via GitHub Actions."
