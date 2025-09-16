@@ -92,4 +92,13 @@
     <string name="bulleted_list">نشان زدہ فہرست</string>
     <string name="numbered_list">عدد والی فہرست</string>
     <string name="checkbox_list">کاموں کی فہرست</string>
+    <string name="nfc_secrets">این ایف سی کے راز</string>
+    <string name="write_secret_to_nfc">این ایف سی ٹیگ پر لکھیں</string>
+    <string name="nfc_write_instructions">نیچے خفیہ کوڈ درج کریں اور اسے این ایف سی ٹیگ پر لکھنے کے لیے بٹن کو تھپتھپائیں۔</string>
+    <string name="your_secret">آپ کا راز…</string>
+    <string name="waiting_for_nfc_tag">این ایف سی ٹیگ کا انتظار ہے…</string>
+    <string name="nfc_write_success">راز کامیابی سے لکھا گیا!</string>
+    <string name="nfc_write_error">ٹیگ پر لکھنے میں خرابی۔ براہ کرم دوبارہ کوشش کریں.</string>
+    <string name="nfc_read_error">اس ٹیگ سے راز کو پڑھا نہیں جا سکا۔</string>
+    <string name="decrypted_secret">ڈی کرپٹ شدہ راز</string>
 </resources>

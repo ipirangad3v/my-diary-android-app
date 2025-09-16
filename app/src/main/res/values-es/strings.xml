@@ -93,4 +93,13 @@
     <string name="bulleted_list">Lista con viñetas</string>
     <string name="numbered_list">Lista numerada</string>
     <string name="checkbox_list">Lista de tareas</string>
+    <string name="nfc_secrets">Secretos NFC</string>
+    <string name="write_secret_to_nfc">Escribir en etiqueta NFC</string>
+    <string name="nfc_write_instructions">Escriba el secreto a continuación y toque el botón para grabarlo en una etiqueta NFC.</string>
+    <string name="your_secret">Tu secreto…</string>
+    <string name="waiting_for_nfc_tag">Esperando etiqueta NFC…</string>
+    <string name="nfc_write_success">¡Secreto grabado con éxito!</string>
+    <string name="nfc_write_error">Error al escribir en la etiqueta. Por favor, inténtelo de nuevo.</string>
+    <string name="nfc_read_error">No se pudo leer el secreto de esta etiqueta.</string>
+    <string name="decrypted_secret">Secreto Descifrado</string>
 </resources>

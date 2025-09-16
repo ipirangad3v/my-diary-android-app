@@ -91,4 +91,13 @@
     <string name="bulleted_list">Bulleted list</string>
     <string name="numbered_list">Numbered list</string>
     <string name="checkbox_list">To-do list</string>
+    <string name="nfc_secrets">NFC Secrets</string>
+    <string name="write_secret_to_nfc">Write to NFC Tag</string>
+    <string name="nfc_write_instructions">Type the secret below and tap the button to write it to an NFC tag.</string>
+    <string name="your_secret">Your secret…</string>
+    <string name="waiting_for_nfc_tag">Waiting for NFC tag…</string>
+    <string name="nfc_write_success">Secret written successfully!</string>
+    <string name="nfc_write_error">Error writing to tag. Please try again.</string>
+    <string name="nfc_read_error">Could not read the secret from this tag.</string>
+    <string name="decrypted_secret">Decrypted Secret</string>
 </resources>

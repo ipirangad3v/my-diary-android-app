@@ -6,7 +6,7 @@ import digital.tonima.mydiary.ui.screens.BottomBarScreen.Diary
  * Enum to represent the main screens accessible via the bottom navigation bar.
  */
 enum class BottomBarScreen {
-    Diary, Vault
+    Diary, Vault, Nfc
 }
 
 /**
@@ -25,7 +25,8 @@ sealed class AppScreen {
      */
     data class Principal(
         val masterPassword: CharArray,
-        val currentScreen: BottomBarScreen = Diary
+        val currentScreen: BottomBarScreen = Diary,
+        val decryptedNfcSecret: String? = null
     ) : AppScreen() {
         override fun equals(other: Any?): Boolean {
             if (this === other) return true

@@ -1,6 +1,7 @@
 package digital.tonima.mydiary
 
 import android.content.Intent
+import android.content.pm.PackageManager.FEATURE_NFC
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -11,15 +12,20 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.biometric.BiometricManager
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.stringResource
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import digital.tonima.mydiary.billing.BillingManager
 import digital.tonima.mydiary.biometrics.BiometricAuthManager
+import digital.tonima.mydiary.nfc.NfcHandler
 import digital.tonima.mydiary.ui.screens.AddEntryScreen
 import digital.tonima.mydiary.ui.screens.AppScreen
 import digital.tonima.mydiary.ui.screens.LockedScreen
@@ -27,11 +33,16 @@ import digital.tonima.mydiary.ui.screens.MainAppContainer
 import digital.tonima.mydiary.ui.screens.ManualPasswordScreen
 import digital.tonima.mydiary.ui.screens.PasswordSetupScreen
 import digital.tonima.mydiary.ui.theme.MyDiaryTheme
+import digital.tonima.mydiary.ui.viewmodels.NfcViewModel
 import digital.tonima.mydiary.ui.viewmodels.VaultViewModel
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : FragmentActivity() {
+
+    private val hasNfcSupport: Boolean by lazy {
+        packageManager.hasSystemFeature(FEATURE_NFC)
+    }
 
     @Inject
     lateinit var billingManager: BillingManager
@@ -39,7 +50,11 @@ class MainActivity : FragmentActivity() {
     @Inject
     lateinit var biometricAuthManager: BiometricAuthManager
 
+    @Inject
+    lateinit var nfcHandler: NfcHandler
+
     private val viewModel: MainViewModel by viewModels()
+    private val nfcViewModel: NfcViewModel by viewModels()
     private val vaultViewModel: VaultViewModel by viewModels()
 
     private val enrollLauncher = registerForActivityResult(
@@ -52,6 +67,7 @@ class MainActivity : FragmentActivity() {
         super.onCreate(savedInstanceState)
         billingManager.connect()
         enableEdgeToEdge()
+        nfcHandler.init(viewModel, nfcViewModel)
 
         val pickImageLauncher = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             if (uri != null) {
@@ -69,9 +85,7 @@ class MainActivity : FragmentActivity() {
                     is AppScreen.SetupPassword -> {
                         PasswordSetupScreen(onPasswordSet = { password ->
                             biometricAuthManager.authenticateForEncryption(
-                                onSuccess = { cipher ->
-                                    viewModel.onPasswordSetup(password, cipher)
-                                },
+                                onSuccess = { cipher -> viewModel.onPasswordSetup(password, cipher) },
                                 onEnrollmentRequired = { actionToRetry ->
                                     viewModel.setPendingBiometricAction(actionToRetry)
                                     launchEnrollment()
@@ -102,12 +116,16 @@ class MainActivity : FragmentActivity() {
                                 viewModel.onRecoveryPasswordSubmit(passwordAttempt) { isCorrect ->
                                     if (isCorrect) {
                                         Toast.makeText(
-                                            this, getString(R.string.password_verified_re_encrypt),
+                                            this,
+                                            getString(R.string.password_verified_re_encrypt),
                                             Toast.LENGTH_LONG
                                         ).show()
                                         biometricAuthManager.authenticateForEncryption(
                                             onSuccess = { cipher ->
-                                                viewModel.onRecoverySuccess(passwordAttempt, cipher)
+                                                viewModel.onRecoverySuccess(
+                                                    passwordAttempt,
+                                                    cipher
+                                                )
                                             },
                                             onEnrollmentRequired = { actionToRetry ->
                                                 viewModel.setPendingBiometricAction(actionToRetry)
@@ -124,12 +142,11 @@ class MainActivity : FragmentActivity() {
 
                     is AppScreen.Principal -> {
                         MainAppContainer(
+                            hasNfcSupport = hasNfcSupport,
                             mainViewModel = viewModel,
                             masterPassword = currentScreen.masterPassword,
                             onAddImage = {
-                                pickImageLauncher.launch(
-                                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
-                                )
+                                pickImageLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
                             },
                             onReauthenticate = { titleResId, subtitleResId, action ->
                                 biometricAuthManager.authenticateForAction(
@@ -141,18 +158,45 @@ class MainActivity : FragmentActivity() {
                             onPurchaseRequest = { billingManager.launchPurchaseFlow(this) },
                             onEditEntry = { fileName -> viewModel.navigateToAddEntry(fileName) }
                         )
+                        currentScreen.decryptedNfcSecret?.let { secret ->
+                            AlertDialog(
+                                onDismissRequest = viewModel::onDismissNfcSecretDialog,
+                                title = { Text(stringResource(R.string.decrypted_secret)) },
+                                text = { Text(secret) },
+                                confirmButton = {
+                                    TextButton(onClick = viewModel::onDismissNfcSecretDialog) {
+                                        Text(stringResource(R.string.close))
+                                    }
+                                }
+                            )
+                        }
                     }
 
                     is AppScreen.AddEntry -> {
                         AddEntryScreen(
                             masterPassword = currentScreen.masterPassword,
-                            onNavigateBack = viewModel::navigateToMain,
+                            onNavigateBack = viewModel::navigateToPrincipal,
                             fileNameToEdit = currentScreen.fileNameToEdit
                         )
                     }
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        nfcHandler.setupNfcForegroundDispatch()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        nfcHandler.disableNfcForegroundDispatch()
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        nfcHandler.handleIntent(intent)
     }
 
     private fun launchEnrollment() {

@@ -92,4 +92,13 @@
     <string name="bulleted_list">Daftar berpoin</string>
     <string name="numbered_list">Daftar bernomor</string>
     <string name="checkbox_list">Daftar tugas</string>
+    <string name="nfc_secrets">Rahasia NFC</string>
+    <string name="write_secret_to_nfc">Tulis ke Tag NFC</string>
+    <string name="nfc_write_instructions">Ketik rahasia di bawah ini dan ketuk tombol untuk menuliskannya ke tag NFC.</string>
+    <string name="your_secret">Rahasia Anda…</string>
+    <string name="waiting_for_nfc_tag">Menunggu tag NFC…</string>
+    <string name="nfc_write_success">Rahasia berhasil ditulis!</string>
+    <string name="nfc_write_error">Terjadi kesalahan saat menulis ke tag. Silakan coba lagi.</string>
+    <string name="nfc_read_error">Tidak dapat membaca rahasia dari tag ini.</string>
+    <string name="decrypted_secret">Rahasia yang Didekripsi</string>
 </resources>

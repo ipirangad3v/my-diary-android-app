@@ -95,4 +95,13 @@
     <string name="bulleted_list">Liste à puces</string>
     <string name="numbered_list">Liste numérotée</string>
     <string name="checkbox_list">Liste de tâches</string>
+    <string name="nfc_secrets">Secrets NFC</string>
+    <string name="write_secret_to_nfc">Écrire sur une balise NFC</string>
+    <string name="nfc_write_instructions">Saisissez le secret ci-dessous et appuyez sur le bouton pour l\'écrire sur une balise NFC.</string>
+    <string name="your_secret">Votre secret…</string>
+    <string name="waiting_for_nfc_tag">En attente d\'une balise NFC…</string>
+    <string name="nfc_write_success">Secret écrit avec succès !</string>
+    <string name="nfc_write_error">Erreur lors de l\'écriture sur la balise. Veuillez réessayer.</string>
+    <string name="nfc_read_error">Impossible de lire le secret de cette balise.</string>
+    <string name="decrypted_secret">Secret Déchiffré</string>
 </resources>

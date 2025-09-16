@@ -92,4 +92,13 @@
     <string name="bulleted_list">बुलेटेड सूची</string>
     <string name="numbered_list">क्रमांकित सूची</string>
     <string name="checkbox_list">कार्य सूची</string>
+    <string name="nfc_secrets">एनएफसी रहस्य</string>
+    <string name="write_secret_to_nfc">एनएफसी टैग पर लिखें</string>
+    <string name="nfc_write_instructions">नीचे रहस्य टाइप करें और इसे एनएफसी टैग पर लिखने के लिए बटन पर टैप करें।</string>
+    <string name="your_secret">आपका रहस्य…</string>
+    <string name="waiting_for_nfc_tag">एनएफसी टैग की प्रतीक्षा में…</string>
+    <string name="nfc_write_success">रहस्य सफलतापूर्वक लिखा गया!</string>
+    <string name="nfc_write_error">टैग पर लिखने में त्रुटि। कृपया पुन: प्रयास करें।</string>
+    <string name="nfc_read_error">इस टैग से रहस्य नहीं पढ़ा जा सका।</string>
+    <string name="decrypted_secret">डिक्रिप्ट किया गया रहस्य</string>
 </resources>
