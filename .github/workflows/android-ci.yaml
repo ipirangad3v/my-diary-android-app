@@ -12,6 +12,38 @@ jobs:
         if: "!contains(github.event.head_commit.message, 'ci: Bump version')"
         runs-on: ubuntu-latest
 
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Set up JDK 21
+              uses: actions/setup-java@v4
+              with:
+                  java-version: '21'
+                  distribution: 'temurin'
+
+            - name: Cache Gradle packages
+              uses: actions/cache@v4
+              with:
+                  path: |
+                      ~/.gradle/caches
+                      ~/.gradle/wrapper
+                  key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+                  restore-keys: |
+                      ${{ runner.os }}-gradle-
+
+            - name: Create google-services.json
+              run: echo "${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}" | base64 --decode > app/google-services.json
+
+            - name: Grant execute permission for gradlew
+              run: chmod +x gradlew
+
+            - name: Run Spotless Check
+              run: ./gradlew spotlessCheck
+
+            - name: Run unit tests
+              run: ./gradlew testDebugUnitTest
+
     deploy:
         name: Build, Sign and Deploy
         if: "!contains(github.event.head_commit.message, 'ci: Bump version')"
