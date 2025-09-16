@@ -89,4 +89,7 @@
     <string name="password_strength_weak">Lemah</string>
     <string name="password_strength_medium">Sedang</string>
     <string name="password_strength_strong">Kuat</string>
+    <string name="bulleted_list">Daftar berpoin</string>
+    <string name="numbered_list">Daftar bernomor</string>
+    <string name="checkbox_list">Daftar tugas</string>
 </resources>

@@ -4,27 +4,19 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Delete
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconToggleButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -35,37 +27,28 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.font.FontStyle.Companion.Italic
-import androidx.compose.ui.text.font.FontWeight.Companion.Bold
-import androidx.compose.ui.text.style.TextDecoration.Companion.Underline
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.ImeAction.Companion.Done
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.mohamedrejeb.richeditor.model.rememberRichTextState
 import com.mohamedrejeb.richeditor.ui.material3.RichTextEditor
-import digital.tonima.mydiary.R.drawable.bold
-import digital.tonima.mydiary.R.drawable.italic
-import digital.tonima.mydiary.R.drawable.underline
-import digital.tonima.mydiary.R.string.back
 import digital.tonima.mydiary.R.string.cancel
 import digital.tonima.mydiary.R.string.confirm_deletion_message
 import digital.tonima.mydiary.R.string.confirm_deletion_title
 import digital.tonima.mydiary.R.string.content_required
-import digital.tonima.mydiary.R.string.delete
-import digital.tonima.mydiary.R.string.title as titleRes
-import digital.tonima.mydiary.R.string.no_title
 import digital.tonima.mydiary.R.string.discard
 import digital.tonima.mydiary.R.string.discard_changes_message
 import digital.tonima.mydiary.R.string.discard_changes_title
-import digital.tonima.mydiary.R.string.edit_entry
-import digital.tonima.mydiary.R.string.new_entry
-import digital.tonima.mydiary.R.string.save_note
+import digital.tonima.mydiary.R.string.no_title
+import digital.tonima.mydiary.ui.components.AddEntryTopBar
 import digital.tonima.mydiary.ui.components.ConfirmationDialog
+import digital.tonima.mydiary.ui.components.FormattingToolbar
 import digital.tonima.mydiary.ui.viewmodels.AddEntryEvent
 import digital.tonima.mydiary.ui.viewmodels.AddEntryViewModel
 import kotlinx.coroutines.flow.collectLatest
+import digital.tonima.mydiary.R.string.title as RTitle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -139,28 +122,18 @@ fun AddEntryScreen(
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
-            TopAppBar(
-                title = { Text(stringResource(if (fileNameToEdit == null) new_entry else edit_entry)) },
-                navigationIcon = {
-                    IconButton(onClick = handleBackNavigation) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(back))
-                    }
-                },
-                actions = {
-                    if (fileNameToEdit != null) {
-                        IconButton(onClick = viewModel::onDeleteRequest) {
-                            Icon(Icons.Default.Delete, contentDescription = stringResource(delete))
-                        }
-                    }
-                    Button(onClick = {
-                        viewModel.saveEntry(
-                            title = title,
-                            contentHtml = richTextState.toHtml(),
-                            fallbackTitle = fallbackTitle,
-                            masterPassword = masterPassword,
-                            contentRequiredMessageResId = content_required
-                        )
-                    }) { Text(stringResource(save_note)) }
+            AddEntryTopBar(
+                fileNameToEdit = fileNameToEdit,
+                onBackClick = handleBackNavigation,
+                onDeleteClick = viewModel::onDeleteRequest,
+                onSaveClick = {
+                    viewModel.saveEntry(
+                        title = title,
+                        contentHtml = richTextState.toHtml(),
+                        fallbackTitle = fallbackTitle,
+                        masterPassword = masterPassword,
+                        contentRequiredMessageResId = content_required
+                    )
                 }
             )
         }
@@ -180,32 +153,20 @@ fun AddEntryScreen(
                 OutlinedTextField(
                     value = title,
                     onValueChange = { title = it },
-                    label = { Text(stringResource(titleRes)) },
+                    label = { Text(stringResource(RTitle)) },
                     modifier = Modifier.fillMaxWidth(),
-                    singleLine = true
+                    singleLine = true,
+                    keyboardActions = KeyboardActions { ImeAction.Next }
                 )
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    IconToggleButton(
-                        checked = richTextState.currentSpanStyle.fontWeight == Bold,
-                        onCheckedChange = { richTextState.toggleSpanStyle(SpanStyle(fontWeight = Bold)) }
-                    ) { Icon(painterResource(bold), "Bold") }
-                    IconToggleButton(
-                        checked = richTextState.currentSpanStyle.fontStyle == Italic,
-                        onCheckedChange = { richTextState.toggleSpanStyle(SpanStyle(fontStyle = Italic)) }
-                    ) { Icon(painterResource(italic), "Italic") }
-                    IconToggleButton(
-                        checked = richTextState.currentSpanStyle.textDecoration == Underline,
-                        onCheckedChange = { richTextState.toggleSpanStyle(SpanStyle(textDecoration = Underline)) }
-                    ) { Icon(painterResource(underline), "Underline") }
-                }
+
+                FormattingToolbar(richTextState = richTextState)
+
                 RichTextEditor(
                     state = richTextState,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .weight(1f)
+                        .weight(1f),
+                    keyboardActions = KeyboardActions { Done }
                 )
             }
         }

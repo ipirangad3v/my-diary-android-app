@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -19,9 +20,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction.Companion.Done
+import androidx.compose.ui.text.input.ImeAction.Companion.Next
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import digital.tonima.mydiary.R.string.confirm_password
 import digital.tonima.mydiary.R.string.create_master_password
 import digital.tonima.mydiary.R.string.master_password
@@ -67,7 +70,8 @@ fun PasswordSetupScreen(
             label = { Text(stringResource(master_password)) },
             visualTransformation = PasswordVisualTransformation(),
             isError = uiState.errorResId != null,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            keyboardActions = KeyboardActions { Next }
         )
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -87,7 +91,8 @@ fun PasswordSetupScreen(
             label = { Text(stringResource(confirm_password)) },
             visualTransformation = PasswordVisualTransformation(),
             isError = uiState.errorResId != null,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            keyboardActions = KeyboardActions { Done }
         )
 
         uiState.errorResId?.let { errorRes ->
