@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -26,10 +27,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.ImeAction.Companion.Done
+import androidx.compose.ui.text.input.ImeAction.Companion.Next
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.mohamedrejeb.richeditor.model.rememberRichTextState
@@ -66,6 +70,9 @@ fun AddEntryScreen(
     val richTextState = rememberRichTextState()
     val snackbarHostState = remember { SnackbarHostState() }
     var showBackConfirmationDialog by remember { mutableStateOf(false) }
+
+    val focusManager = LocalFocusManager.current
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     LaunchedEffect(fileNameToEdit) {
         viewModel.initialize(fileNameToEdit, masterPassword)
@@ -156,7 +163,13 @@ fun AddEntryScreen(
                     label = { Text(stringResource(RTitle)) },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
-                    keyboardActions = KeyboardActions { ImeAction.Next }
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = Next
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onNext = {
+                            focusManager.moveFocus(FocusDirection.Down)
+                        })
                 )
 
                 FormattingToolbar(richTextState = richTextState)
@@ -166,7 +179,14 @@ fun AddEntryScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1f),
-                    keyboardActions = KeyboardActions { Done }
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = Done
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            focusManager.clearFocus()
+                            keyboardController?.hide()
+                        })
                 )
             }
         }
