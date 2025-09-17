@@ -25,12 +25,12 @@ import coil.compose.AsyncImage
 import digital.tonima.mydiary.R.string.close
 import digital.tonima.mydiary.R.string.delete
 import digital.tonima.mydiary.R.string.share
-import java.io.File
+import digital.tonima.mydiary.database.entities.VaultImageEntity
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ImageViewerDialog(
-    file: File,
+    imageEntity: VaultImageEntity,
     imageLoader: ImageLoader,
     onDismiss: () -> Unit,
     onDeleteRequest: () -> Unit,
@@ -69,7 +69,7 @@ fun ImageViewerDialog(
                 contentAlignment = Center
             ) {
                 AsyncImage(
-                    model = file,
+                    model = imageEntity,
                     imageLoader = imageLoader,
                     contentDescription = "Full screen encrypted image",
                     modifier = Modifier.fillMaxWidth()

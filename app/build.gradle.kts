@@ -174,6 +174,17 @@ dependencies {
   implementation(libs.hilt.binder)
   ksp(libs.hilt.binder.compiler)
 
+  // Room Database
+  implementation(libs.room.runtime)
+  implementation(libs.room.ktx)
+  ksp(libs.room.compiler)
+
+  // SQLCipher para encriptação do Room
+  implementation(libs.sqlcipher)
+
+  // Requerido pelo SQLCipher
+  implementation(libs.sqlite.ktx)
+
   testImplementation(libs.junit)
   testImplementation(libs.kotlinx.coroutines.test)
   testImplementation(libs.mockk)
@@ -192,3 +203,5 @@ dependencies {
 }
 
 apply(from = "../spotless.gradle")
+
+ksp { arg("room.schemaLocation", "$projectDir/schemas") }

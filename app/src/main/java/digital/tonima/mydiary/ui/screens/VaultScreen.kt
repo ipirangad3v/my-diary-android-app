@@ -39,6 +39,7 @@ import digital.tonima.mydiary.R.string.delete_image_message
 import digital.tonima.mydiary.R.string.delete_image_title
 import digital.tonima.mydiary.R.string.share_image
 import digital.tonima.mydiary.R.string.vault_empty_message
+import digital.tonima.mydiary.encrypting.PasswordBasedCryptoManager
 import digital.tonima.mydiary.imagevault.EncryptedImageFetcher
 import digital.tonima.mydiary.ui.components.AdBannerView
 import digital.tonima.mydiary.ui.components.ConfirmationDialog
@@ -50,6 +51,7 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 fun VaultScreen(
     masterPassword: CharArray,
+    cryptoManager: PasswordBasedCryptoManager,
     onAddImage: () -> Unit,
     viewModel: VaultViewModel = hiltViewModel()
 ) {
@@ -60,13 +62,13 @@ fun VaultScreen(
     val imageLoader = remember(masterPassword) {
         ImageLoader.Builder(context)
             .components {
-                add(EncryptedImageFetcher.Factory(context, masterPassword))
+                add(EncryptedImageFetcher.Factory(context, masterPassword,cryptoManager))
             }
             .build()
     }
 
     LaunchedEffect(Unit) {
-        viewModel.loadVaultImages()
+        viewModel.initialize(masterPassword)
 
         viewModel.eventFlow.collectLatest { event ->
             when (event) {
@@ -106,7 +108,7 @@ fun VaultScreen(
                 horizontalArrangement = spacedBy(4.dp),
                 contentPadding = PaddingValues(4.dp)
             ) {
-                items(uiState.vaultImages, key = { it.name }) { file ->
+                items(uiState.vaultImages, key = { it.encryptedFileName }) { file ->
                     AsyncImage(
                         model = file,
                         imageLoader = imageLoader,
@@ -130,13 +132,13 @@ fun VaultScreen(
         }
     }
 
-    uiState.selectedImage?.let { file ->
+    uiState.selectedImage?.let { imageEntity ->
         ImageViewerDialog(
-            file = file,
+            imageEntity = imageEntity,
             imageLoader = imageLoader,
             onDismiss = viewModel::onDismissImageViewer,
             onDeleteRequest = viewModel::onDeleteRequest,
-            onShareRequest = { viewModel.onShareRequest(masterPassword) }
+            onShareRequest = { viewModel.onShareRequest() }
         )
     }
 

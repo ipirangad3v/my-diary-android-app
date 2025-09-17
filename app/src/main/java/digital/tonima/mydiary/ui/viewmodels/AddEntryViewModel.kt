@@ -1,12 +1,10 @@
 package digital.tonima.mydiary.ui.viewmodels
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import digital.tonima.mydiary.data.model.DiaryEntry
-import digital.tonima.mydiary.encrypting.PasswordBasedCryptoManager
+import digital.tonima.mydiary.database.repositories.DiaryRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +13,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.File
 import javax.inject.Inject
 
 data class AddEntryUiState(
@@ -32,7 +29,7 @@ sealed class AddEntryEvent {
 
 @HiltViewModel
 class AddEntryViewModel @Inject constructor(
-    @ApplicationContext private val context: Context,
+    private val diaryRepository: DiaryRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(AddEntryUiState())
@@ -41,35 +38,31 @@ class AddEntryViewModel @Inject constructor(
     private val _eventFlow = MutableSharedFlow<AddEntryEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
-    private var currentFileName: String? = null
+    private var currentEntryId: Long? = null
 
-    fun initialize(fileName: String?, masterPassword: CharArray) {
-        if (fileName != null && currentFileName == fileName) return
+    fun initialize(entryId: Long?, masterPassword: CharArray) {
+        if (currentEntryId == entryId) return
 
-        currentFileName = fileName
-        if (fileName != null) {
-            loadEntryForEditing(fileName, masterPassword)
+        currentEntryId = entryId
+        if (entryId != null) {
+            loadEntryForEditing(entryId, masterPassword)
         } else {
             _uiState.update { AddEntryUiState() }
         }
     }
 
-    private fun loadEntryForEditing(fileName: String, masterPassword: CharArray) {
+    private fun loadEntryForEditing(entryId: Long, masterPassword: CharArray) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
-            val entry = withContext(Dispatchers.IO) {
-                PasswordBasedCryptoManager.readDiaryEntry(
-                    context,
-                    File(context.filesDir, fileName),
-                    masterPassword
-                )
+            val entryPair = withContext(Dispatchers.IO) {
+                diaryRepository.getEntryById(entryId, masterPassword)
             }
-            if (entry != null) {
+            if (entryPair != null) {
                 _uiState.update {
                     it.copy(
                         isLoading = false,
-                        initialTitle = entry.title,
-                        initialContentHtml = entry.contentHtml
+                        initialTitle = entryPair.second.title,
+                        initialContentHtml = entryPair.second.contentHtml
                     )
                 }
             } else {
@@ -92,18 +85,12 @@ class AddEntryViewModel @Inject constructor(
             return
         }
 
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                PasswordBasedCryptoManager.saveDiaryEntry(
-                    context,
-                    DiaryEntry(
-                        title = title.takeIf { it.isNotBlank() } ?: fallbackTitle,
-                        contentHtml = contentHtml
-                    ),
-                    masterPassword,
-                    fileName = currentFileName
-                )
-            }
+        viewModelScope.launch(Dispatchers.IO) {
+            val entry = DiaryEntry(
+                title = title.takeIf { it.isNotBlank() } ?: fallbackTitle,
+                contentHtml = contentHtml
+            )
+            diaryRepository.addOrUpdateEntry(entry, masterPassword, currentEntryId)
             _eventFlow.emit(AddEntryEvent.NavigateBack)
         }
     }
@@ -116,14 +103,10 @@ class AddEntryViewModel @Inject constructor(
         _uiState.update { it.copy(showDeleteConfirmation = false) }
     }
 
-    fun deleteEntry() {
-        val fileToDelete = currentFileName ?: return
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                PasswordBasedCryptoManager.deleteEncryptedFile(File(context.filesDir, fileToDelete))
-            }
-            currentFileName = null
-            _uiState.update { AddEntryUiState() }
+    fun deleteEntry(masterPassword: CharArray) {
+        val entryIdToDelete = currentEntryId ?: return
+        viewModelScope.launch(Dispatchers.IO) {
+            diaryRepository.deleteEntry(entryIdToDelete, masterPassword)
             _eventFlow.emit(AddEntryEvent.NavigateBack)
         }
     }

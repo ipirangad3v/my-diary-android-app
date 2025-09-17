@@ -48,22 +48,22 @@ sealed class AppScreen {
      * Represents the screen for adding a new diary entry.
      * @param masterPassword The master password, needed to save the new entry.
      */
-    data class AddEntry(val masterPassword: CharArray, val fileNameToEdit: String? = null) : AppScreen() {
+    data class AddEntry(val masterPassword: CharArray, val entryId: Long? = null) : AppScreen() {
         override fun equals(other: Any?): Boolean {
             if (this === other) return true
             if (javaClass != other?.javaClass) return false
 
             other as AddEntry
 
+            if (entryId != other.entryId) return false
             if (!masterPassword.contentEquals(other.masterPassword)) return false
-            if (fileNameToEdit != other.fileNameToEdit) return false
 
             return true
         }
 
         override fun hashCode(): Int {
-            var result = masterPassword.contentHashCode()
-            result = 31 * result + (fileNameToEdit?.hashCode() ?: 0)
+            var result = entryId?.hashCode() ?: 0
+            result = 31 * result + masterPassword.contentHashCode()
             return result
         }
     }

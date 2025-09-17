@@ -25,6 +25,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import digital.tonima.mydiary.billing.BillingManager
 import digital.tonima.mydiary.biometrics.BiometricAuthManager
+import digital.tonima.mydiary.encrypting.PasswordBasedCryptoManager
 import digital.tonima.mydiary.nfc.NfcHandler
 import digital.tonima.mydiary.ui.screens.AddEntryScreen
 import digital.tonima.mydiary.ui.screens.AppScreen
@@ -53,6 +54,9 @@ class MainActivity : FragmentActivity() {
     @Inject
     lateinit var nfcHandler: NfcHandler
 
+    @Inject
+    lateinit var cryptoManager: PasswordBasedCryptoManager
+
     private val viewModel: MainViewModel by viewModels()
     private val nfcViewModel: NfcViewModel by viewModels()
     private val vaultViewModel: VaultViewModel by viewModels()
@@ -72,7 +76,7 @@ class MainActivity : FragmentActivity() {
         val pickImageLauncher = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             if (uri != null) {
                 (viewModel.uiState.value as? AppScreen.Principal)?.masterPassword?.let { password ->
-                    vaultViewModel.saveImage(uri, password)
+                    vaultViewModel.saveImage(uri)
                 }
             }
         }
@@ -144,6 +148,7 @@ class MainActivity : FragmentActivity() {
                         MainAppContainer(
                             hasNfcSupport = hasNfcSupport,
                             mainViewModel = viewModel,
+                            cryptoManager=  cryptoManager,
                             masterPassword = currentScreen.masterPassword,
                             onAddImage = {
                                 pickImageLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
@@ -176,7 +181,7 @@ class MainActivity : FragmentActivity() {
                         AddEntryScreen(
                             masterPassword = currentScreen.masterPassword,
                             onNavigateBack = viewModel::navigateToPrincipal,
-                            fileNameToEdit = currentScreen.fileNameToEdit
+                            entryId = currentScreen.entryId
                         )
                     }
                 }

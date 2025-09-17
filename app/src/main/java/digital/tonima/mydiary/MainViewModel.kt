@@ -1,10 +1,9 @@
 package digital.tonima.mydiary
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
+import digital.tonima.mydiary.delegates.ProUserProvider
 import digital.tonima.mydiary.encrypting.EncryptedPassword
 import digital.tonima.mydiary.encrypting.PasswordBasedCryptoManager
 import digital.tonima.mydiary.encrypting.PasswordRepository
@@ -22,8 +21,9 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val passwordRepository: PasswordRepository,
-    @ApplicationContext private val applicationContext: Context
-) : ViewModel() {
+    private val cryptoManager: PasswordBasedCryptoManager,
+    proUserProvider: ProUserProvider,
+) : ViewModel(), ProUserProvider by proUserProvider {
 
     private val _uiState = MutableStateFlow(
         if (passwordRepository.hasPassword()) AppScreen.Locked else AppScreen.SetupPassword
@@ -80,14 +80,13 @@ class MainViewModel @Inject constructor(
     fun onRecoveryPasswordSubmit(passwordAttempt: CharArray, onResult: (Boolean) -> Unit) {
         viewModelScope.launch {
             val isPasswordCorrect = withContext(Dispatchers.IO) {
-                PasswordBasedCryptoManager.verifyPassword(applicationContext, passwordAttempt)
+                cryptoManager.verifyPassword( passwordAttempt)
             }
             onResult(isPasswordCorrect)
         }
     }
 
     fun onRecoverySuccess(password: CharArray, cipher: Cipher) {
-        // A lógica é a mesma da configuração inicial
         onPasswordSetup(password, cipher)
     }
 
@@ -97,13 +96,6 @@ class MainViewModel @Inject constructor(
             _uiState.update {
                 currentState.copy(currentScreen = screen)
             }
-        }
-    }
-
-    fun navigateToAddEntry(fileName: String? = null) {
-        val currentState = _uiState.value
-        if (currentState is AppScreen.Principal) {
-            _uiState.value = AppScreen.AddEntry(currentState.masterPassword, fileName)
         }
     }
 
@@ -117,6 +109,13 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun navigateToAddEntry(entryId: Long? = null) {
+        val currentState = _uiState.value
+        if (currentState is AppScreen.Principal) {
+            _uiState.value = AppScreen.AddEntry(currentState.masterPassword, entryId)
+        }
+    }
+
     fun lockApp() {
         _uiState.value = AppScreen.Locked
     }
@@ -124,7 +123,7 @@ class MainViewModel @Inject constructor(
     fun resetApp() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                PasswordBasedCryptoManager.deleteAllEntries(applicationContext)
+                cryptoManager.deleteAllEntries()
                 passwordRepository.clearPassword()
             }
             _uiState.value = AppScreen.SetupPassword
@@ -135,7 +134,7 @@ class MainViewModel @Inject constructor(
         val currentState = _uiState.value as? AppScreen.Principal ?: return
         viewModelScope.launch {
             val decrypted = withContext(Dispatchers.IO) {
-                PasswordBasedCryptoManager.decryptFromNfc(data, currentState.masterPassword)
+                cryptoManager.decryptSecret(data, currentState.masterPassword)
             }
             _uiState.update { (it as AppScreen.Principal).copy(decryptedNfcSecret = decrypted) }
         }

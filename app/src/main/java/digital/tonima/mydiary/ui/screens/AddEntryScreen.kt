@@ -58,7 +58,7 @@ import digital.tonima.mydiary.R.string.title as RTitle
 @Composable
 fun AddEntryScreen(
     masterPassword: CharArray,
-    fileNameToEdit: String?,
+    entryId: Long?,
     onNavigateBack: () -> Unit,
     viewModel: AddEntryViewModel = hiltViewModel()
 ) {
@@ -74,8 +74,8 @@ fun AddEntryScreen(
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
 
-    LaunchedEffect(fileNameToEdit) {
-        viewModel.initialize(fileNameToEdit, masterPassword)
+    LaunchedEffect(entryId) {
+        viewModel.initialize(entryId, masterPassword)
     }
 
     LaunchedEffect(uiState.initialContentHtml) {
@@ -85,7 +85,7 @@ fun AddEntryScreen(
     }
 
     val handleBackNavigation = {
-        val hasChanges = if (fileNameToEdit != null) {
+        val hasChanges = if (entryId != null) {
             title != uiState.initialTitle || richTextState.toHtml() != uiState.initialContentHtml
         } else {
             title.isNotBlank() || richTextState.annotatedString.isNotBlank()
@@ -130,7 +130,7 @@ fun AddEntryScreen(
         snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             AddEntryTopBar(
-                fileNameToEdit = fileNameToEdit,
+                entryId = entryId,
                 onBackClick = handleBackNavigation,
                 onDeleteClick = viewModel::onDeleteRequest,
                 onSaveClick = {
@@ -196,7 +196,7 @@ fun AddEntryScreen(
         ConfirmationDialog(
             title = stringResource(confirm_deletion_title),
             text = stringResource(confirm_deletion_message),
-            onConfirm = viewModel::deleteEntry,
+            onConfirm = { viewModel.deleteEntry(masterPassword) },
             onDismiss = viewModel::onDismissDeleteDialog
         )
     }

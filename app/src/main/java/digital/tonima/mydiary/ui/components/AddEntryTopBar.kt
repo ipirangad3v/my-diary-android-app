@@ -41,20 +41,20 @@ import digital.tonima.mydiary.R.string.save_note
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddEntryTopBar(
-    fileNameToEdit: String?,
+    entryId: Long?,
     onBackClick: () -> Unit,
+    onDeleteClick: () -> Unit,
     onSaveClick: () -> Unit,
-    onDeleteClick: () -> Unit
 ) {
     TopAppBar(
-        title = { Text(stringResource(if (fileNameToEdit == null) new_entry else edit_entry)) },
+        { Text(stringResource(if (entryId == null) new_entry else edit_entry)) },
         navigationIcon = {
             IconButton(onClick = onBackClick) {
                 Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(back))
             }
         },
         actions = {
-            if (fileNameToEdit != null) {
+            if (entryId != null) {
                 IconButton(onClick = onDeleteClick) {
                     Icon(Icons.Default.Delete, contentDescription = stringResource(delete))
                 }

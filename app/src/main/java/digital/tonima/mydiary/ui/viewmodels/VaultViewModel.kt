@@ -1,30 +1,27 @@
 package digital.tonima.mydiary.ui.viewmodels
 
-import android.content.Context
 import android.net.Uri
-import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
-import digital.tonima.mydiary.BuildConfig
+import digital.tonima.mydiary.database.entities.VaultImageEntity
+import digital.tonima.mydiary.database.repositories.VaultRepository
 import digital.tonima.mydiary.delegates.ProUserProvider
-import digital.tonima.mydiary.encrypting.PasswordBasedCryptoManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.File
 import javax.inject.Inject
 
 data class VaultUiState(
     val isLoading: Boolean = true,
-    val vaultImages: List<File> = emptyList(),
-    val selectedImage: File? = null,
+    val vaultImages: List<VaultImageEntity> = emptyList(),
+    val selectedImage: VaultImageEntity? = null,
     val showDeleteConfirmation: Boolean = false
 )
 
@@ -34,10 +31,9 @@ sealed class VaultEvent {
 
 @HiltViewModel
 class VaultViewModel @Inject constructor(
-    @ApplicationContext private val context: Context,
+    private val vaultRepository: VaultRepository,
     proUserProvider: ProUserProvider
 ) : ViewModel(), ProUserProvider by proUserProvider {
-
 
     private val _uiState = MutableStateFlow(VaultUiState())
     val uiState = _uiState.asStateFlow()
@@ -45,27 +41,39 @@ class VaultViewModel @Inject constructor(
     private val _eventFlow = MutableSharedFlow<VaultEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
-    fun loadVaultImages() {
-        viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true) }
-            val images = withContext(Dispatchers.IO) {
-                PasswordBasedCryptoManager.getAllVaultFiles(context)
-            }
-            _uiState.update { it.copy(isLoading = false, vaultImages = images.sortedByDescending { it.name }) }
-        }
-    }
+    private var masterPassword: CharArray? = null
 
-    fun saveImage(uri: Uri, masterPassword: CharArray) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                PasswordBasedCryptoManager.saveEncryptedImage(context, uri, masterPassword)
-            }
+    fun initialize(password: CharArray) {
+        if (masterPassword == null) {
+            masterPassword = password
             loadVaultImages()
         }
     }
 
-    fun onImageClicked(file: File) {
-        _uiState.update { it.copy(selectedImage = file) }
+    fun loadVaultImages() {
+        val currentPassword = masterPassword ?: return
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+            vaultRepository.getImages(currentPassword).collectLatest { images ->
+                _uiState.update {
+                    it.copy(
+                        isLoading = false,
+                        vaultImages = images
+                    )
+                }
+            }
+        }
+    }
+
+    fun saveImage(uri: Uri) {
+        val currentPassword = masterPassword ?: return
+        viewModelScope.launch(Dispatchers.IO) {
+            vaultRepository.saveImage(uri, currentPassword)
+        }
+    }
+
+    fun onImageClicked(image: VaultImageEntity) {
+        _uiState.update { it.copy(selectedImage = image) }
     }
 
     fun onDismissImageViewer() {
@@ -82,42 +90,20 @@ class VaultViewModel @Inject constructor(
 
     fun deleteSelectedImage() {
         val imageToDelete = _uiState.value.selectedImage ?: return
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                PasswordBasedCryptoManager.deleteEncryptedFile(imageToDelete)
-            }
-            _uiState.update { it.copy(selectedImage = null, showDeleteConfirmation = false) }
-            loadVaultImages()
+        val currentPassword = masterPassword ?: return
+        viewModelScope.launch(Dispatchers.IO) {
+            vaultRepository.deleteImage(imageToDelete, currentPassword)
         }
+        _uiState.update { it.copy(selectedImage = null, showDeleteConfirmation = false) }
     }
 
-    fun onShareRequest(masterPassword: CharArray) {
+    fun onShareRequest() {
         val imageToShare = _uiState.value.selectedImage ?: return
+        val currentPassword = masterPassword ?: return
         viewModelScope.launch {
             val uri = withContext(Dispatchers.IO) {
-                val cacheDir = File(context.cacheDir, "images")
-                cacheDir.mkdirs()
-                val tempFile = File.createTempFile("shared_", ".jpg", cacheDir)
-
-                val success = PasswordBasedCryptoManager.decryptImageToFile(
-                    context,
-                    imageToShare,
-                    tempFile,
-                    masterPassword
-                )
-
-                if (success) {
-                    // Get a content URI for the temporary file using the FileProvider
-                    FileProvider.getUriForFile(
-                        context,
-                        "${BuildConfig.APPLICATION_ID}.provider",
-                        tempFile
-                    )
-                } else {
-                    null
-                }
+                vaultRepository.prepareImageForSharing(imageToShare, currentPassword)
             }
-
             uri?.let {
                 _eventFlow.emit(VaultEvent.ShareImage(it))
             }
