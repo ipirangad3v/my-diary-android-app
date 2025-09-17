@@ -1,74 +1,64 @@
 package digital.tonima.mydiary.ui.viewmodels
 
-
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import digital.tonima.mydiary.data.model.DiaryEntry
+import digital.tonima.mydiary.database.entities.DiaryEntryEntity
+import digital.tonima.mydiary.database.repositories.DiaryRepository
 import digital.tonima.mydiary.delegates.ProUserProvider
-import digital.tonima.mydiary.encrypting.PasswordBasedCryptoManager
-import digital.tonima.mydiary.ui.screens.BottomBarScreen
-import digital.tonima.mydiary.ui.screens.BottomBarScreen.Diary
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.io.File
 import java.time.LocalDate
 import javax.inject.Inject
 
 data class PrincipalScreenUiState(
     val isLoading: Boolean = true,
-    val allDecryptedEntries: Map<File, DiaryEntry> = emptyMap(),
+    val allDecryptedEntries: Map<DiaryEntryEntity, DiaryEntry> = emptyMap(),
     val selectedDate: LocalDate? = LocalDate.now(),
-    val selectedEntry: Pair<File, DiaryEntry>? = null,
+    val selectedEntry: Pair<DiaryEntryEntity, DiaryEntry>? = null,
     val showDeleteConfirmation: Boolean = false,
     val showDeleteAllConfirmation: Boolean = false,
     val showResetAppConfirmation: Boolean = false,
-    val showUpgradeConfirmation: Boolean = false,
-    val currentScreen: BottomBarScreen = Diary
+    val showUpgradeConfirmation: Boolean = false
 )
 
 @HiltViewModel
 class PrincipalViewModel @Inject constructor(
-    @ApplicationContext private val context: Context,
-    proUserProvider: ProUserProvider
+    private val diaryRepository: DiaryRepository,
+    proUserProvider: ProUserProvider,
 ) : ViewModel(), ProUserProvider by proUserProvider {
+
     private val _uiState = MutableStateFlow(PrincipalScreenUiState())
     val uiState = _uiState.asStateFlow()
-
-
-    fun onUpgradeToProRequest() {
-        _uiState.update { it.copy(showUpgradeConfirmation = true) }
-    }
-
-    fun onDismissUpgradeDialog() {
-        _uiState.update { it.copy(showUpgradeConfirmation = false) }
-    }
 
     fun loadEntries(masterPassword: CharArray) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
-            val decrypted = withContext(Dispatchers.IO) {
-                val files = PasswordBasedCryptoManager.getAllEntryFiles(context)
-                files.mapNotNull { file ->
-                    PasswordBasedCryptoManager.readDiaryEntry(context, file, masterPassword)
-                        ?.let { entry ->
-                            file to entry
-                        }
-                }.toMap()
-            }
-            _uiState.update {
-                it.copy(
-                    isLoading = false,
-                    allDecryptedEntries = decrypted
-                )
+            diaryRepository.getEntries(masterPassword).collectLatest { decryptedMap ->
+                _uiState.update {
+                    it.copy(
+                        isLoading = false,
+                        allDecryptedEntries = decryptedMap
+                    )
+                }
             }
         }
+    }
+
+    fun deleteAllEntries(masterPassword: CharArray) {
+        viewModelScope.launch(Dispatchers.IO) {
+            diaryRepository.deleteAllEntries(masterPassword)
+        }
+        _uiState.update { it.copy(showDeleteAllConfirmation = false) }
+    }
+
+    fun onDateSelected(date: LocalDate?) {
+        _uiState.update { it.copy(selectedDate = date) }
     }
 
     fun onDeleteAllRequest() {
@@ -84,20 +74,11 @@ class PrincipalViewModel @Inject constructor(
     }
 
     fun onDismissResetAppDialog() {
-        _uiState.update { it.copy(showResetAppConfirmation = false, showDeleteAllConfirmation = false) }
+        _uiState.update { it.copy(showResetAppConfirmation = false) }
     }
 
-    fun onDateSelected(date: LocalDate?) {
-        _uiState.update { it.copy(selectedDate = date) }
+    fun onUpgradeToProRequest() {
+        _uiState.update { it.copy(showUpgradeConfirmation = true) }
     }
 
-    fun deleteAllEntries(masterPassword: CharArray) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                PasswordBasedCryptoManager.deleteAllEntries(context)
-            }
-            _uiState.update { it.copy(showDeleteAllConfirmation = false, showResetAppConfirmation = false) }
-            loadEntries(masterPassword)
-        }
-    }
 }

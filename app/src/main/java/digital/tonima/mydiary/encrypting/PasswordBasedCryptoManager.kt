@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import android.util.Log
 import com.google.gson.Gson
+import dagger.hilt.android.qualifiers.ApplicationContext
 import digital.tonima.mydiary.data.model.DiaryEntry
 import java.io.File
 import java.io.InputStream
@@ -15,24 +16,25 @@ import javax.crypto.SecretKey
 import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.PBEKeySpec
 import javax.crypto.spec.GCMParameterSpec
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Manages all cryptographic operations based on a user-provided master password.
- *
- * This object is responsible for deriving a strong encryption key from a password
- * and using it to encrypt/decrypt diary entries and images. It employs PBKDF2 for
- * key derivation and AES/GCM for encryption, ensuring robust security that is
- * portable across devices (as it's not tied to hardware keys).
+ * This class is a Singleton managed by Hilt and can be injected into repositories.
  */
-object PasswordBasedCryptoManager {
+@Singleton
+class PasswordBasedCryptoManager @Inject constructor(
+    @ApplicationContext private val context: Context
+) {
 
-    private const val TRANSFORMATION = "AES/GCM/NoPadding"
-    private const val PBKDF2_ALGORITHM = "PBKDF2WithHmacSHA256"
-    private const val AES_KEY_SIZE = 256
-    private const val GCM_TAG_LENGTH = 128
-    private const val SALT_SIZE = 16
-    private const val IV_SIZE = 12
-    private const val PBKDF2_ITERATIONS = 100000
+    private val TRANSFORMATION = "AES/GCM/NoPadding"
+    private val PBKDF2_ALGORITHM = "PBKDF2WithHmacSHA256"
+    private val AES_KEY_SIZE = 256
+    private val GCM_TAG_LENGTH = 128
+    private val SALT_SIZE = 16
+    private val IV_SIZE = 12
+    private val PBKDF2_ITERATIONS = 100000
 
     private fun deriveKey(password: CharArray, salt: ByteArray): SecretKey {
         val spec = PBEKeySpec(password, salt, PBKDF2_ITERATIONS, AES_KEY_SIZE)
@@ -40,40 +42,7 @@ object PasswordBasedCryptoManager {
         return factory.generateSecret(spec)
     }
 
-    fun saveDiaryEntry(
-        context: Context,
-        entry: DiaryEntry,
-        masterPassword: CharArray,
-        fileName: String? = null
-    ) {
-        val salt = ByteArray(SALT_SIZE)
-        SecureRandom().nextBytes(salt)
-
-        val key = deriveKey(masterPassword, salt)
-        val cipher = Cipher.getInstance(TRANSFORMATION)
-
-        cipher.init(Cipher.ENCRYPT_MODE, key)
-        val iv = cipher.iv
-
-        val gson = Gson()
-        val jsonString = gson.toJson(entry)
-        val encryptedContent = cipher.doFinal(jsonString.toByteArray())
-
-        val file = if (fileName != null) {
-            File(context.filesDir, fileName)
-        } else {
-            val timestamp = System.currentTimeMillis()
-            File(context.filesDir, "entry_$timestamp.txt")
-        }
-
-        file.outputStream().use {
-            it.write(salt)
-            it.write(iv)
-            it.write(encryptedContent)
-        }
-    }
-
-    fun readDiaryEntry(context: Context, file: File, masterPassword: CharArray): DiaryEntry? {
+    fun readDiaryEntry(file: File, masterPassword: CharArray): DiaryEntry? {
         return try {
             file.inputStream().use {
                 val salt = ByteArray(SALT_SIZE)
@@ -96,12 +65,12 @@ object PasswordBasedCryptoManager {
         }
     }
 
-    fun verifyPassword(context: Context, masterPassword: CharArray): Boolean {
-        val firstEntry = getAllEntryFiles(context).firstOrNull() ?: return true
-        return readDiaryEntry(context, firstEntry, masterPassword) != null
+    fun verifyPassword(masterPassword: CharArray): Boolean {
+        val firstEntry = getAllEntryFiles().firstOrNull() ?: return true
+        return readDiaryEntry(firstEntry, masterPassword) != null
     }
 
-    fun getAllEntryFiles(context: Context): List<File> {
+    fun getAllEntryFiles(): List<File> {
         return context.filesDir.listFiles { _, name -> name.startsWith("entry_") }?.toList() ?: emptyList()
     }
 
@@ -111,36 +80,42 @@ object PasswordBasedCryptoManager {
         }
     }
 
-    fun deleteAllEntries(context: Context) {
-        getAllEntryFiles(context).forEach { file ->
+    fun deleteAllEntries() {
+        getAllEntryFiles().forEach { file ->
             deleteEncryptedFile(file)
         }
     }
 
-    fun saveEncryptedImage(context: Context, imageUri: Uri, masterPassword: CharArray) {
-        val salt = ByteArray(SALT_SIZE)
-        SecureRandom().nextBytes(salt)
+    fun saveEncryptedImage(imageUri: Uri, masterPassword: CharArray): File? {
+        return try {
+            val salt = ByteArray(SALT_SIZE)
+            SecureRandom().nextBytes(salt)
 
-        val key = deriveKey(masterPassword, salt)
-        val cipher = Cipher.getInstance(TRANSFORMATION)
-        cipher.init(Cipher.ENCRYPT_MODE, key)
-        val iv = cipher.iv
+            val key = deriveKey(masterPassword, salt)
+            val cipher = Cipher.getInstance(TRANSFORMATION)
+            cipher.init(Cipher.ENCRYPT_MODE, key)
+            val iv = cipher.iv
 
-        val timestamp = System.currentTimeMillis()
-        val outputFile = File(context.filesDir, "vault_$timestamp.enc")
+            val timestamp = System.currentTimeMillis()
+            val outputFile = File(context.filesDir, "vault_$timestamp.enc")
 
-        context.contentResolver.openInputStream(imageUri)?.use { inputStream ->
-            outputFile.outputStream().use { fileOutputStream ->
-                fileOutputStream.write(salt)
-                fileOutputStream.write(iv)
-                CipherOutputStream(fileOutputStream, cipher).use { cipherOutputStream ->
-                    inputStream.copyTo(cipherOutputStream)
+            context.contentResolver.openInputStream(imageUri)?.use { inputStream ->
+                outputFile.outputStream().use { fileOutputStream ->
+                    fileOutputStream.write(salt)
+                    fileOutputStream.write(iv)
+                    CipherOutputStream(fileOutputStream, cipher).use { cipherOutputStream ->
+                        inputStream.copyTo(cipherOutputStream)
+                    }
                 }
             }
+            outputFile
+        } catch (e: Exception) {
+            Log.e("CryptoManager", "Failed to save encrypted image", e)
+            null
         }
     }
 
-    fun getDecryptedImageInputStream(context: Context, file: File, masterPassword: CharArray): InputStream? {
+    fun getDecryptedImageInputStream(file: File, masterPassword: CharArray): InputStream? {
         return try {
             val fileInputStream = file.inputStream()
             val salt = ByteArray(SALT_SIZE)
@@ -161,9 +136,9 @@ object PasswordBasedCryptoManager {
         }
     }
 
-    fun decryptImageToFile(context: Context, encryptedFile: File, tempFile: File, masterPassword: CharArray): Boolean {
+    fun decryptImageToFile(encryptedFile: File, tempFile: File, masterPassword: CharArray): Boolean {
         return try {
-            getDecryptedImageInputStream(context, encryptedFile, masterPassword)?.use { inputStream ->
+            getDecryptedImageInputStream(encryptedFile, masterPassword)?.use { inputStream ->
                 tempFile.outputStream().use { outputStream ->
                     inputStream.copyTo(outputStream)
                 }
@@ -175,7 +150,7 @@ object PasswordBasedCryptoManager {
         }
     }
 
-    fun encryptForNfc(secret: String, masterPassword: CharArray): ByteArray? {
+    fun encryptSecret(secret: String, masterPassword: CharArray): ByteArray? {
         return try {
             val salt = ByteArray(SALT_SIZE)
             SecureRandom().nextBytes(salt)
@@ -192,7 +167,7 @@ object PasswordBasedCryptoManager {
         }
     }
 
-    fun decryptFromNfc(data: ByteArray, masterPassword: CharArray): String? {
+    fun decryptSecret(data: ByteArray, masterPassword: CharArray): String? {
         return try {
             val salt = data.copyOfRange(0, SALT_SIZE)
             val iv = data.copyOfRange(SALT_SIZE, SALT_SIZE + IV_SIZE)
@@ -208,9 +183,5 @@ object PasswordBasedCryptoManager {
             Log.e("CryptoManager", "Failed to decrypt NFC data", e)
             null
         }
-    }
-
-    fun getAllVaultFiles(context: Context): List<File> {
-        return context.filesDir.listFiles { _, name -> name.startsWith("vault_") }?.toList() ?: emptyList()
     }
 }

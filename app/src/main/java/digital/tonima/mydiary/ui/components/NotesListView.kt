@@ -1,5 +1,6 @@
 package digital.tonima.mydiary.ui.components
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -14,21 +15,22 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import digital.tonima.mydiary.R
+import digital.tonima.mydiary.R.string.none_note_for_this_day
 import digital.tonima.mydiary.data.model.DiaryEntry
+import digital.tonima.mydiary.database.entities.DiaryEntryEntity
 import digital.tonima.mydiary.utils.formatTimestampToHourAndMinute
-import java.io.File
 import java.time.LocalDate
 
 @Composable
-internal fun NotesListView(
+fun NotesListView(
     modifier: Modifier = Modifier,
     isLoading: Boolean,
     allEntriesCount: Int,
-    filteredEntries: List<Pair<File, DiaryEntry>>,
+    filteredEntries: List<Pair<DiaryEntryEntity, DiaryEntry>>,
     selectedDate: LocalDate?,
-    onNoteClick: (File, DiaryEntry) -> Unit
+    onNoteClick: (Long) -> Unit
 ) {
-    Box(modifier = modifier.padding(8.dp), contentAlignment = Alignment.Center) {
+    Box(modifier = modifier, contentAlignment = Alignment.Center) {
         if (isLoading) {
             CircularProgressIndicator()
         } else if (allEntriesCount == 0) {
@@ -38,7 +40,7 @@ internal fun NotesListView(
                 modifier = Modifier.padding(16.dp)
             )
         } else if (filteredEntries.isEmpty() && selectedDate != null) {
-            Text(stringResource(R.string.none_note_for_this_day), modifier = Modifier.padding(16.dp))
+            Text(stringResource(none_note_for_this_day), modifier = Modifier.padding(16.dp))
         } else if (filteredEntries.isEmpty()) {
             Text(
                 stringResource(R.string.select_a_day_to_see_notes),
@@ -46,12 +48,12 @@ internal fun NotesListView(
                 modifier = Modifier.padding(16.dp)
             )
         } else {
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(filteredEntries, key = { it.first.name }) { (file, entry) ->
+            LazyColumn(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                items(filteredEntries, key = { it.first.id }) { (entity, entry) ->
                     EntryListItem(
                         title = entry.title,
-                        time = formatTimestampToHourAndMinute(file.name),
-                        onClick = { onNoteClick(file, entry) }
+                        time = formatTimestampToHourAndMinute(entity.timestamp),
+                        onClick = { onNoteClick(entity.id) }
                     )
                 }
             }

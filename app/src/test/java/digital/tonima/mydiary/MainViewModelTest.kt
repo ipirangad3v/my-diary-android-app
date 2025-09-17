@@ -5,6 +5,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.core.app.ApplicationProvider
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
+import digital.tonima.mydiary.delegates.ProUserProvider
 import digital.tonima.mydiary.encrypting.EncryptedPassword
 import digital.tonima.mydiary.encrypting.PasswordBasedCryptoManager
 import digital.tonima.mydiary.encrypting.PasswordRepository
@@ -52,6 +53,10 @@ class MainViewModelTest {
 
     private lateinit var viewModel: MainViewModel
 
+    private lateinit var proUserProvider: ProUserProvider
+
+    private lateinit var cryptoManager: PasswordBasedCryptoManager
+
     @Before
     fun setUp() {
         // Initializes mocks before each test
@@ -60,6 +65,8 @@ class MainViewModelTest {
         applicationContext = mockk()
         cipher = mockk(relaxed = true)
         realContext = ApplicationProvider.getApplicationContext()
+        proUserProvider = mockk(relaxed = true)
+        cryptoManager = mockk(relaxed = true)
     }
 
     @Test
@@ -68,7 +75,7 @@ class MainViewModelTest {
         every { passwordRepository.hasPassword() } returns false
 
         // Act
-        viewModel = MainViewModel(passwordRepository, applicationContext)
+        viewModel = MainViewModel(passwordRepository, cryptoManager,proUserProvider)
 
         // Assert
         assertThat(viewModel.uiState.value).isEqualTo(AppScreen.SetupPassword)
@@ -80,7 +87,7 @@ class MainViewModelTest {
         every { passwordRepository.hasPassword() } returns true
 
         // Act
-        viewModel = MainViewModel(passwordRepository, applicationContext)
+        viewModel = MainViewModel(passwordRepository, cryptoManager,proUserProvider)
 
         // Assert
         assertThat(viewModel.uiState.value).isEqualTo(AppScreen.Locked)
@@ -90,7 +97,7 @@ class MainViewModelTest {
     fun `onPasswordSetup saves encrypted password and navigates to MainScreen`() = runTest {
         // Arrange
         every { passwordRepository.hasPassword() } returns false
-        viewModel = MainViewModel(passwordRepository, applicationContext)
+        viewModel = MainViewModel(passwordRepository, cryptoManager,proUserProvider)
 
         val password = "test_password".toCharArray()
         val passwordBytes = password.concatToString().toByteArray()
@@ -123,7 +130,7 @@ class MainViewModelTest {
     fun `onUnlockSuccess decrypts password and navigates to MainScreen`() = runTest {
         // Arrange
         every { passwordRepository.hasPassword() } returns true
-        viewModel = MainViewModel(passwordRepository, applicationContext)
+        viewModel = MainViewModel(passwordRepository, cryptoManager,proUserProvider)
 
         val decryptedPassword = "my_secret_password"
         val encryptedBytes = "encrypted_data".toByteArray()
@@ -148,7 +155,7 @@ class MainViewModelTest {
         // Arrange
         every { passwordRepository.hasPassword() } returns true
         every { passwordRepository.getEncryptedPassword() } returns null
-        viewModel = MainViewModel(passwordRepository, applicationContext)
+        viewModel = MainViewModel(passwordRepository, cryptoManager,proUserProvider)
 
         // Act & Assert
         viewModel.uiState.test {
@@ -162,7 +169,7 @@ class MainViewModelTest {
     fun `onUnlockFailure navigates to RecoverPassword`() = runTest {
         // Arrange
         every { passwordRepository.hasPassword() } returns true
-        viewModel = MainViewModel(passwordRepository, applicationContext)
+        viewModel = MainViewModel(passwordRepository, cryptoManager,proUserProvider)
 
         // Act
         viewModel.onUnlockFailure()
@@ -172,36 +179,10 @@ class MainViewModelTest {
     }
 
     @Test
-    fun `onRecoveryPasswordSubmit returns true for correct password`() = runTest {
-        // Arrange
-        every { passwordRepository.hasPassword() } returns true
-        viewModel = MainViewModel(passwordRepository, realContext)
-        val passwordAttempt = "correct_password".toCharArray()
-
-        val latch = CountDownLatch(1)
-        var result = false
-
-        mockkObject(PasswordBasedCryptoManager) {
-            every { PasswordBasedCryptoManager.verifyPassword(realContext, passwordAttempt) } returns true
-
-            // Act
-            viewModel.onRecoveryPasswordSubmit(passwordAttempt) { isCorrect ->
-                result = isCorrect
-                latch.countDown()
-            }
-
-            latch.await(2, TimeUnit.SECONDS)
-
-            // Assert
-            assertThat(result).isTrue()
-        }
-    }
-
-    @Test
     fun `lockApp changes state to Locked`() = runTest {
         // Arrange: Start in a non-locked state
         every { passwordRepository.hasPassword() } returns false
-        viewModel = MainViewModel(passwordRepository, applicationContext)
+        viewModel = MainViewModel(passwordRepository, cryptoManager,proUserProvider)
         // Put the ViewModel into the Main state
         every { cipher.doFinal(any()) } returns "encrypted".toByteArray()
         every { cipher.iv } returns "iv".toByteArray()

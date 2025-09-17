@@ -1,7 +1,6 @@
 package digital.tonima.mydiary.ui.screens
 
 import android.content.res.Configuration
-import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,13 +9,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DividerDefaults
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -40,85 +36,38 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.kizitonwose.calendar.compose.rememberCalendarState
 import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
 import digital.tonima.mydiary.BuildConfig.ADMOB_BANNER_AD_UNIT_HOME
-import digital.tonima.mydiary.R
-import digital.tonima.mydiary.R.string.add_note
 import digital.tonima.mydiary.R.string.delete_all_confirmation_message
 import digital.tonima.mydiary.R.string.delete_all_confirmation_title
-import digital.tonima.mydiary.R.string.lock_diary
-import digital.tonima.mydiary.R.string.menu
 import digital.tonima.mydiary.R.string.re_authentication_subtitle
+import digital.tonima.mydiary.R.string.app_name
 import digital.tonima.mydiary.R.string.re_authentication_title
 import digital.tonima.mydiary.R.string.reset_app_confirmation_message
 import digital.tonima.mydiary.R.string.reset_app_confirmation_title
-import digital.tonima.mydiary.data.model.DiaryEntry
+import digital.tonima.mydiary.R.string.menu
+import digital.tonima.mydiary.R.string.add_note
+import digital.tonima.mydiary.R.string.lock_diary
 import digital.tonima.mydiary.ui.components.AdBannerView
 import digital.tonima.mydiary.ui.components.CalendarView
 import digital.tonima.mydiary.ui.components.ConfirmationDialog
 import digital.tonima.mydiary.ui.components.DrawerContent
-import digital.tonima.mydiary.ui.components.EntryListItem
+import digital.tonima.mydiary.ui.components.NotesListView
 import digital.tonima.mydiary.ui.viewmodels.PrincipalViewModel
-import digital.tonima.mydiary.utils.formatTimestampToHourAndMinute
-import digital.tonima.mydiary.utils.getLocalDateFromFile
+import digital.tonima.mydiary.utils.getLocalDateFromEntity
 import kotlinx.coroutines.launch
-import java.io.File
-import java.time.LocalDate
 import java.time.YearMonth
-
-@Composable
-private fun NotesListView(
-    modifier: Modifier = Modifier,
-    isLoading: Boolean,
-    allEntriesCount: Int,
-    filteredEntries: List<Pair<File, DiaryEntry>>,
-    selectedDate: LocalDate?,
-    onNoteClick: (File) -> Unit
-) {
-    Box(modifier = modifier, contentAlignment = Alignment.Center) {
-        if (isLoading) {
-            CircularProgressIndicator()
-        } else if (allEntriesCount == 0) {
-            Text(
-                stringResource(R.string.empty_notes_message),
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(16.dp)
-            )
-        } else if (filteredEntries.isEmpty() && selectedDate != null) {
-            Text(stringResource(R.string.none_note_for_this_day), modifier = Modifier.padding(16.dp))
-        } else if (filteredEntries.isEmpty()) {
-            Text(
-                stringResource(R.string.select_a_day_to_see_notes),
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(16.dp)
-            )
-        } else {
-            LazyColumn(modifier = Modifier
-                .fillMaxSize()
-                .padding(8.dp), verticalArrangement = spacedBy(4.dp)
-            ) {
-                items(filteredEntries, key = { it.first.name }) { (file, entry) ->
-                    EntryListItem(
-                        title = entry.title,
-                        time = formatTimestampToHourAndMinute(file.name),
-                        onClick = { onNoteClick(file) }
-                    )
-                }
-            }
-        }
-    }
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PrincipalScreen(
+    isProUser: Boolean,
     masterPassword: CharArray,
     onAddEntry: () -> Unit,
-    onEditEntry: (String) -> Unit,
+    onEditEntry: (Long) -> Unit,
     onLockRequest: () -> Unit,
     onResetApp: () -> Unit,
     onReauthenticate: (titleResId: Int, subtitleResId: Int, action: () -> Unit) -> Unit,
@@ -126,19 +75,18 @@ fun PrincipalScreen(
     viewModel: PrincipalViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val isProUser by viewModel.isProUser.collectAsState()
     val configuration = LocalConfiguration.current
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
     val entryDates by remember(uiState.allDecryptedEntries) {
-        mutableStateOf(uiState.allDecryptedEntries.keys.mapNotNull { getLocalDateFromFile(it) }.toSet())
+        mutableStateOf(uiState.allDecryptedEntries.keys.map { getLocalDateFromEntity(it) }.toSet())
     }
     val filteredEntries by remember(uiState.allDecryptedEntries, uiState.selectedDate) {
         mutableStateOf(
-            uiState.allDecryptedEntries.filter { (file, _) ->
-                getLocalDateFromFile(file) == uiState.selectedDate
-            }.toList().sortedByDescending { it.first.name }
+            uiState.allDecryptedEntries.filter { (entity, _) ->
+                getLocalDateFromEntity(entity) == uiState.selectedDate
+            }.toList().sortedByDescending { it.first.timestamp }
         )
     }
 
@@ -173,7 +121,7 @@ fun PrincipalScreen(
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title = { Text(stringResource(R.string.app_name)) },
+                    title = { Text(stringResource(app_name)) },
                     navigationIcon = {
                         IconButton(onClick = { scope.launch { drawerState.open() } }) {
                             Icon(Icons.Default.Menu, contentDescription = stringResource(menu))
@@ -221,7 +169,7 @@ fun PrincipalScreen(
                                     allEntriesCount = uiState.allDecryptedEntries.size,
                                     filteredEntries = filteredEntries,
                                     selectedDate = uiState.selectedDate,
-                                    onNoteClick = { file -> onEditEntry(file.name) }
+                                    onNoteClick = onEditEntry
                                 )
                             }
                         }
@@ -238,12 +186,12 @@ fun PrincipalScreen(
                                 NotesListView(
                                     modifier = Modifier
                                         .weight(1f)
-                                        .fillMaxWidth(),
+                                        .fillMaxWidth().padding(8.dp),
                                     isLoading = uiState.isLoading,
                                     allEntriesCount = uiState.allDecryptedEntries.size,
                                     filteredEntries = filteredEntries,
                                     selectedDate = uiState.selectedDate,
-                                    onNoteClick = { file -> onEditEntry(file.name) }
+                                    onNoteClick = onEditEntry
                                 )
                             }
                         }
@@ -264,9 +212,8 @@ fun PrincipalScreen(
             onConfirm = {
                 onReauthenticate(
                     re_authentication_title,
-                    re_authentication_subtitle,
-                    { viewModel.deleteAllEntries(masterPassword) }
-                )
+                    re_authentication_subtitle
+                ) { viewModel.deleteAllEntries(masterPassword) }
             },
             onDismiss = viewModel::onDismissDeleteAllDialog
         )
@@ -288,7 +235,6 @@ fun PrincipalScreen(
     }
 
     if (uiState.showUpgradeConfirmation) {
-        viewModel.onDismissUpgradeDialog()
         onPurchaseRequest()
     }
 }

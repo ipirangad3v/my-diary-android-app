@@ -1,8 +1,9 @@
 package digital.tonima.mydiary.ui.viewmodels
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import digital.tonima.mydiary.encrypting.PasswordBasedCryptoManager
+import digital.tonima.mydiary.database.repositories.NfcRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -38,7 +39,9 @@ data class NfcUiState(
 }
 
 @HiltViewModel
-class NfcViewModel @Inject constructor() : ViewModel() {
+class NfcViewModel @Inject constructor(
+    private val nfcRepository: NfcRepository
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(NfcUiState())
     val uiState = _uiState.asStateFlow()
@@ -53,7 +56,7 @@ class NfcViewModel @Inject constructor() : ViewModel() {
         viewModelScope.launch {
             _uiState.update { it.copy(isWaitingForTag = true) }
             val data = withContext(Dispatchers.IO) {
-                PasswordBasedCryptoManager.encryptForNfc(uiState.value.secretText, masterPassword)
+                nfcRepository.encryptSecret(uiState.value.secretText, masterPassword)
             }
             _uiState.update { it.copy(encryptedData = data) }
         }
