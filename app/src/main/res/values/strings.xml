@@ -101,5 +101,6 @@
     <string name="nfc_write_error">Erro ao gravar na tag. Por favor, tente novamente.</string>
     <string name="nfc_read_error">Não foi possível ler o segredo desta tag.</string>
     <string name="decrypted_secret">Segredo Desencriptado</string>
-
+    <string name="version" translatable="false">v%1$s</string>
+    <string name="our_other_apps">Conheça nossos outros apps</string>
 </resources>

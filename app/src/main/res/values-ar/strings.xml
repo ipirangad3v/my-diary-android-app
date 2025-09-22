@@ -99,4 +99,5 @@
     <string name="nfc_write_error">خطأ في الكتابة على البطاقة. يرجى المحاولة مرة أخرى.</string>
     <string name="nfc_read_error">تعذر قراءة السر من هذه البطاقة.</string>
     <string name="decrypted_secret">السر المفكوك تشفيره</string>
+    <string name="our_other_apps">تعرف على تطبيقاتنا الأخرى</string>
 </resources>
