@@ -81,4 +81,8 @@ class PrincipalViewModel @Inject constructor(
         _uiState.update { it.copy(showUpgradeConfirmation = true) }
     }
 
+    fun onPurchaseFlowHandled() {
+        _uiState.update { it.copy(showUpgradeConfirmation = false) }
+    }
+
 }

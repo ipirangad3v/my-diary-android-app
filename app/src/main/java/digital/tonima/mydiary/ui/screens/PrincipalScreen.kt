@@ -235,6 +235,9 @@ fun PrincipalScreen(
     }
 
     if (uiState.showUpgradeConfirmation) {
-        onPurchaseRequest()
+        LaunchedEffect(uiState.showUpgradeConfirmation) {
+            onPurchaseRequest()
+            viewModel.onPurchaseFlowHandled()
+        }
     }
 }
