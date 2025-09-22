@@ -102,4 +102,5 @@
     <string name="nfc_write_error">Error al escribir en la etiqueta. Por favor, inténtelo de nuevo.</string>
     <string name="nfc_read_error">No se pudo leer el secreto de esta etiqueta.</string>
     <string name="decrypted_secret">Secreto Descifrado</string>
+    <string name="our_other_apps">Conoce nuestras otras apps</string>
 </resources>

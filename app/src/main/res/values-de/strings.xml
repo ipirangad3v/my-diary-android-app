@@ -106,4 +106,5 @@
     <string name="nfc_write_error">Fehler beim Schreiben auf den Tag. Bitte versuchen Sie es erneut.</string>
     <string name="nfc_read_error">Das Geheimnis von diesem Tag konnte nicht gelesen werden.</string>
     <string name="decrypted_secret">Entschlüsseltes Geheimnis</string>
+    <string name="our_other_apps">Entdecken Sie unsere anderen Apps</string>
 </resources>

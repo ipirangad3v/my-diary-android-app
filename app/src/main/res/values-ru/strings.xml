@@ -103,4 +103,5 @@
     <string name="nfc_write_error">Ошибка записи на метку. Пожалуйста, попробуйте еще раз.</string>
     <string name="nfc_read_error">Не удалось прочитать секрет с этой метки.</string>
     <string name="decrypted_secret">Расшифрованный секрет</string>
+    <string name="our_other_apps">Познакомьтесь с другими нашими приложениями</string>
 </resources>
