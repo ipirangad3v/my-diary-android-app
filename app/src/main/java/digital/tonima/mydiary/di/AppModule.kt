@@ -15,8 +15,9 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideNfcAdapter(@ApplicationContext context: Context): NfcAdapter? {
+    fun provideNfcAdapter(
+        @ApplicationContext context: Context
+    ): NfcAdapter? {
         return NfcAdapter.getDefaultAdapter(context)
     }
-
 }

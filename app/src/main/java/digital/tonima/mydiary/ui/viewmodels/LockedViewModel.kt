@@ -6,6 +6,8 @@ import digital.tonima.mydiary.delegates.ProUserProvider
 import javax.inject.Inject
 
 @HiltViewModel
-class LockedViewModel @Inject constructor(
-    proUserProvider: ProUserProvider
-) : ViewModel() , ProUserProvider by proUserProvider
+class LockedViewModel
+    @Inject
+    constructor(
+        proUserProvider: ProUserProvider
+    ) : ViewModel(), ProUserProvider by proUserProvider

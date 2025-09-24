@@ -46,7 +46,5 @@ fun AppBottomNavigation(
                 onClick = { onScreenSelected(Nfc) }
             )
         }
-
-
     }
 }

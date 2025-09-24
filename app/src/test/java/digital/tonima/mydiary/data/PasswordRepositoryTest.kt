@@ -17,7 +17,7 @@ import org.robolectric.RobolectricTestRunner
  * and an in-memory SharedPreferences implementation.
  */
 @RunWith(RobolectricTestRunner::class) // Use AndroidJUnit4 runner for Robolectric
-class PasswordRepositoryImplTest {
+class PasswordRepositoryTest {
 
     // The class under test
     private lateinit var passwordRepository: PasswordRepository

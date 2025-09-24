@@ -62,7 +62,7 @@ fun VaultScreen(
     val imageLoader = remember(masterPassword) {
         ImageLoader.Builder(context)
             .components {
-                add(EncryptedImageFetcher.Factory(context, masterPassword,cryptoManager))
+                add(EncryptedImageFetcher.Factory(context, masterPassword, cryptoManager))
             }
             .build()
     }

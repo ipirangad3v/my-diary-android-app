@@ -44,7 +44,7 @@ fun AddEntryTopBar(
     entryId: Long?,
     onBackClick: () -> Unit,
     onDeleteClick: () -> Unit,
-    onSaveClick: () -> Unit,
+    onSaveClick: () -> Unit
 ) {
     TopAppBar(
         { Text(stringResource(if (entryId == null) new_entry else edit_entry)) },

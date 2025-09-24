@@ -9,5 +9,4 @@ interface NfcHandler {
     fun setupNfcForegroundDispatch()
     fun disableNfcForegroundDispatch()
     fun handleIntent(intent: Intent)
-
 }

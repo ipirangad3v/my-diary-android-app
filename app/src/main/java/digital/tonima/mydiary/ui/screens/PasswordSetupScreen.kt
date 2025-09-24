@@ -46,7 +46,7 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 fun PasswordSetupScreen(
     viewModel: PasswordSetupViewModel = hiltViewModel(),
-    onPasswordSet: (CharArray) -> Unit,
+    onPasswordSet: (CharArray) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -90,7 +90,8 @@ fun PasswordSetupScreen(
             keyboardActions = KeyboardActions(
                 onNext = {
                     focusManager.moveFocus(FocusDirection.Down)
-                })
+                }
+            )
         )
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -102,7 +103,6 @@ fun PasswordSetupScreen(
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
         Spacer(modifier = Modifier.height(8.dp))
-
 
         OutlinedTextField(
             value = uiState.confirmPassword,

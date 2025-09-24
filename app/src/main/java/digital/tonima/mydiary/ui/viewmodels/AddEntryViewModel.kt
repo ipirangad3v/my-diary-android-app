@@ -28,86 +28,88 @@ sealed class AddEntryEvent {
 }
 
 @HiltViewModel
-class AddEntryViewModel @Inject constructor(
-    private val diaryRepository: DiaryRepository
-) : ViewModel() {
+class AddEntryViewModel
+    @Inject
+    constructor(
+        private val diaryRepository: DiaryRepository
+    ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(AddEntryUiState())
-    val uiState = _uiState.asStateFlow()
+        private val _uiState = MutableStateFlow(AddEntryUiState())
+        val uiState = _uiState.asStateFlow()
 
-    private val _eventFlow = MutableSharedFlow<AddEntryEvent>()
-    val eventFlow = _eventFlow.asSharedFlow()
+        private val _eventFlow = MutableSharedFlow<AddEntryEvent>()
+        val eventFlow = _eventFlow.asSharedFlow()
 
-    private var currentEntryId: Long? = null
+        private var currentEntryId: Long? = null
 
-    fun initialize(entryId: Long?, masterPassword: CharArray) {
-        if (currentEntryId == entryId) return
+        fun initialize(entryId: Long?, masterPassword: CharArray) {
+            if (currentEntryId == entryId) return
 
-        currentEntryId = entryId
-        if (entryId != null) {
-            loadEntryForEditing(entryId, masterPassword)
-        } else {
-            _uiState.update { AddEntryUiState() }
-        }
-    }
-
-    private fun loadEntryForEditing(entryId: Long, masterPassword: CharArray) {
-        viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true) }
-            val entryPair = withContext(Dispatchers.IO) {
-                diaryRepository.getEntryById(entryId, masterPassword)
-            }
-            if (entryPair != null) {
-                _uiState.update {
-                    it.copy(
-                        isLoading = false,
-                        initialTitle = entryPair.second.title,
-                        initialContentHtml = entryPair.second.contentHtml
-                    )
-                }
+            currentEntryId = entryId
+            if (entryId != null) {
+                loadEntryForEditing(entryId, masterPassword)
             } else {
-                _uiState.update { it.copy(isLoading = false) }
+                _uiState.update { AddEntryUiState() }
             }
         }
-    }
 
-    fun saveEntry(
-        title: String,
-        contentHtml: String,
-        fallbackTitle: String,
-        masterPassword: CharArray,
-        contentRequiredMessageResId: Int
-    ) {
-        if (contentHtml.isBlank() || contentHtml == "<p><br></p>") {
+        private fun loadEntryForEditing(entryId: Long, masterPassword: CharArray) {
             viewModelScope.launch {
-                _eventFlow.emit(AddEntryEvent.ShowSnackbar(contentRequiredMessageResId))
+                _uiState.update { it.copy(isLoading = true) }
+                val entryPair = withContext(Dispatchers.IO) {
+                    diaryRepository.getEntryById(entryId, masterPassword)
+                }
+                if (entryPair != null) {
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            initialTitle = entryPair.second.title,
+                            initialContentHtml = entryPair.second.contentHtml
+                        )
+                    }
+                } else {
+                    _uiState.update { it.copy(isLoading = false) }
+                }
             }
-            return
         }
 
-        viewModelScope.launch(Dispatchers.IO) {
-            val entry = DiaryEntry(
-                title = title.takeIf { it.isNotBlank() } ?: fallbackTitle,
-                contentHtml = contentHtml
-            )
-            diaryRepository.addOrUpdateEntry(entry, masterPassword, currentEntryId)
-            _eventFlow.emit(AddEntryEvent.NavigateBack)
+        fun saveEntry(
+            title: String,
+            contentHtml: String,
+            fallbackTitle: String,
+            masterPassword: CharArray,
+            contentRequiredMessageResId: Int
+        ) {
+            if (contentHtml.isBlank() || contentHtml == "<p><br></p>") {
+                viewModelScope.launch {
+                    _eventFlow.emit(AddEntryEvent.ShowSnackbar(contentRequiredMessageResId))
+                }
+                return
+            }
+
+            viewModelScope.launch(Dispatchers.IO) {
+                val entry = DiaryEntry(
+                    title = title.takeIf { it.isNotBlank() } ?: fallbackTitle,
+                    contentHtml = contentHtml
+                )
+                diaryRepository.addOrUpdateEntry(entry, masterPassword, currentEntryId)
+                _eventFlow.emit(AddEntryEvent.NavigateBack)
+            }
+        }
+
+        fun onDeleteRequest() {
+            _uiState.update { it.copy(showDeleteConfirmation = true) }
+        }
+
+        fun onDismissDeleteDialog() {
+            _uiState.update { it.copy(showDeleteConfirmation = false) }
+        }
+
+        fun deleteEntry(masterPassword: CharArray) {
+            val entryIdToDelete = currentEntryId ?: return
+            viewModelScope.launch(Dispatchers.IO) {
+                diaryRepository.deleteEntry(entryIdToDelete, masterPassword)
+                _eventFlow.emit(AddEntryEvent.NavigateBack)
+            }
         }
     }
-
-    fun onDeleteRequest() {
-        _uiState.update { it.copy(showDeleteConfirmation = true) }
-    }
-
-    fun onDismissDeleteDialog() {
-        _uiState.update { it.copy(showDeleteConfirmation = false) }
-    }
-
-    fun deleteEntry(masterPassword: CharArray) {
-        val entryIdToDelete = currentEntryId ?: return
-        viewModelScope.launch(Dispatchers.IO) {
-            diaryRepository.deleteEntry(entryIdToDelete, masterPassword)
-            _eventFlow.emit(AddEntryEvent.NavigateBack)
-        }
-    }
-}

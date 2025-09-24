@@ -28,61 +28,62 @@ data class PrincipalScreenUiState(
 )
 
 @HiltViewModel
-class PrincipalViewModel @Inject constructor(
-    private val diaryRepository: DiaryRepository,
-    proUserProvider: ProUserProvider,
-) : ViewModel(), ProUserProvider by proUserProvider {
+class PrincipalViewModel
+    @Inject
+    constructor(
+        private val diaryRepository: DiaryRepository,
+        proUserProvider: ProUserProvider
+    ) : ViewModel(), ProUserProvider by proUserProvider {
 
-    private val _uiState = MutableStateFlow(PrincipalScreenUiState())
-    val uiState = _uiState.asStateFlow()
+        private val _uiState = MutableStateFlow(PrincipalScreenUiState())
+        val uiState = _uiState.asStateFlow()
 
-    fun loadEntries(masterPassword: CharArray) {
-        viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true) }
-            diaryRepository.getEntries(masterPassword).collectLatest { decryptedMap ->
-                _uiState.update {
-                    it.copy(
-                        isLoading = false,
-                        allDecryptedEntries = decryptedMap
-                    )
+        fun loadEntries(masterPassword: CharArray) {
+            viewModelScope.launch {
+                _uiState.update { it.copy(isLoading = true) }
+                diaryRepository.getEntries(masterPassword).collectLatest { decryptedMap ->
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            allDecryptedEntries = decryptedMap
+                        )
+                    }
                 }
             }
         }
-    }
 
-    fun deleteAllEntries(masterPassword: CharArray) {
-        viewModelScope.launch(Dispatchers.IO) {
-            diaryRepository.deleteAllEntries(masterPassword)
+        fun deleteAllEntries(masterPassword: CharArray) {
+            viewModelScope.launch(Dispatchers.IO) {
+                diaryRepository.deleteAllEntries(masterPassword)
+            }
+            _uiState.update { it.copy(showDeleteAllConfirmation = false) }
         }
-        _uiState.update { it.copy(showDeleteAllConfirmation = false) }
-    }
 
-    fun onDateSelected(date: LocalDate?) {
-        _uiState.update { it.copy(selectedDate = date) }
-    }
+        fun onDateSelected(date: LocalDate?) {
+            _uiState.update { it.copy(selectedDate = date) }
+        }
 
-    fun onDeleteAllRequest() {
-        _uiState.update { it.copy(showDeleteAllConfirmation = true) }
-    }
+        fun onDeleteAllRequest() {
+            _uiState.update { it.copy(showDeleteAllConfirmation = true) }
+        }
 
-    fun onDismissDeleteAllDialog() {
-        _uiState.update { it.copy(showDeleteAllConfirmation = false) }
-    }
+        fun onDismissDeleteAllDialog() {
+            _uiState.update { it.copy(showDeleteAllConfirmation = false) }
+        }
 
-    fun onResetAppRequest() {
-        _uiState.update { it.copy(showResetAppConfirmation = true) }
-    }
+        fun onResetAppRequest() {
+            _uiState.update { it.copy(showResetAppConfirmation = true) }
+        }
 
-    fun onDismissResetAppDialog() {
-        _uiState.update { it.copy(showResetAppConfirmation = false) }
-    }
+        fun onDismissResetAppDialog() {
+            _uiState.update { it.copy(showResetAppConfirmation = false) }
+        }
 
-    fun onUpgradeToProRequest() {
-        _uiState.update { it.copy(showUpgradeConfirmation = true) }
-    }
+        fun onUpgradeToProRequest() {
+            _uiState.update { it.copy(showUpgradeConfirmation = true) }
+        }
 
-    fun onPurchaseFlowHandled() {
-        _uiState.update { it.copy(showUpgradeConfirmation = false) }
+        fun onPurchaseFlowHandled() {
+            _uiState.update { it.copy(showUpgradeConfirmation = false) }
+        }
     }
-
-}

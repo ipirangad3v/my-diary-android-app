@@ -23,7 +23,7 @@ fun MainAppContainer(
     onReauthenticate: (titleResId: Int, subtitleResId: Int, action: () -> Unit) -> Unit,
     onPurchaseRequest: () -> Unit,
     onEditEntry: (fileId: Long) -> Unit,
-    hasNfcSupport: Boolean = false,
+    hasNfcSupport: Boolean = false
 ) {
     val uiState by mainViewModel.uiState.collectAsStateWithLifecycle()
     val isProUser by mainViewModel.isProUser.collectAsStateWithLifecycle()

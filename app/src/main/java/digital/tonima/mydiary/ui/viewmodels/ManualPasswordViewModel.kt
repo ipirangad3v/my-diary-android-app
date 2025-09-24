@@ -8,16 +8,18 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 data class ManualPasswordUiState(
-    val password:  String = ""
+    val password: String = ""
 )
 
 @HiltViewModel
-class ManualPasswordViewModel @Inject constructor() : ViewModel() {
+class ManualPasswordViewModel
+    @Inject
+    constructor() : ViewModel() {
 
-    private val _uiState = MutableStateFlow(ManualPasswordUiState())
-    val uiState = _uiState.asStateFlow()
+        private val _uiState = MutableStateFlow(ManualPasswordUiState())
+        val uiState = _uiState.asStateFlow()
 
-    fun onPasswordChange(password: String) {
-        _uiState.update { it.copy(password = password) }
+        fun onPasswordChange(password: String) {
+            _uiState.update { it.copy(password = password) }
+        }
     }
-}
