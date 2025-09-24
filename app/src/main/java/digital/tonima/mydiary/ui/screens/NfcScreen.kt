@@ -85,8 +85,8 @@ fun NfcScreen(
                     onDone = {
                         focusManager.clearFocus()
                         keyboardController?.hide()
-
-                    })
+                    }
+                )
             )
             Spacer(modifier = Modifier.height(16.dp))
 

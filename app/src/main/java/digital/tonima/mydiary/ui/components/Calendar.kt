@@ -69,7 +69,9 @@ private fun Day(
                     modifier = Modifier
                         .size(4.dp)
                         .clip(CircleShape)
-                        .background(if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary)
+                        .background(
+                            if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary
+                        )
                 )
             }
         }
@@ -84,7 +86,7 @@ private fun DaysOfWeekTitle(daysOfWeek: List<DayOfWeek>) {
                 modifier = Modifier.weight(1f),
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold,
-                text = dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault()),
+                text = dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault())
             )
         }
     }

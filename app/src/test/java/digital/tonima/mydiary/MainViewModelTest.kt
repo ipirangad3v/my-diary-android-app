@@ -12,7 +12,6 @@ import digital.tonima.mydiary.encrypting.PasswordRepository
 import digital.tonima.mydiary.ui.screens.AppScreen
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.mockkObject
 import io.mockk.slot
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -24,8 +23,6 @@ import org.junit.rules.TemporaryFolder
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit
 import javax.crypto.Cipher
 
 @RunWith(RobolectricTestRunner::class)
@@ -75,7 +72,7 @@ class MainViewModelTest {
         every { passwordRepository.hasPassword() } returns false
 
         // Act
-        viewModel = MainViewModel(passwordRepository, cryptoManager,proUserProvider)
+        viewModel = MainViewModel(passwordRepository, cryptoManager, proUserProvider)
 
         // Assert
         assertThat(viewModel.uiState.value).isEqualTo(AppScreen.SetupPassword)
@@ -87,7 +84,7 @@ class MainViewModelTest {
         every { passwordRepository.hasPassword() } returns true
 
         // Act
-        viewModel = MainViewModel(passwordRepository, cryptoManager,proUserProvider)
+        viewModel = MainViewModel(passwordRepository, cryptoManager, proUserProvider)
 
         // Assert
         assertThat(viewModel.uiState.value).isEqualTo(AppScreen.Locked)
@@ -97,7 +94,7 @@ class MainViewModelTest {
     fun `onPasswordSetup saves encrypted password and navigates to MainScreen`() = runTest {
         // Arrange
         every { passwordRepository.hasPassword() } returns false
-        viewModel = MainViewModel(passwordRepository, cryptoManager,proUserProvider)
+        viewModel = MainViewModel(passwordRepository, cryptoManager, proUserProvider)
 
         val password = "test_password".toCharArray()
         val passwordBytes = password.concatToString().toByteArray()
@@ -130,7 +127,7 @@ class MainViewModelTest {
     fun `onUnlockSuccess decrypts password and navigates to MainScreen`() = runTest {
         // Arrange
         every { passwordRepository.hasPassword() } returns true
-        viewModel = MainViewModel(passwordRepository, cryptoManager,proUserProvider)
+        viewModel = MainViewModel(passwordRepository, cryptoManager, proUserProvider)
 
         val decryptedPassword = "my_secret_password"
         val encryptedBytes = "encrypted_data".toByteArray()
@@ -155,7 +152,7 @@ class MainViewModelTest {
         // Arrange
         every { passwordRepository.hasPassword() } returns true
         every { passwordRepository.getEncryptedPassword() } returns null
-        viewModel = MainViewModel(passwordRepository, cryptoManager,proUserProvider)
+        viewModel = MainViewModel(passwordRepository, cryptoManager, proUserProvider)
 
         // Act & Assert
         viewModel.uiState.test {
@@ -169,7 +166,7 @@ class MainViewModelTest {
     fun `onUnlockFailure navigates to RecoverPassword`() = runTest {
         // Arrange
         every { passwordRepository.hasPassword() } returns true
-        viewModel = MainViewModel(passwordRepository, cryptoManager,proUserProvider)
+        viewModel = MainViewModel(passwordRepository, cryptoManager, proUserProvider)
 
         // Act
         viewModel.onUnlockFailure()
@@ -182,7 +179,7 @@ class MainViewModelTest {
     fun `lockApp changes state to Locked`() = runTest {
         // Arrange: Start in a non-locked state
         every { passwordRepository.hasPassword() } returns false
-        viewModel = MainViewModel(passwordRepository, cryptoManager,proUserProvider)
+        viewModel = MainViewModel(passwordRepository, cryptoManager, proUserProvider)
         // Put the ViewModel into the Main state
         every { cipher.doFinal(any()) } returns "encrypted".toByteArray()
         every { cipher.iv } returns "iv".toByteArray()

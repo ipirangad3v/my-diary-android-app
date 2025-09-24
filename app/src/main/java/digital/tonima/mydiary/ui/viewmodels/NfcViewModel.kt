@@ -39,34 +39,36 @@ data class NfcUiState(
 }
 
 @HiltViewModel
-class NfcViewModel @Inject constructor(
-    private val nfcRepository: NfcRepository
-) : ViewModel() {
+class NfcViewModel
+    @Inject
+    constructor(
+        private val nfcRepository: NfcRepository
+    ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(NfcUiState())
-    val uiState = _uiState.asStateFlow()
+        private val _uiState = MutableStateFlow(NfcUiState())
+        val uiState = _uiState.asStateFlow()
 
-    fun onSecretTextChange(text: String) {
-        _uiState.update { it.copy(secretText = text) }
-    }
+        fun onSecretTextChange(text: String) {
+            _uiState.update { it.copy(secretText = text) }
+        }
 
-    fun prepareToWrite(masterPassword: CharArray) {
-        if (uiState.value.secretText.isBlank()) return
+        fun prepareToWrite(masterPassword: CharArray) {
+            if (uiState.value.secretText.isBlank()) return
 
-        viewModelScope.launch {
-            _uiState.update { it.copy(isWaitingForTag = true) }
-            val data = withContext(Dispatchers.IO) {
-                nfcRepository.encryptSecret(uiState.value.secretText, masterPassword)
+            viewModelScope.launch {
+                _uiState.update { it.copy(isWaitingForTag = true) }
+                val data = withContext(Dispatchers.IO) {
+                    nfcRepository.encryptSecret(uiState.value.secretText, masterPassword)
+                }
+                _uiState.update { it.copy(encryptedData = data) }
             }
-            _uiState.update { it.copy(encryptedData = data) }
+        }
+
+        fun onTagWritten() {
+            _uiState.update { it.copy(isWaitingForTag = false, encryptedData = null, secretText = "") }
+        }
+
+        fun onWriteCancelled() {
+            _uiState.update { it.copy(isWaitingForTag = false, encryptedData = null) }
         }
     }
-
-    fun onTagWritten() {
-        _uiState.update { it.copy(isWaitingForTag = false, encryptedData = null, secretText = "") }
-    }
-
-    fun onWriteCancelled() {
-        _uiState.update { it.copy(isWaitingForTag = false, encryptedData = null) }
-    }
-}

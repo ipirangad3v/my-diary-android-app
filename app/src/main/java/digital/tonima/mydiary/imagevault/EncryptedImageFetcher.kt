@@ -51,14 +51,14 @@ class EncryptedImageFetcher(
         private val cryptoManager: PasswordBasedCryptoManager
     ) :
         Fetcher.Factory<VaultImageEntity> {
-        override fun create(data: VaultImageEntity, options: Options, imageLoader: ImageLoader): Fetcher {
-            return EncryptedImageFetcher(
-                context,
-                data,
-                masterPassword,
-                options,
-                cryptoManager
-            )
+            override fun create(data: VaultImageEntity, options: Options, imageLoader: ImageLoader): Fetcher {
+                return EncryptedImageFetcher(
+                    context,
+                    data,
+                    masterPassword,
+                    options,
+                    cryptoManager
+                )
+            }
         }
-    }
 }

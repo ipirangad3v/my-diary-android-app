@@ -43,61 +43,63 @@ sealed class PasswordSetupEvent {
 }
 
 @HiltViewModel
-class PasswordSetupViewModel @Inject constructor() : ViewModel() {
+class PasswordSetupViewModel
+    @Inject
+    constructor() : ViewModel() {
 
-    private val _uiState = MutableStateFlow(PasswordSetupUiState())
-    val uiState = _uiState.asStateFlow()
+        private val _uiState = MutableStateFlow(PasswordSetupUiState())
+        val uiState = _uiState.asStateFlow()
 
-    private val _eventFlow = MutableSharedFlow<PasswordSetupEvent>()
-    val eventFlow = _eventFlow.asSharedFlow()
+        private val _eventFlow = MutableSharedFlow<PasswordSetupEvent>()
+        val eventFlow = _eventFlow.asSharedFlow()
 
-    fun onPasswordChange(password: String) {
-        val strength = calculatePasswordStrength(password)
-        _uiState.update {
-            it.copy(
-                password = password,
-                errorResId = null,
-                passwordStrength = strength
-            )
+        fun onPasswordChange(password: String) {
+            val strength = calculatePasswordStrength(password)
+            _uiState.update {
+                it.copy(
+                    password = password,
+                    errorResId = null,
+                    passwordStrength = strength
+                )
+            }
+        }
+
+        private fun calculatePasswordStrength(password: String): PasswordStrength {
+            if (password.isEmpty()) return PasswordStrength.EMPTY
+
+            val hasLowercase = password.any { it.isLowerCase() }
+            val hasUppercase = password.any { it.isUpperCase() }
+            val hasDigit = password.any { it.isDigit() }
+            val hasSpecialChar = password.any { !it.isLetterOrDigit() }
+
+            val criteriaCount = listOf(hasLowercase, hasUppercase, hasDigit, hasSpecialChar).count { it }
+
+            return when {
+                password.length < 8 -> PasswordStrength.WEAK
+                criteriaCount >= 3 -> PasswordStrength.STRONG
+                criteriaCount >= 2 -> PasswordStrength.MEDIUM
+                else -> PasswordStrength.WEAK
+            }
+        }
+
+        fun onConfirmPasswordChange(confirmPassword: String) {
+            _uiState.update { it.copy(confirmPassword = confirmPassword, errorResId = null) }
+        }
+
+        fun onSavePasswordClicked() {
+            val state = _uiState.value
+            if (state.password.length < 6) {
+                _uiState.update { it.copy(errorResId = R.string.password_too_short) }
+                return
+            }
+
+            if (state.password != state.confirmPassword) {
+                _uiState.update { it.copy(errorResId = R.string.passwords_do_not_match) }
+                return
+            }
+
+            viewModelScope.launch {
+                _eventFlow.emit(PasswordSetupEvent.PasswordSet(state.password.toCharArray()))
+            }
         }
     }
-
-    private fun calculatePasswordStrength(password: String): PasswordStrength {
-        if (password.isEmpty()) return PasswordStrength.EMPTY
-
-        val hasLowercase = password.any { it.isLowerCase() }
-        val hasUppercase = password.any { it.isUpperCase() }
-        val hasDigit = password.any { it.isDigit() }
-        val hasSpecialChar = password.any { !it.isLetterOrDigit() }
-
-        val criteriaCount = listOf(hasLowercase, hasUppercase, hasDigit, hasSpecialChar).count { it }
-
-        return when {
-            password.length < 8 -> PasswordStrength.WEAK
-            criteriaCount >= 3 -> PasswordStrength.STRONG
-            criteriaCount >= 2 -> PasswordStrength.MEDIUM
-            else -> PasswordStrength.WEAK
-        }
-    }
-
-    fun onConfirmPasswordChange(confirmPassword: String) {
-        _uiState.update { it.copy(confirmPassword = confirmPassword, errorResId = null) }
-    }
-
-    fun onSavePasswordClicked() {
-        val state = _uiState.value
-        if (state.password.length < 6) {
-            _uiState.update { it.copy(errorResId = R.string.password_too_short) }
-            return
-        }
-
-        if (state.password != state.confirmPassword) {
-            _uiState.update { it.copy(errorResId = R.string.passwords_do_not_match) }
-            return
-        }
-
-        viewModelScope.launch {
-            _eventFlow.emit(PasswordSetupEvent.PasswordSet(state.password.toCharArray()))
-        }
-    }
-}

@@ -16,7 +16,6 @@ interface DiaryDao {
     @Query("SELECT * FROM diary_entries WHERE id = :id LIMIT 1")
     suspend fun getEntryById(id: Long): DiaryEntryEntity?
 
-
     @Insert
     suspend fun insert(entry: DiaryEntryEntity): Long
 

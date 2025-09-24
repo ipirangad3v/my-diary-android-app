@@ -26,5 +26,4 @@ interface PasswordRepository {
      * Clears the stored encrypted password from persistent storage.
      */
     fun clearPassword()
-
 }

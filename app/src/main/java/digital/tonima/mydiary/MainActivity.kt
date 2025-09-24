@@ -11,7 +11,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
+import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -148,10 +149,12 @@ class MainActivity : FragmentActivity() {
                         MainAppContainer(
                             hasNfcSupport = hasNfcSupport,
                             mainViewModel = viewModel,
-                            cryptoManager=  cryptoManager,
+                            cryptoManager = cryptoManager,
                             masterPassword = currentScreen.masterPassword,
                             onAddImage = {
-                                pickImageLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                                pickImageLauncher.launch(
+                                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                                )
                             },
                             onReauthenticate = { titleResId, subtitleResId, action ->
                                 biometricAuthManager.authenticateForAction(
@@ -211,7 +214,7 @@ class MainActivity : FragmentActivity() {
             Intent(Settings.ACTION_BIOMETRIC_ENROLL).apply {
                 putExtra(
                     Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
-                    BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.DEVICE_CREDENTIAL
+                    BIOMETRIC_STRONG or DEVICE_CREDENTIAL
                 )
             }
         } else {

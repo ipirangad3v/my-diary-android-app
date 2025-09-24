@@ -98,6 +98,7 @@ android {
           "String", "ADMOB_BANNER_AD_UNIT_VAULT_SCREEN", "\"$admobBannerAdUnitIdVaultScreen\"")
     }
   }
+
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_21
     targetCompatibility = JavaVersion.VERSION_21

@@ -169,7 +169,8 @@ fun AddEntryScreen(
                     keyboardActions = KeyboardActions(
                         onNext = {
                             focusManager.moveFocus(FocusDirection.Down)
-                        })
+                        }
+                    )
                 )
 
                 FormattingToolbar(richTextState = richTextState)
@@ -186,7 +187,8 @@ fun AddEntryScreen(
                         onDone = {
                             focusManager.clearFocus()
                             keyboardController?.hide()
-                        })
+                        }
+                    )
                 )
             }
         }
