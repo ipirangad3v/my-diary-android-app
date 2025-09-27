@@ -35,10 +35,14 @@ android {
             resValue("string", "admob_app_id", admobAppIdTest)
             buildConfigField("String", "ADMOB_BANNER_AD_UNIT_HOME", "\"$admobBannerAdUnitIdTest\"")
             buildConfigField(
-                "String", "ADMOB_BANNER_AD_UNIT_LOCKED_DIARY", "\"$admobBannerAdUnitIdTest\""
+                "String",
+                "ADMOB_BANNER_AD_UNIT_LOCKED_DIARY",
+                "\"$admobBannerAdUnitIdTest\""
             )
             buildConfigField(
-                "String", "ADMOB_BANNER_AD_UNIT_VAULT_SCREEN", "\"$admobBannerAdUnitIdTest\""
+                "String",
+                "ADMOB_BANNER_AD_UNIT_VAULT_SCREEN",
+                "\"$admobBannerAdUnitIdTest\""
             )
         }
         release {
@@ -57,8 +61,7 @@ android {
             val admobBannerAdUnitIdLockedDiary: String
             val admobBannerAdUnitIdVaultScreen: String
 
-            if (isRunningReleaseTask) {
-                // Se for uma tarefa de release, carrega os segredos reais
+            if (isRunningReleaseTask) { // Se for uma tarefa de release, carrega os segredos reais
                 val localProperties = Properties()
                 val localPropertiesFile = rootProject.file("local.properties")
                 if (localPropertiesFile.exists()) {
@@ -68,24 +71,23 @@ android {
                 admobAppId =
                     System.getenv("ADMOB_APP_ID")
                         ?: localProperties.getProperty("admob.app.id")
-                            ?: admobAppIdTest
+                        ?: admobAppIdTest
 
                 admobBannerAdUnitIdHome =
                     System.getenv("ADMOB_BANNER_AD_UNIT_HOME")
                         ?: localProperties.getProperty("admob.banner.ad.unit.home")
-                            ?: admobBannerAdUnitIdTest
+                        ?: admobBannerAdUnitIdTest
 
                 admobBannerAdUnitIdLockedDiary =
                     System.getenv("ADMOB_BANNER_AD_UNIT_LOCKED_DIARY")
                         ?: localProperties.getProperty("admob.banner.ad.unit.locked.diary")
-                            ?: admobBannerAdUnitIdTest
+                        ?: admobBannerAdUnitIdTest
 
                 admobBannerAdUnitIdVaultScreen =
                     System.getenv("ADMOB_BANNER_AD_UNIT_VAULT_SCREEN")
                         ?: localProperties.getProperty("admob.banner.ad.unit.vault.screen")
-                            ?: admobBannerAdUnitIdTest
-            } else {
-                // Para qualquer outra tarefa (como spotlessCheck), usa os IDs de teste
+                        ?: admobBannerAdUnitIdTest
+            } else { // Para qualquer outra tarefa (como spotlessCheck), usa os IDs de teste
                 admobAppId = admobAppIdTest
                 admobBannerAdUnitIdHome = admobBannerAdUnitIdTest
                 admobBannerAdUnitIdLockedDiary = admobBannerAdUnitIdTest
@@ -95,10 +97,14 @@ android {
             resValue("string", "admob_app_id", admobAppId)
             buildConfigField("String", "ADMOB_BANNER_AD_UNIT_HOME", "\"$admobBannerAdUnitIdHome\"")
             buildConfigField(
-                "String", "ADMOB_BANNER_AD_UNIT_LOCKED_DIARY", "\"$admobBannerAdUnitIdLockedDiary\""
+                "String",
+                "ADMOB_BANNER_AD_UNIT_LOCKED_DIARY",
+                "\"$admobBannerAdUnitIdLockedDiary\""
             )
             buildConfigField(
-                "String", "ADMOB_BANNER_AD_UNIT_VAULT_SCREEN", "\"$admobBannerAdUnitIdVaultScreen\""
+                "String",
+                "ADMOB_BANNER_AD_UNIT_VAULT_SCREEN",
+                "\"$admobBannerAdUnitIdVaultScreen\""
             )
         }
     }
@@ -125,15 +131,13 @@ tasks.register<JacocoReport>("createDebugCoverageReport") {
     }
 
     val fileFilter =
-        listOf(
-            // Android
+        listOf( // Android
             "**/R.class",
             "**/R$*.class",
             "**/BuildConfig.*",
             "**/Manifest*.*",
             "**/*Test*.*",
-            "android/**/*.*",
-            // DI, generated code
+            "android/**/*.*", // DI, generated code
             "**/*_Hilt*.class",
             "**/Dagger*Component.class",
             "**/Dagger*Module.class",
@@ -151,7 +155,8 @@ tasks.register<JacocoReport>("createDebugCoverageReport") {
     executionData.setFrom(
         fileTree(layout.buildDirectory) {
             include("outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec")
-        })
+        }
+    )
 }
 
 dependencies {
@@ -213,6 +218,6 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 }
 
-apply(from = "../spotless.gradle")
-
 ksp { arg("room.schemaLocation", "$projectDir/schemas") }
+
+apply(from = "../spotless.gradle")
