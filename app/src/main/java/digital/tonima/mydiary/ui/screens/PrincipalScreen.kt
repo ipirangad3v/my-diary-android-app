@@ -72,7 +72,7 @@ fun PrincipalScreen(
     onResetApp: () -> Unit,
     onReauthenticate: (titleResId: Int, subtitleResId: Int, action: () -> Unit) -> Unit,
     onPurchaseRequest: () -> Unit,
-    viewModel: PrincipalViewModel = hiltViewModel()
+    viewModel: PrincipalViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val configuration = LocalConfiguration.current
@@ -86,7 +86,7 @@ fun PrincipalScreen(
         mutableStateOf(
             uiState.allDecryptedEntries.filter { (entity, _) ->
                 getLocalDateFromEntity(entity) == uiState.selectedDate
-            }.toList().sortedByDescending { it.first.timestamp }
+            }.toList().sortedByDescending { it.first.timestamp },
         )
     }
 
@@ -99,7 +99,7 @@ fun PrincipalScreen(
         startMonth = startMonth,
         endMonth = endMonth,
         firstVisibleMonth = currentMonth,
-        firstDayOfWeek = firstDayOfWeek
+        firstDayOfWeek = firstDayOfWeek,
     )
 
     LaunchedEffect(Unit) {
@@ -114,9 +114,9 @@ fun PrincipalScreen(
                 onDeleteAll = viewModel::onDeleteAllRequest,
                 onResetApp = viewModel::onResetAppRequest,
                 onUpgradeToPro = viewModel::onUpgradeToProRequest,
-                onCloseDrawer = { scope.launch { drawerState.close() } }
+                onCloseDrawer = { scope.launch { drawerState.close() } },
             )
-        }
+        },
     ) {
         Scaffold(
             topBar = {
@@ -126,7 +126,7 @@ fun PrincipalScreen(
                         IconButton(onClick = { scope.launch { drawerState.open() } }) {
                             Icon(Icons.Default.Menu, contentDescription = stringResource(menu))
                         }
-                    }
+                    },
                 )
             },
             floatingActionButton = {
@@ -138,12 +138,12 @@ fun PrincipalScreen(
                         Icon(Icons.Filled.Lock, contentDescription = stringResource(lock_diary))
                     }
                 }
-            }
+            },
         ) { innerPadding ->
             Column(
                 modifier = Modifier
                     .padding(innerPadding)
-                    .fillMaxSize()
+                    .fillMaxSize(),
             ) {
                 Box(Modifier.weight(1f)) {
                     when (configuration.orientation) {
@@ -154,14 +154,14 @@ fun PrincipalScreen(
                                     calendarState = calendarState,
                                     selectedDate = uiState.selectedDate,
                                     entryDates = entryDates,
-                                    onDateSelected = viewModel::onDateSelected
+                                    onDateSelected = viewModel::onDateSelected,
                                 )
                                 HorizontalDivider(
                                     modifier = Modifier
                                         .fillMaxHeight()
                                         .width(1.dp),
                                     thickness = DividerDefaults.Thickness,
-                                    color = DividerDefaults.color
+                                    color = DividerDefaults.color,
                                 )
                                 NotesListView(
                                     modifier = Modifier.weight(0.55f),
@@ -169,7 +169,7 @@ fun PrincipalScreen(
                                     allEntriesCount = uiState.allDecryptedEntries.size,
                                     filteredEntries = filteredEntries,
                                     selectedDate = uiState.selectedDate,
-                                    onNoteClick = onEditEntry
+                                    onNoteClick = onEditEntry,
                                 )
                             }
                         }
@@ -180,7 +180,7 @@ fun PrincipalScreen(
                                     calendarState = calendarState,
                                     selectedDate = uiState.selectedDate,
                                     entryDates = entryDates,
-                                    onDateSelected = viewModel::onDateSelected
+                                    onDateSelected = viewModel::onDateSelected,
                                 )
                                 HorizontalDivider(Modifier, DividerDefaults.Thickness, DividerDefaults.color)
                                 NotesListView(
@@ -191,7 +191,7 @@ fun PrincipalScreen(
                                     allEntriesCount = uiState.allDecryptedEntries.size,
                                     filteredEntries = filteredEntries,
                                     selectedDate = uiState.selectedDate,
-                                    onNoteClick = onEditEntry
+                                    onNoteClick = onEditEntry,
                                 )
                             }
                         }
@@ -199,7 +199,7 @@ fun PrincipalScreen(
                 }
                 AdBannerView(
                     adId = ADMOB_BANNER_AD_UNIT_HOME,
-                    isProUser = isProUser
+                    isProUser = isProUser,
                 )
             }
         }
@@ -212,10 +212,10 @@ fun PrincipalScreen(
             onConfirm = {
                 onReauthenticate(
                     re_authentication_title,
-                    re_authentication_subtitle
+                    re_authentication_subtitle,
                 ) { viewModel.deleteAllEntries(masterPassword) }
             },
-            onDismiss = viewModel::onDismissDeleteAllDialog
+            onDismiss = viewModel::onDismissDeleteAllDialog,
         )
     }
 
@@ -227,10 +227,10 @@ fun PrincipalScreen(
                 onReauthenticate(
                     re_authentication_title,
                     re_authentication_subtitle,
-                    onResetApp
+                    onResetApp,
                 )
             },
-            onDismiss = viewModel::onDismissResetAppDialog
+            onDismiss = viewModel::onDismissResetAppDialog,
         )
     }
 

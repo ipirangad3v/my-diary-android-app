@@ -37,12 +37,12 @@ android {
             buildConfigField(
                 "String",
                 "ADMOB_BANNER_AD_UNIT_LOCKED_DIARY",
-                "\"$admobBannerAdUnitIdTest\""
+                "\"$admobBannerAdUnitIdTest\"",
             )
             buildConfigField(
                 "String",
                 "ADMOB_BANNER_AD_UNIT_VAULT_SCREEN",
-                "\"$admobBannerAdUnitIdTest\""
+                "\"$admobBannerAdUnitIdTest\"",
             )
         }
         release {
@@ -99,12 +99,12 @@ android {
             buildConfigField(
                 "String",
                 "ADMOB_BANNER_AD_UNIT_LOCKED_DIARY",
-                "\"$admobBannerAdUnitIdLockedDiary\""
+                "\"$admobBannerAdUnitIdLockedDiary\"",
             )
             buildConfigField(
                 "String",
                 "ADMOB_BANNER_AD_UNIT_VAULT_SCREEN",
-                "\"$admobBannerAdUnitIdVaultScreen\""
+                "\"$admobBannerAdUnitIdVaultScreen\"",
             )
         }
     }
@@ -143,7 +143,7 @@ tasks.register<JacocoReport>("createDebugCoverageReport") {
             "**/Dagger*Module.class",
             "**/Dagger*Module_Provide*Factory.class",
             "**/*_Provide*Factory*.*",
-            "**/*_Factory*.*"
+            "**/*_Factory*.*",
         )
 
     val debugTree =
@@ -155,7 +155,7 @@ tasks.register<JacocoReport>("createDebugCoverageReport") {
     executionData.setFrom(
         fileTree(layout.buildDirectory) {
             include("outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec")
-        }
+        },
     )
 }
 

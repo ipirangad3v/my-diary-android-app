@@ -35,7 +35,7 @@ class PasswordRepositoryTest {
         // Arrange: Create a sample encrypted password object
         val originalPassword = EncryptedPassword(
             value = "my-secret-encrypted-data".toByteArray(),
-            iv = "my-initialization-vector".toByteArray()
+            iv = "my-initialization-vector".toByteArray(),
         )
 
         // Act: Save the password

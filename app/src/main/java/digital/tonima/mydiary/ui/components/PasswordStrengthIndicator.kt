@@ -42,34 +42,34 @@ fun PasswordStrengthIndicator(strength: PasswordStrength) {
 
     Column(
         modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.End
+        horizontalAlignment = Alignment.End,
     ) {
         if (strength != PasswordStrength.EMPTY) {
             Text(
                 text = text,
                 color = animatedColor,
-                style = MaterialTheme.typography.bodySmall
+                style = MaterialTheme.typography.bodySmall,
             )
         }
         Spacer(modifier = Modifier.height(4.dp))
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = spacedBy(4.dp)
+            horizontalArrangement = spacedBy(4.dp),
         ) {
             StrengthBar(
                 modifier = Modifier.weight(1f),
                 isActive = strength != PasswordStrength.EMPTY,
-                color = animatedColor
+                color = animatedColor,
             )
             StrengthBar(
                 modifier = Modifier.weight(1f),
                 isActive = strength == PasswordStrength.MEDIUM || strength == PasswordStrength.STRONG,
-                color = animatedColor
+                color = animatedColor,
             )
             StrengthBar(
                 modifier = Modifier.weight(1f),
                 isActive = strength == PasswordStrength.STRONG,
-                color = animatedColor
+                color = animatedColor,
             )
         }
     }
@@ -79,7 +79,7 @@ fun PasswordStrengthIndicator(strength: PasswordStrength) {
 private fun StrengthBar(
     modifier: Modifier = Modifier,
     isActive: Boolean,
-    color: Color
+    color: Color,
 ) {
     val barColor = if (isActive) color else MaterialTheme.colorScheme.surfaceVariant
     val animatedBarColor by animateColorAsState(targetValue = barColor, animationSpec = tween(500))
@@ -87,6 +87,6 @@ private fun StrengthBar(
         modifier = modifier
             .height(4.dp)
             .clip(RoundedCornerShape(2.dp))
-            .background(animatedBarColor)
+            .background(animatedBarColor),
     )
 }

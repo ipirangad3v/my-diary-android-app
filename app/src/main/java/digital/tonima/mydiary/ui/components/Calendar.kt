@@ -37,7 +37,7 @@ private fun Day(
     day: CalendarDay,
     isSelected: Boolean,
     hasEntry: Boolean,
-    onClick: (CalendarDay) -> Unit
+    onClick: (CalendarDay) -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -47,13 +47,13 @@ private fun Day(
             .background(color = if (isSelected) MaterialTheme.colorScheme.primary else Color.Transparent)
             .clickable(
                 enabled = day.position == DayPosition.MonthDate,
-                onClick = { onClick(day) }
+                onClick = { onClick(day) },
             ),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Center,
         ) {
             Text(
                 text = day.date.dayOfMonth.toString(),
@@ -62,7 +62,7 @@ private fun Day(
                 } else {
                     Color.Gray
                 },
-                fontSize = 14.sp
+                fontSize = 14.sp,
             )
             if (hasEntry && day.position == DayPosition.MonthDate) {
                 Box(
@@ -70,8 +70,8 @@ private fun Day(
                         .size(4.dp)
                         .clip(CircleShape)
                         .background(
-                            if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary
-                        )
+                            if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary,
+                        ),
                 )
             }
         }
@@ -86,7 +86,7 @@ private fun DaysOfWeekTitle(daysOfWeek: List<DayOfWeek>) {
                 modifier = Modifier.weight(1f),
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold,
-                text = dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault())
+                text = dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault()),
             )
         }
     }
@@ -98,7 +98,7 @@ internal fun CalendarView(
     calendarState: com.kizitonwose.calendar.compose.CalendarState,
     selectedDate: LocalDate?,
     entryDates: Set<LocalDate>,
-    onDateSelected: (LocalDate?) -> Unit
+    onDateSelected: (LocalDate?) -> Unit,
 ) {
     val monthTitle = remember(calendarState.firstVisibleMonth) {
         val year = calendarState.firstVisibleMonth.yearMonth.year
@@ -112,7 +112,7 @@ internal fun CalendarView(
                 text = monthTitle,
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp,
-                modifier = Modifier.padding(bottom = 8.dp)
+                modifier = Modifier.padding(bottom = 8.dp),
             )
             val daysOfWeek = remember {
                 firstDayOfWeekFromLocale().let {
@@ -132,9 +132,9 @@ internal fun CalendarView(
                     hasEntry = day.date in entryDates,
                     onClick = {
                         onDateSelected(if (selectedDate == it.date) null else it.date)
-                    }
+                    },
                 )
-            }
+            },
         )
     }
 }

@@ -28,7 +28,7 @@ fun NotesListView(
     allEntriesCount: Int,
     filteredEntries: List<Pair<DiaryEntryEntity, DiaryEntry>>,
     selectedDate: LocalDate?,
-    onNoteClick: (Long) -> Unit
+    onNoteClick: (Long) -> Unit,
 ) {
     Box(modifier = modifier, contentAlignment = Alignment.Center) {
         if (isLoading) {
@@ -37,7 +37,7 @@ fun NotesListView(
             Text(
                 stringResource(R.string.empty_notes_message),
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(16.dp),
             )
         } else if (filteredEntries.isEmpty() && selectedDate != null) {
             Text(stringResource(none_note_for_this_day), modifier = Modifier.padding(16.dp))
@@ -45,7 +45,7 @@ fun NotesListView(
             Text(
                 stringResource(R.string.select_a_day_to_see_notes),
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(16.dp),
             )
         } else {
             LazyColumn(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -53,7 +53,7 @@ fun NotesListView(
                     EntryListItem(
                         title = entry.title,
                         time = formatTimestampToHourAndMinute(entity.timestamp),
-                        onClick = { onNoteClick(entity.id) }
+                        onClick = { onNoteClick(entity.id) },
                     )
                 }
             }

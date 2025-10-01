@@ -20,7 +20,7 @@ import javax.inject.Singleton
 class DatabaseProvider
     @Inject
     constructor(
-        @ApplicationContext private val context: Context
+        @ApplicationContext private val context: Context,
     ) {
         private var database: AppDatabase? = null
 
@@ -54,7 +54,7 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun provideDatabaseProvider(
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
     ): DatabaseProvider {
         return DatabaseProvider(context)
     }

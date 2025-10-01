@@ -19,7 +19,7 @@ data class AddEntryUiState(
     val isLoading: Boolean = false,
     val initialTitle: String = "",
     val initialContentHtml: String = "",
-    val showDeleteConfirmation: Boolean = false
+    val showDeleteConfirmation: Boolean = false,
 )
 
 sealed class AddEntryEvent {
@@ -31,7 +31,7 @@ sealed class AddEntryEvent {
 class AddEntryViewModel
     @Inject
     constructor(
-        private val diaryRepository: DiaryRepository
+        private val diaryRepository: DiaryRepository,
     ) : ViewModel() {
 
         private val _uiState = MutableStateFlow(AddEntryUiState())
@@ -64,7 +64,7 @@ class AddEntryViewModel
                         it.copy(
                             isLoading = false,
                             initialTitle = entryPair.second.title,
-                            initialContentHtml = entryPair.second.contentHtml
+                            initialContentHtml = entryPair.second.contentHtml,
                         )
                     }
                 } else {
@@ -78,7 +78,7 @@ class AddEntryViewModel
             contentHtml: String,
             fallbackTitle: String,
             masterPassword: CharArray,
-            contentRequiredMessageResId: Int
+            contentRequiredMessageResId: Int,
         ) {
             if (contentHtml.isBlank() || contentHtml == "<p><br></p>") {
                 viewModelScope.launch {
@@ -90,7 +90,7 @@ class AddEntryViewModel
             viewModelScope.launch(Dispatchers.IO) {
                 val entry = DiaryEntry(
                     title = title.takeIf { it.isNotBlank() } ?: fallbackTitle,
-                    contentHtml = contentHtml
+                    contentHtml = contentHtml,
                 )
                 diaryRepository.addOrUpdateEntry(entry, masterPassword, currentEntryId)
                 _eventFlow.emit(AddEntryEvent.NavigateBack)

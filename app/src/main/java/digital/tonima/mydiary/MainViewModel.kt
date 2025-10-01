@@ -24,11 +24,11 @@ class MainViewModel
     constructor(
         private val passwordRepository: PasswordRepository,
         private val cryptoManager: PasswordBasedCryptoManager,
-        proUserProvider: ProUserProvider
+        proUserProvider: ProUserProvider,
     ) : ViewModel(), ProUserProvider by proUserProvider {
 
         private val _uiState = MutableStateFlow(
-            if (passwordRepository.hasPassword()) AppScreen.Locked else AppScreen.SetupPassword
+            if (passwordRepository.hasPassword()) AppScreen.Locked else AppScreen.SetupPassword,
         )
         val uiState = _uiState.asStateFlow()
 
@@ -106,7 +106,7 @@ class MainViewModel
             if (currentState is AppScreen.AddEntry) {
                 _uiState.value = AppScreen.Principal(
                     masterPassword = currentState.masterPassword,
-                    currentScreen = (uiState.value as? AppScreen.Principal)?.currentScreen ?: BottomBarScreen.Diary
+                    currentScreen = (uiState.value as? AppScreen.Principal)?.currentScreen ?: BottomBarScreen.Diary,
                 )
             }
         }

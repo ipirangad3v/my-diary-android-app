@@ -24,7 +24,7 @@ data class PrincipalScreenUiState(
     val showDeleteConfirmation: Boolean = false,
     val showDeleteAllConfirmation: Boolean = false,
     val showResetAppConfirmation: Boolean = false,
-    val showUpgradeConfirmation: Boolean = false
+    val showUpgradeConfirmation: Boolean = false,
 )
 
 @HiltViewModel
@@ -32,7 +32,7 @@ class PrincipalViewModel
     @Inject
     constructor(
         private val diaryRepository: DiaryRepository,
-        proUserProvider: ProUserProvider
+        proUserProvider: ProUserProvider,
     ) : ViewModel(), ProUserProvider by proUserProvider {
 
         private val _uiState = MutableStateFlow(PrincipalScreenUiState())
@@ -45,7 +45,7 @@ class PrincipalViewModel
                     _uiState.update {
                         it.copy(
                             isLoading = false,
-                            allDecryptedEntries = decryptedMap
+                            allDecryptedEntries = decryptedMap,
                         )
                     }
                 }

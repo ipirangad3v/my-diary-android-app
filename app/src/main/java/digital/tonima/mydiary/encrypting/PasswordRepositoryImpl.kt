@@ -18,7 +18,7 @@ import javax.inject.Inject
 class PasswordRepositoryImpl
     @Inject
     constructor(
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
     ) :
     PasswordRepository {
 
@@ -38,11 +38,11 @@ class PasswordRepositoryImpl
             prefs.edit {
                 putString(
                     PREF_KEY_ENCRYPTED_PASSWORD,
-                    Base64.encodeToString(encryptedPassword.value, Base64.DEFAULT)
+                    Base64.encodeToString(encryptedPassword.value, Base64.DEFAULT),
                 )
                 putString(
                     PREF_KEY_PASSWORD_IV,
-                    Base64.encodeToString(encryptedPassword.iv, Base64.DEFAULT)
+                    Base64.encodeToString(encryptedPassword.iv, Base64.DEFAULT),
                 )
             }
         }

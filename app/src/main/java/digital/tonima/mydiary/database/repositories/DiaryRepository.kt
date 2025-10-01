@@ -15,7 +15,7 @@ class DiaryRepository
     @Inject
     constructor(
         private val dbProvider: DatabaseProvider,
-        private val cryptoManager: PasswordBasedCryptoManager
+        private val cryptoManager: PasswordBasedCryptoManager,
     ) {
         private fun getDao(passphrase: CharArray): DiaryDao {
             return dbProvider.getDatabase(passphrase).diaryDao()
@@ -50,7 +50,7 @@ class DiaryRepository
                 if (originalEntity != null) {
                     val updatedEntity = originalEntity.copy(
                         title = entry.title,
-                        encryptedContentHtml = encryptedContent
+                        encryptedContentHtml = encryptedContent,
                     )
                     dao.update(updatedEntity)
                 }
@@ -58,7 +58,7 @@ class DiaryRepository
                 val newEntity = DiaryEntryEntity(
                     timestamp = System.currentTimeMillis(),
                     title = entry.title,
-                    encryptedContentHtml = encryptedContent
+                    encryptedContentHtml = encryptedContent,
                 )
                 dao.insert(newEntity)
             }

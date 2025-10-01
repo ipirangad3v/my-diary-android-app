@@ -37,7 +37,7 @@ fun DrawerContent(
     onDeleteAll: () -> Unit,
     onResetApp: () -> Unit,
     onUpgradeToPro: () -> Unit,
-    onCloseDrawer: () -> Unit
+    onCloseDrawer: () -> Unit,
 ) {
     val context = LocalContext.current
     val versionName = remember {
@@ -66,7 +66,7 @@ fun DrawerContent(
                         onClick = {
                             onUpgradeToPro()
                             onCloseDrawer()
-                        }
+                        },
                     )
                 }
 
@@ -77,7 +77,7 @@ fun DrawerContent(
                     onClick = {
                         onDeleteAll()
                         onCloseDrawer()
-                    }
+                    },
                 )
                 NavigationDrawerItem(
                     icon = { Icon(Icons.Default.Lock, contentDescription = null) },
@@ -86,7 +86,7 @@ fun DrawerContent(
                     onClick = {
                         onResetApp()
                         onCloseDrawer()
-                    }
+                    },
                 )
                 HorizontalDivider()
                 Spacer(Modifier.height(12.dp))
@@ -97,11 +97,11 @@ fun DrawerContent(
                     onClick = {
                         val browserIntent = Intent(
                             Intent.ACTION_VIEW,
-                            "https://play.google.com/store/apps/dev?id=6594602823307179845".toUri()
+                            "https://play.google.com/store/apps/dev?id=6594602823307179845".toUri(),
                         )
                         context.startActivity(browserIntent)
                         onCloseDrawer()
-                    }
+                    },
                 )
             }
             Text(
@@ -110,7 +110,7 @@ fun DrawerContent(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .padding(16.dp)
+                    .padding(16.dp),
             )
         }
     }

@@ -20,7 +20,7 @@ class VaultRepository
     constructor(
         @ApplicationContext private val context: Context,
         private val cryptoManager: PasswordBasedCryptoManager,
-        private val dbProvider: DatabaseProvider
+        private val dbProvider: DatabaseProvider,
     ) {
         private fun getDao(passphrase: CharArray): VaultDao {
             return dbProvider.getDatabase(passphrase).vaultDao()
@@ -35,7 +35,7 @@ class VaultRepository
             if (encryptedFile != null) {
                 val newImage = VaultImageEntity(
                     encryptedFileName = encryptedFile.name,
-                    timestamp = encryptedFile.lastModified()
+                    timestamp = encryptedFile.lastModified(),
                 )
                 getDao(masterPassword).insert(newImage)
             }
@@ -44,7 +44,7 @@ class VaultRepository
         suspend fun addImage(fileName: String, masterPassword: CharArray) {
             val newImage = VaultImageEntity(
                 encryptedFileName = fileName,
-                timestamp = System.currentTimeMillis()
+                timestamp = System.currentTimeMillis(),
             )
             getDao(masterPassword).insert(newImage)
         }

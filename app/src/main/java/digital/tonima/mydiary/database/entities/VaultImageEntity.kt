@@ -13,5 +13,5 @@ data class VaultImageEntity(
     val encryptedFileName: String,
 
     @ColumnInfo(name = "timestamp")
-    val timestamp: Long
+    val timestamp: Long,
 )

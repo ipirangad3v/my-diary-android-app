@@ -8,7 +8,7 @@ import javax.inject.Singleton
 class NfcRepository
     @Inject
     constructor(
-        private val cryptoManager: PasswordBasedCryptoManager
+        private val cryptoManager: PasswordBasedCryptoManager,
     ) {
 
         /**

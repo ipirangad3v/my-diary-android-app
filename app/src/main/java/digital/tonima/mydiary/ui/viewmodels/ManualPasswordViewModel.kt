@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 data class ManualPasswordUiState(
-    val password: String = ""
+    val password: String = "",
 )
 
 @HiltViewModel

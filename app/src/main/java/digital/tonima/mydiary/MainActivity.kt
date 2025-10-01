@@ -63,7 +63,7 @@ class MainActivity : FragmentActivity() {
     private val vaultViewModel: VaultViewModel by viewModels()
 
     private val enrollLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
+        ActivityResultContracts.StartActivityForResult(),
     ) {
         viewModel.retryBiometricAction()
     }
@@ -94,7 +94,7 @@ class MainActivity : FragmentActivity() {
                                 onEnrollmentRequired = { actionToRetry ->
                                     viewModel.setPendingBiometricAction(actionToRetry)
                                     launchEnrollment()
-                                }
+                                },
                             )
                         })
                     }
@@ -108,7 +108,7 @@ class MainActivity : FragmentActivity() {
                                 onEnrollmentRequired = { actionToRetry ->
                                     viewModel.setPendingBiometricAction(actionToRetry)
                                     launchEnrollment()
-                                }
+                                },
                             )
                         })
                     }
@@ -123,25 +123,25 @@ class MainActivity : FragmentActivity() {
                                         Toast.makeText(
                                             this,
                                             getString(R.string.password_verified_re_encrypt),
-                                            Toast.LENGTH_LONG
+                                            Toast.LENGTH_LONG,
                                         ).show()
                                         biometricAuthManager.authenticateForEncryption(
                                             onSuccess = { cipher ->
                                                 viewModel.onRecoverySuccess(
                                                     passwordAttempt,
-                                                    cipher
+                                                    cipher,
                                                 )
                                             },
                                             onEnrollmentRequired = { actionToRetry ->
                                                 viewModel.setPendingBiometricAction(actionToRetry)
                                                 launchEnrollment()
-                                            }
+                                            },
                                         )
                                     } else {
                                         error = getString(R.string.incorrect_password_try_again)
                                     }
                                 }
-                            }
+                            },
                         )
                     }
 
@@ -153,18 +153,18 @@ class MainActivity : FragmentActivity() {
                             masterPassword = currentScreen.masterPassword,
                             onAddImage = {
                                 pickImageLauncher.launch(
-                                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly),
                                 )
                             },
                             onReauthenticate = { titleResId, subtitleResId, action ->
                                 biometricAuthManager.authenticateForAction(
                                     titleResId = titleResId,
                                     subtitleResId = subtitleResId,
-                                    onSuccess = action
+                                    onSuccess = action,
                                 )
                             },
                             onPurchaseRequest = { billingManager.launchPurchaseFlow(this) },
-                            onEditEntry = { fileName -> viewModel.navigateToAddEntry(fileName) }
+                            onEditEntry = { fileName -> viewModel.navigateToAddEntry(fileName) },
                         )
                         currentScreen.decryptedNfcSecret?.let { secret ->
                             AlertDialog(
@@ -175,7 +175,7 @@ class MainActivity : FragmentActivity() {
                                     TextButton(onClick = viewModel::onDismissNfcSecretDialog) {
                                         Text(stringResource(R.string.close))
                                     }
-                                }
+                                },
                             )
                         }
                     }
@@ -184,7 +184,7 @@ class MainActivity : FragmentActivity() {
                         AddEntryScreen(
                             masterPassword = currentScreen.masterPassword,
                             onNavigateBack = viewModel::navigateToPrincipal,
-                            entryId = currentScreen.entryId
+                            entryId = currentScreen.entryId,
                         )
                     }
                 }
@@ -214,7 +214,7 @@ class MainActivity : FragmentActivity() {
             Intent(Settings.ACTION_BIOMETRIC_ENROLL).apply {
                 putExtra(
                     Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
-                    BIOMETRIC_STRONG or DEVICE_CREDENTIAL
+                    BIOMETRIC_STRONG or DEVICE_CREDENTIAL,
                 )
             }
         } else {

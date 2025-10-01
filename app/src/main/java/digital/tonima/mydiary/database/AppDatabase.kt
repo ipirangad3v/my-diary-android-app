@@ -10,7 +10,7 @@ import digital.tonima.mydiary.database.entities.VaultImageEntity
 @Database(
     entities = [DiaryEntryEntity::class, VaultImageEntity::class],
     version = 1,
-    exportSchema = true
+    exportSchema = true,
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun diaryDao(): DiaryDao

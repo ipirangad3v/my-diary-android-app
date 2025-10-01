@@ -34,11 +34,11 @@ fun ImageViewerDialog(
     imageLoader: ImageLoader,
     onDismiss: () -> Unit,
     onDeleteRequest: () -> Unit,
-    onShareRequest: () -> Unit
+    onShareRequest: () -> Unit,
 ) {
     Dialog(
         onDismissRequest = onDismiss,
-        properties = DialogProperties(usePlatformDefaultWidth = false)
+        properties = DialogProperties(usePlatformDefaultWidth = false),
     ) {
         Scaffold(
             topBar = {
@@ -58,21 +58,21 @@ fun ImageViewerDialog(
                                 Icon(Icons.Default.Delete, contentDescription = stringResource(delete))
                             }
                         }
-                    }
+                    },
                 )
-            }
+            },
         ) { paddingValues ->
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(paddingValues),
-                contentAlignment = Center
+                contentAlignment = Center,
             ) {
                 AsyncImage(
                     model = imageEntity,
                     imageLoader = imageLoader,
                     contentDescription = "Full screen encrypted image",
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 )
             }
         }
