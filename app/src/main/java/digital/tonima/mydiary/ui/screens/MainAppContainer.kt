@@ -23,7 +23,7 @@ fun MainAppContainer(
     onReauthenticate: (titleResId: Int, subtitleResId: Int, action: () -> Unit) -> Unit,
     onPurchaseRequest: () -> Unit,
     onEditEntry: (fileId: Long) -> Unit,
-    hasNfcSupport: Boolean = false
+    hasNfcSupport: Boolean = false,
 ) {
     val uiState by mainViewModel.uiState.collectAsStateWithLifecycle()
     val isProUser by mainViewModel.isProUser.collectAsStateWithLifecycle()
@@ -34,9 +34,9 @@ fun MainAppContainer(
             AppBottomNavigation(
                 currentScreen = principalScreenState.currentScreen,
                 onScreenSelected = mainViewModel::onScreenSelected,
-                hasNfcSupport = hasNfcSupport
+                hasNfcSupport = hasNfcSupport,
             )
-        }
+        },
     ) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)) {
             when (principalScreenState.currentScreen) {
@@ -48,19 +48,19 @@ fun MainAppContainer(
                     onResetApp = mainViewModel::resetApp,
                     onReauthenticate = onReauthenticate,
                     onPurchaseRequest = onPurchaseRequest,
-                    isProUser = isProUser
+                    isProUser = isProUser,
                 )
 
                 Vault -> VaultScreen(
                     masterPassword = masterPassword,
                     onAddImage = onAddImage,
-                    cryptoManager = cryptoManager
+                    cryptoManager = cryptoManager,
                 )
 
                 Nfc ->
                     NfcScreen(
                         masterPassword = masterPassword,
-                        onWriteToTag = { data -> mainViewModel.onNfcTagRead(data) }
+                        onWriteToTag = { data -> mainViewModel.onNfcTagRead(data) },
                     )
             }
         }

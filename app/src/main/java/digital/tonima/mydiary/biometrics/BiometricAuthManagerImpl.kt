@@ -28,14 +28,14 @@ import javax.inject.Inject
 class BiometricAuthManagerImpl
     @Inject
     constructor(
-        @ActivityContext private val context: Context
+        @ActivityContext private val context: Context,
     ) : BiometricAuthManager {
         private val activity = context as FragmentActivity
         private val executor = ContextCompat.getMainExecutor(context)
 
         override fun authenticateForEncryption(
             onSuccess: (Cipher) -> Unit,
-            onEnrollmentRequired: (actionToRetry: () -> Unit) -> Unit
+            onEnrollmentRequired: (actionToRetry: () -> Unit) -> Unit,
         ) {
             val action = { authenticateForEncryption(onSuccess, onEnrollmentRequired) }
             if (isEnrollmentRequired(action, onEnrollmentRequired)) return
@@ -49,7 +49,7 @@ class BiometricAuthManagerImpl
             try {
                 val encryptCipher = KeystoreCryptoManager.getEncryptCipher()
                 val biometricPrompt = createBiometricPrompt(
-                    onSuccess = { result -> result.cryptoObject?.cipher?.let(onSuccess) }
+                    onSuccess = { result -> result.cryptoObject?.cipher?.let(onSuccess) },
                 )
                 biometricPrompt.authenticate(promptInfo, BiometricPrompt.CryptoObject(encryptCipher))
             } catch (e: Exception) {
@@ -61,7 +61,7 @@ class BiometricAuthManagerImpl
             iv: ByteArray,
             onSuccess: (Cipher) -> Unit,
             onFailure: () -> Unit,
-            onEnrollmentRequired: (actionToRetry: () -> Unit) -> Unit
+            onEnrollmentRequired: (actionToRetry: () -> Unit) -> Unit,
         ) {
             val action = { authenticateForDecryption(iv, onSuccess, onFailure, onEnrollmentRequired) }
             if (isEnrollmentRequired(action, onEnrollmentRequired)) return
@@ -78,7 +78,7 @@ class BiometricAuthManagerImpl
                     onSuccess = { result ->
                         result.cryptoObject?.cipher?.let(onSuccess) ?: onFailure()
                     },
-                    onError = onFailure
+                    onError = onFailure,
                 )
                 biometricPrompt.authenticate(promptInfo, BiometricPrompt.CryptoObject(decryptCipher))
             } catch (e: Exception) {
@@ -89,7 +89,7 @@ class BiometricAuthManagerImpl
 
         private fun isEnrollmentRequired(
             actionToRetry: () -> Unit,
-            onEnrollmentRequired: (actionToRetry: () -> Unit) -> Unit
+            onEnrollmentRequired: (actionToRetry: () -> Unit) -> Unit,
         ): Boolean {
             val biometricManager = BiometricManager.from(context)
             val authenticators =
@@ -104,7 +104,7 @@ class BiometricAuthManagerImpl
         override fun authenticateForAction(
             titleResId: Int,
             subtitleResId: Int,
-            onSuccess: () -> Unit
+            onSuccess: () -> Unit,
         ) {
             val promptInfo = BiometricPrompt.PromptInfo.Builder()
                 .setTitle(activity.getString(titleResId))
@@ -113,14 +113,14 @@ class BiometricAuthManagerImpl
                 .build()
 
             val biometricPrompt = createBiometricPrompt(
-                onSuccess = { onSuccess() }
+                onSuccess = { onSuccess() },
             )
             biometricPrompt.authenticate(promptInfo)
         }
 
         private fun createBiometricPrompt(
             onSuccess: (BiometricPrompt.AuthenticationResult) -> Unit,
-            onError: (() -> Unit)? = null
+            onError: (() -> Unit)? = null,
         ): BiometricPrompt {
             return BiometricPrompt(
                 activity,
@@ -135,7 +135,7 @@ class BiometricAuthManagerImpl
                             onError?.invoke()
                         }
                     }
-                }
+                },
             )
         }
     }

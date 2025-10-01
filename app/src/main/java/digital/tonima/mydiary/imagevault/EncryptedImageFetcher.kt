@@ -23,7 +23,7 @@ class EncryptedImageFetcher(
     private val imageEntity: VaultImageEntity,
     private val masterPassword: CharArray,
     private val options: Options,
-    private val cryptoManager: PasswordBasedCryptoManager
+    private val cryptoManager: PasswordBasedCryptoManager,
 ) : Fetcher {
     override suspend fun fetch(): FetchResult? {
         val file = File(context.filesDir, imageEntity.encryptedFileName)
@@ -38,7 +38,7 @@ class EncryptedImageFetcher(
         return SourceResult(
             source = imageSource,
             mimeType = null,
-            dataSource = DataSource.DISK
+            dataSource = DataSource.DISK,
         )
     }
 
@@ -48,7 +48,7 @@ class EncryptedImageFetcher(
     class Factory(
         private val context: Context,
         private val masterPassword: CharArray,
-        private val cryptoManager: PasswordBasedCryptoManager
+        private val cryptoManager: PasswordBasedCryptoManager,
     ) :
         Fetcher.Factory<VaultImageEntity> {
             override fun create(data: VaultImageEntity, options: Options, imageLoader: ImageLoader): Fetcher {
@@ -57,7 +57,7 @@ class EncryptedImageFetcher(
                     data,
                     masterPassword,
                     options,
-                    cryptoManager
+                    cryptoManager,
                 )
             }
         }

@@ -9,5 +9,5 @@ import javax.inject.Inject
 class LockedViewModel
     @Inject
     constructor(
-        proUserProvider: ProUserProvider
+        proUserProvider: ProUserProvider,
     ) : ViewModel(), ProUserProvider by proUserProvider

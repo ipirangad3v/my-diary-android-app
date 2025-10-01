@@ -33,7 +33,7 @@ import digital.tonima.mydiary.ui.viewmodels.ManualPasswordViewModel
 fun ManualPasswordScreen(
     error: String?,
     onPasswordSubmit: (CharArray) -> Unit,
-    viewModel: ManualPasswordViewModel = hiltViewModel()
+    viewModel: ManualPasswordViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -44,12 +44,12 @@ fun ManualPasswordScreen(
                 .padding(innerPadding)
                 .padding(16.dp),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
                 text = stringResource(R.string.master_password_recovery),
                 style = MaterialTheme.typography.headlineSmall,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -57,7 +57,7 @@ fun ManualPasswordScreen(
             Text(
                 text = stringResource(R.string.master_password_recovery_desc),
                 style = MaterialTheme.typography.bodyMedium,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -70,7 +70,7 @@ fun ManualPasswordScreen(
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 isError = error != null,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
 
             if (error != null) {
@@ -78,7 +78,7 @@ fun ManualPasswordScreen(
                     text = error,
                     color = MaterialTheme.colorScheme.error,
                     style = MaterialTheme.typography.bodySmall,
-                    modifier = Modifier.padding(top = 8.dp)
+                    modifier = Modifier.padding(top = 8.dp),
                 )
             }
 
@@ -87,7 +87,7 @@ fun ManualPasswordScreen(
             Button(
                 onClick = { onPasswordSubmit(uiState.password.toCharArray()) },
                 enabled = uiState.password.isNotBlank(),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             ) {
                 Text(stringResource(R.string.unlock))
             }

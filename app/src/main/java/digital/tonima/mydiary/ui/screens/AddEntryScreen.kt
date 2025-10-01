@@ -60,7 +60,7 @@ fun AddEntryScreen(
     masterPassword: CharArray,
     entryId: Long?,
     onNavigateBack: () -> Unit,
-    viewModel: AddEntryViewModel = hiltViewModel()
+    viewModel: AddEntryViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val fallbackTitle = stringResource(no_title)
@@ -122,7 +122,7 @@ fun AddEntryScreen(
             },
             dismissButton = {
                 TextButton(onClick = { showBackConfirmationDialog = false }) { Text(stringResource(cancel)) }
-            }
+            },
         )
     }
 
@@ -139,11 +139,11 @@ fun AddEntryScreen(
                         contentHtml = richTextState.toHtml(),
                         fallbackTitle = fallbackTitle,
                         masterPassword = masterPassword,
-                        contentRequiredMessageResId = content_required
+                        contentRequiredMessageResId = content_required,
                     )
-                }
+                },
             )
-        }
+        },
     ) { paddingValues ->
         if (uiState.isLoading) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Center) {
@@ -155,7 +155,7 @@ fun AddEntryScreen(
                     .fillMaxSize()
                     .padding(paddingValues)
                     .padding(horizontal = 16.dp, vertical = 8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 OutlinedTextField(
                     value = title,
@@ -164,13 +164,13 @@ fun AddEntryScreen(
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(
-                        imeAction = Next
+                        imeAction = Next,
                     ),
                     keyboardActions = KeyboardActions(
                         onNext = {
                             focusManager.moveFocus(FocusDirection.Down)
-                        }
-                    )
+                        },
+                    ),
                 )
 
                 FormattingToolbar(richTextState = richTextState)
@@ -181,14 +181,14 @@ fun AddEntryScreen(
                         .fillMaxWidth()
                         .weight(1f),
                     keyboardOptions = KeyboardOptions(
-                        imeAction = Done
+                        imeAction = Done,
                     ),
                     keyboardActions = KeyboardActions(
                         onDone = {
                             focusManager.clearFocus()
                             keyboardController?.hide()
-                        }
-                    )
+                        },
+                    ),
                 )
             }
         }
@@ -199,7 +199,7 @@ fun AddEntryScreen(
             title = stringResource(confirm_deletion_title),
             text = stringResource(confirm_deletion_message),
             onConfirm = { viewModel.deleteEntry(masterPassword) },
-            onDismiss = viewModel::onDismissDeleteDialog
+            onDismiss = viewModel::onDismissDeleteDialog,
         )
     }
 }

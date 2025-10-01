@@ -23,27 +23,27 @@ import digital.tonima.mydiary.ui.screens.BottomBarScreen.Vault
 fun AppBottomNavigation(
     currentScreen: BottomBarScreen,
     onScreenSelected: (BottomBarScreen) -> Unit,
-    hasNfcSupport: Boolean = false
+    hasNfcSupport: Boolean = false,
 ) {
     NavigationBar {
         NavigationBarItem(
             icon = { Icon(Icons.Default.Home, contentDescription = stringResource(diary)) },
             label = { Text(stringResource(diary)) },
             selected = currentScreen == Diary,
-            onClick = { onScreenSelected(Diary) }
+            onClick = { onScreenSelected(Diary) },
         )
         NavigationBarItem(
             icon = { Icon(Icons.Default.Lock, contentDescription = stringResource(vault)) },
             label = { Text(stringResource(vault)) },
             selected = currentScreen == Vault,
-            onClick = { onScreenSelected(Vault) }
+            onClick = { onScreenSelected(Vault) },
         )
         if (hasNfcSupport) {
             NavigationBarItem(
                 icon = { Icon(painterResource(nfc), contentDescription = stringResource(nfc_secrets)) },
                 label = { Text(stringResource(nfc_secrets)) },
                 selected = currentScreen == Nfc,
-                onClick = { onScreenSelected(Nfc) }
+                onClick = { onScreenSelected(Nfc) },
             )
         }
     }

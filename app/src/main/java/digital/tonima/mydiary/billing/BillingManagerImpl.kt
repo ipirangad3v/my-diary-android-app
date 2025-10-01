@@ -31,7 +31,7 @@ private const val PRODUCT_ID_REMOVE_ADS = "remove_ads_premium"
 class BillingManagerImpl
     @Inject
     constructor(
-        @ApplicationContext private val context: Context
+        @ApplicationContext private val context: Context,
     ) : BillingManager {
         private val _isProUser = MutableStateFlow(false)
         override val isProUser = _isProUser.asStateFlow()
@@ -49,7 +49,7 @@ class BillingManagerImpl
             .enablePendingPurchases(
                 PendingPurchasesParams.newBuilder()
                     .enableOneTimeProducts()
-                    .build()
+                    .build(),
             )
             .build()
 
@@ -95,7 +95,7 @@ class BillingManagerImpl
                 QueryProductDetailsParams.Product.newBuilder()
                     .setProductId(PRODUCT_ID_REMOVE_ADS)
                     .setProductType(BillingClient.ProductType.INAPP)
-                    .build()
+                    .build(),
             )
             val params = QueryProductDetailsParams.newBuilder().setProductList(productList)
 
@@ -105,7 +105,7 @@ class BillingManagerImpl
                     val productDetailsParamsList = listOf(
                         BillingFlowParams.ProductDetailsParams.newBuilder()
                             .setProductDetails(productDetails)
-                            .build()
+                            .build(),
                     )
                     val billingFlowParams = BillingFlowParams.newBuilder()
                         .setProductDetailsParamsList(productDetailsParamsList)
@@ -115,12 +115,12 @@ class BillingManagerImpl
                 } else {
                     Log.e(
                         "BillingManager",
-                        "Product details not found or error. Response code: ${billingResult.responseCode}"
+                        "Product details not found or error. Response code: ${billingResult.responseCode}",
                     )
                     Toast.makeText(
                         context,
                         "Não foi possível encontrar o item na loja. Verifique sua conexão.",
-                        Toast.LENGTH_LONG
+                        Toast.LENGTH_LONG,
                     ).show()
                 }
             }

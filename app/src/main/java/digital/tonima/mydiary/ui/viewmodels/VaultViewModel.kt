@@ -22,7 +22,7 @@ data class VaultUiState(
     val isLoading: Boolean = true,
     val vaultImages: List<VaultImageEntity> = emptyList(),
     val selectedImage: VaultImageEntity? = null,
-    val showDeleteConfirmation: Boolean = false
+    val showDeleteConfirmation: Boolean = false,
 )
 
 sealed class VaultEvent {
@@ -34,7 +34,7 @@ class VaultViewModel
     @Inject
     constructor(
         private val vaultRepository: VaultRepository,
-        proUserProvider: ProUserProvider
+        proUserProvider: ProUserProvider,
     ) : ViewModel(), ProUserProvider by proUserProvider {
 
         private val _uiState = MutableStateFlow(VaultUiState())
@@ -60,7 +60,7 @@ class VaultViewModel
                     _uiState.update {
                         it.copy(
                             isLoading = false,
-                            vaultImages = images
+                            vaultImages = images,
                         )
                     }
                 }

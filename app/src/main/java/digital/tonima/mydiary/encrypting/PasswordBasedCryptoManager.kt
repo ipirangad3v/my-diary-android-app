@@ -27,7 +27,7 @@ import javax.inject.Singleton
 class PasswordBasedCryptoManager
     @Inject
     constructor(
-        @ApplicationContext private val context: Context
+        @ApplicationContext private val context: Context,
     ) {
 
         private val TRANSFORMATION = "AES/GCM/NoPadding"

@@ -15,7 +15,7 @@ import javax.inject.Inject
 data class NfcUiState(
     val secretText: String = "",
     val isWaitingForTag: Boolean = false,
-    val encryptedData: ByteArray? = null
+    val encryptedData: ByteArray? = null,
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -42,7 +42,7 @@ data class NfcUiState(
 class NfcViewModel
     @Inject
     constructor(
-        private val nfcRepository: NfcRepository
+        private val nfcRepository: NfcRepository,
     ) : ViewModel() {
 
         private val _uiState = MutableStateFlow(NfcUiState())

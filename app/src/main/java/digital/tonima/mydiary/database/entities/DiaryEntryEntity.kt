@@ -16,5 +16,5 @@ data class DiaryEntryEntity(
     val title: String,
 
     @ColumnInfo(name = "encrypted_content_html", typeAffinity = ColumnInfo.BLOB)
-    val encryptedContentHtml: ByteArray
+    val encryptedContentHtml: ByteArray,
 )

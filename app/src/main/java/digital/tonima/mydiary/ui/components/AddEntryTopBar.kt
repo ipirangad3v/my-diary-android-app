@@ -44,7 +44,7 @@ fun AddEntryTopBar(
     entryId: Long?,
     onBackClick: () -> Unit,
     onDeleteClick: () -> Unit,
-    onSaveClick: () -> Unit
+    onSaveClick: () -> Unit,
 ) {
     TopAppBar(
         { Text(stringResource(if (entryId == null) new_entry else edit_entry)) },
@@ -62,52 +62,52 @@ fun AddEntryTopBar(
             Button(onClick = onSaveClick) {
                 Text(stringResource(save_note))
             }
-        }
+        },
     )
 }
 
 @Composable
 fun FormattingToolbar(
     richTextState: RichTextState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val selectedButtonColors = IconButtonDefaults.iconToggleButtonColors(
-        checkedContainerColor = MaterialTheme.colorScheme.secondaryContainer
+        checkedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
     )
 
     Row(
         modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(4.dp)
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         IconToggleButton(
             checked = richTextState.currentSpanStyle.fontWeight == Bold,
             onCheckedChange = { richTextState.toggleSpanStyle(SpanStyle(fontWeight = Bold)) },
-            colors = selectedButtonColors
+            colors = selectedButtonColors,
         ) { Icon(painterResource(bold), "Bold") }
 
         IconToggleButton(
             checked = richTextState.currentSpanStyle.fontStyle == Italic,
             onCheckedChange = { richTextState.toggleSpanStyle(SpanStyle(fontStyle = Italic)) },
-            colors = selectedButtonColors
+            colors = selectedButtonColors,
         ) { Icon(painterResource(italic), "Italic") }
 
         IconToggleButton(
             checked = richTextState.currentSpanStyle.textDecoration == Underline,
             onCheckedChange = { richTextState.toggleSpanStyle(SpanStyle(textDecoration = Underline)) },
-            colors = selectedButtonColors
+            colors = selectedButtonColors,
         ) { Icon(painterResource(underline), "Underline") }
 
         IconToggleButton(
             checked = richTextState.isUnorderedList,
             onCheckedChange = { richTextState.toggleUnorderedList() },
-            colors = selectedButtonColors
+            colors = selectedButtonColors,
         ) {
             Icon(painterResource(list_bulleted), stringResource(bulleted_list))
         }
         IconToggleButton(
             checked = richTextState.isOrderedList,
             onCheckedChange = { richTextState.toggleOrderedList() },
-            colors = selectedButtonColors
+            colors = selectedButtonColors,
         ) {
             Icon(painterResource(list_numbered), stringResource(numbered_list))
         }

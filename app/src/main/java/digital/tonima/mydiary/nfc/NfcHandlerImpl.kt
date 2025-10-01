@@ -28,7 +28,7 @@ class NfcHandlerImpl
     @Inject
     constructor(
         private val activity: FragmentActivity,
-        private val nfcAdapter: NfcAdapter?
+        private val nfcAdapter: NfcAdapter?,
     ) : NfcHandler {
         private lateinit var mainViewModel: MainViewModel
         private lateinit var nfcViewModel: NfcViewModel
@@ -48,7 +48,7 @@ class NfcHandlerImpl
                 activity,
                 0,
                 intent,
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) PendingIntent.FLAG_MUTABLE else 0
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) PendingIntent.FLAG_MUTABLE else 0,
             )
             val intentFilter = IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED)
             try {
@@ -101,7 +101,7 @@ class NfcHandlerImpl
                 Log.e(
                     "NfcHandler",
                     "Failed to write data to NFC tag. Is the tag too small? ${e.message}",
-                    e
+                    e,
                 )
                 nfcViewModel.onWriteCancelled()
             } finally {

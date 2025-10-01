@@ -46,7 +46,7 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 fun PasswordSetupScreen(
     viewModel: PasswordSetupViewModel = hiltViewModel(),
-    onPasswordSet: (CharArray) -> Unit
+    onPasswordSet: (CharArray) -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -66,7 +66,7 @@ fun PasswordSetupScreen(
             .fillMaxSize()
             .padding(16.dp)
             .verticalScroll(scrollState),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Spacer(modifier = Modifier.weight(1f))
 
@@ -85,13 +85,13 @@ fun PasswordSetupScreen(
             singleLine = true,
             keyboardOptions = KeyboardOptions(
                 keyboardType = Password,
-                imeAction = Next
+                imeAction = Next,
             ),
             keyboardActions = KeyboardActions(
                 onNext = {
                     focusManager.moveFocus(FocusDirection.Down)
-                }
-            )
+                },
+            ),
         )
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -100,7 +100,7 @@ fun PasswordSetupScreen(
         Text(
             text = stringResource(password_requirements),
             style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -114,14 +114,14 @@ fun PasswordSetupScreen(
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(
                 keyboardType = Password,
-                imeAction = Done
+                imeAction = Done,
             ),
             keyboardActions = KeyboardActions(
                 onDone = {
                     focusManager.clearFocus()
                     keyboardController?.hide()
-                }
-            )
+                },
+            ),
         )
 
         uiState.errorResId?.let { errorRes ->
@@ -129,14 +129,14 @@ fun PasswordSetupScreen(
                 text = stringResource(errorRes),
                 color = MaterialTheme.colorScheme.error,
                 style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier.padding(top = 8.dp)
+                modifier = Modifier.padding(top = 8.dp),
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
             onClick = viewModel::onSavePasswordClicked,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         ) {
             Text(stringResource(save_password))
         }

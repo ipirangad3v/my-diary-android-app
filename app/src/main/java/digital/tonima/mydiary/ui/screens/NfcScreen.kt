@@ -41,7 +41,7 @@ import digital.tonima.mydiary.ui.viewmodels.NfcViewModel
 fun NfcScreen(
     masterPassword: CharArray,
     onWriteToTag: (ByteArray) -> Unit,
-    viewModel: NfcViewModel = hiltViewModel()
+    viewModel: NfcViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -55,20 +55,20 @@ fun NfcScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(nfc_secrets)) }
+                title = { Text(stringResource(nfc_secrets)) },
             )
-        }
+        },
     ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
                 .padding(16.dp),
-            horizontalAlignment = CenterHorizontally
+            horizontalAlignment = CenterHorizontally,
         ) {
             Text(
                 text = stringResource(nfc_write_instructions),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
             Spacer(modifier = Modifier.height(16.dp))
             OutlinedTextField(
@@ -79,21 +79,21 @@ fun NfcScreen(
                     .fillMaxWidth()
                     .weight(1f),
                 keyboardOptions = KeyboardOptions(
-                    imeAction = Done
+                    imeAction = Done,
                 ),
                 keyboardActions = KeyboardActions(
                     onDone = {
                         focusManager.clearFocus()
                         keyboardController?.hide()
-                    }
-                )
+                    },
+                ),
             )
             Spacer(modifier = Modifier.height(16.dp))
 
             if (uiState.isWaitingForTag) {
                 Column(
                     horizontalAlignment = CenterHorizontally,
-                    verticalArrangement = spacedBy(8.dp)
+                    verticalArrangement = spacedBy(8.dp),
                 ) {
                     CircularProgressIndicator()
                     Text(stringResource(waiting_for_nfc_tag))
@@ -105,7 +105,7 @@ fun NfcScreen(
                 Button(
                     onClick = { viewModel.prepareToWrite(masterPassword) },
                     enabled = uiState.secretText.isNotBlank(),
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 ) {
                     Text(stringResource(write_secret_to_nfc))
                 }

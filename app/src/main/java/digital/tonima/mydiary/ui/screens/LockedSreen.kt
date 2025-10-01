@@ -33,23 +33,23 @@ fun LockedScreen(onUnlockRequest: () -> Unit, viewModel: LockedViewModel = hiltV
             FloatingActionButton(onClick = { onUnlockRequest() }) {
                 Icon(Icons.Filled.Lock, contentDescription = stringResource(id = unlock_diary))
             }
-        }
+        },
     ) { innerPadding ->
         Column(
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize(),
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Center,
         ) {
             AdBannerView(
                 adId = ADMOB_BANNER_AD_UNIT_LOCKED_DIARY,
-                isProUser = isProUser
+                isProUser = isProUser,
             )
             Box(
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxSize(),
-                contentAlignment = Alignment.Center
+                contentAlignment = Alignment.Center,
             ) {
                 Text(text = stringResource(id = locked_diary))
             }

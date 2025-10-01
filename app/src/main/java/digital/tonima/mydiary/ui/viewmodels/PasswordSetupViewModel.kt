@@ -20,7 +20,7 @@ data class PasswordSetupUiState(
     val password: String = "",
     val confirmPassword: String = "",
     val errorResId: Int? = null,
-    val passwordStrength: PasswordStrength = PasswordStrength.EMPTY
+    val passwordStrength: PasswordStrength = PasswordStrength.EMPTY,
 )
 
 sealed class PasswordSetupEvent {
@@ -59,7 +59,7 @@ class PasswordSetupViewModel
                 it.copy(
                     password = password,
                     errorResId = null,
-                    passwordStrength = strength
+                    passwordStrength = strength,
                 )
             }
         }

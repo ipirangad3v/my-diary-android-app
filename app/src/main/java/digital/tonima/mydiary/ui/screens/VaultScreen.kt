@@ -53,7 +53,7 @@ fun VaultScreen(
     masterPassword: CharArray,
     cryptoManager: PasswordBasedCryptoManager,
     onAddImage: () -> Unit,
-    viewModel: VaultViewModel = hiltViewModel()
+    viewModel: VaultViewModel = hiltViewModel(),
 ) {
     val isProUser by viewModel.isProUser.collectAsState()
     val uiState by viewModel.uiState.collectAsState()
@@ -94,19 +94,19 @@ fun VaultScreen(
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .align(Center)
-                    .padding(16.dp)
+                    .padding(16.dp),
             )
         } else {
             AdBannerView(
                 adId = ADMOB_BANNER_AD_UNIT_VAULT_SCREEN,
-                isProUser = isProUser
+                isProUser = isProUser,
             )
             LazyVerticalGrid(
                 columns = GridCells.Adaptive(minSize = 128.dp),
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = spacedBy(4.dp),
                 horizontalArrangement = spacedBy(4.dp),
-                contentPadding = PaddingValues(4.dp)
+                contentPadding = PaddingValues(4.dp),
             ) {
                 items(uiState.vaultImages, key = { it.encryptedFileName }) { file ->
                     AsyncImage(
@@ -116,7 +116,7 @@ fun VaultScreen(
                         modifier = Modifier
                             .aspectRatio(1f)
                             .clickable { viewModel.onImageClicked(file) },
-                        contentScale = ContentScale.Crop
+                        contentScale = ContentScale.Crop,
                     )
                 }
             }
@@ -126,7 +126,7 @@ fun VaultScreen(
             onClick = onAddImage,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(16.dp)
+                .padding(16.dp),
         ) {
             Icon(Icons.Default.Add, contentDescription = stringResource(add_image))
         }
@@ -138,7 +138,7 @@ fun VaultScreen(
             imageLoader = imageLoader,
             onDismiss = viewModel::onDismissImageViewer,
             onDeleteRequest = viewModel::onDeleteRequest,
-            onShareRequest = { viewModel.onShareRequest() }
+            onShareRequest = { viewModel.onShareRequest() },
         )
     }
 
@@ -147,7 +147,7 @@ fun VaultScreen(
             title = stringResource(delete_image_title),
             text = stringResource(delete_image_message),
             onConfirm = viewModel::deleteSelectedImage,
-            onDismiss = viewModel::onDismissDeleteDialog
+            onDismiss = viewModel::onDismissDeleteDialog,
         )
     }
 }
